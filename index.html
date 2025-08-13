@@ -127,7 +127,7 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
     <div class="word" id="promptBig"></div>
     <div class="kana" id="promptSub"></div>
 
-    <div class="meaning" id="answerBlock">
+    <div class="meaning hidden-el" id="answerBlock">
       <div id="answerMain"></div>
       <div class="ex" id="exampleBlock"></div>
     </div>
@@ -170,13 +170,32 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
 </div>
 
 <script>
+/* ---------- safety: show first runtime error on-screen ---------- */
+(function(){
+  window.addEventListener('error', function(ev){
+    var box = document.getElementById('errbox');
+    if(box) return;
+    box = document.createElement('div');
+    box.id='errbox';
+    box.style.cssText='position:fixed;left:12px;bottom:12px;max-width:90vw;background:#111;color:#fff;border:1px solid #f55;padding:10px 12px;border-radius:8px;z-index:99999;font:12px/1.4 ui-monospace,Menlo,monospace';
+    box.textContent = 'JS Error: ' + (ev.message||'') + (ev.filename?(' @ '+ev.filename+':'+ev.lineno):'');
+    document.body.appendChild(box);
+  });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  /* ===== Utils + storage ===== */
   function uuidv4(){ if (crypto.randomUUID) return crypto.randomUUID(); return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16)}) }
   const Store=(function(){ try{ const t='__t'; localStorage.setItem(t,'1'); localStorage.removeItem(t); return localStorage; }catch(_){ let mem={}; return {getItem:k=>mem[k]||null,setItem:(k,v)=>{mem[k]=String(v)},removeItem:k=>{delete mem[k]}} } })();
-
-  const STORAGE="jlpt_flash_v11"; /* bump to reseed */
+  const STORAGE="jlpt_flash_v12"; /* bump to reseed */
   const SETTINGS="jlpt_flash_settings";
   const $=s=>document.querySelector(s);
   const $$=s=>document.querySelectorAll(s);
+
+  /* ===== Settings / State ===== */
   function loadSettings(){try{return JSON.parse(Store.getItem(SETTINGS)||"{}")}catch(_){return {}}}
   function saveSettings(s){try{const cur=loadSettings();Store.setItem(SETTINGS,JSON.stringify(Object.assign({},cur,s)));}catch(e){Store.setItem(SETTINGS,JSON.stringify(s));}}
   const settingsBootstrap=loadSettings();
@@ -196,11 +215,13 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
     bgRemoteRandom:!!settingsBootstrap.bgRemoteRandom
   };
 
+  /* ===== Seeds ===== */
   const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."],["原因","げんいん","cause","原因は何ですか。","What is the cause?"],["役に立つ","やくにたつ","be useful","この本は役に立ちます。","This book is useful."],["到着","とうちゃく","arrival","電車が到着します。","The train arrives."],["出発","しゅっぱつ","departure","九時に出発します。","We depart at 9."],["予定","よてい","plan; schedule","明日の予定を確認します。","I’ll check tomorrow’s plan."],["準備","じゅんび","preparation","会議の準備をします。","I’ll prepare for the meeting."],["注意","ちゅうい","attention","車に注意してください。","Please watch out for cars."],["経験","けいけん","experience","経験がありません。","I have no experience."],["連絡","れんらく","contact","後で連絡します。","I’ll contact you later."],["比較","ひかく","comparison","価格を比較します。","I’ll compare prices."],["相談","そうだん","consultation","先生に相談します。","I’ll consult the teacher."],["確認","かくにん","confirmation","住所を確認してください。","Please confirm the address."],["返事","へんじ","reply","返事を待っています。","I’m waiting for your reply."],["遅刻","ちこく","tardiness","今日は遅刻しました。","I was late today."],["約束","やくそく","appointment","三時に約束があります。","I have an appointment at 3."],["事故","じこ","accident","事故が起きました。","An accident occurred."],["安心","あんしん","relief","安心してください。","Please don’t worry."],["運転","うんてん","driving","安全に運転してください。","Please drive safely."],["住所","じゅうしょ","address","新しい住所を書きます。","I’ll write my new address."]];
   const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."],["改善","かいぜん","improvement","サービスを改善します。","Improve the service."],["対象","たいしょう","target","学生が対象です。","Students are the target."],["傾向","けいこう","tendency","増加の傾向があります。","There is an increasing trend."],["影響","えいきょう","influence","天気の影響を受けます。","It’s affected by weather."],["判断","はんだん","judgment","状況を判断します。","Judge the situation."],["証拠","しょうこ","evidence","証拠が足りません。","There isn’t enough evidence."],["主張","しゅちょう","assertion","彼は主張を通した。","He insisted on his claim."],["否定","ひてい","denial","関与を否定した。","He denied involvement."],["許可","きょか","permission","入場には許可が必要です。","Permission is required."]];
   const N3=N3_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N3"}));
   const N2=N2_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N2"}));
 
+  /* ===== Data I/O ===== */
   function freshDeck(){ const now=Date.now(); return [...N3,...N2].map((x,i)=>({id:uuidv4(),...x,status:"new",seen:0,correct:0,addedAt:now+i})) }
   function load(){ const raw=Store.getItem(STORAGE); if(!raw){ const init=freshDeck(); Store.setItem(STORAGE,JSON.stringify(init)); return init; } try{const p=JSON.parse(raw); if(!Array.isArray(p)||p.length===0) throw 0; return p;}catch(_){ Store.removeItem(STORAGE); const init=freshDeck(); Store.setItem(STORAGE,JSON.stringify(init)); return init; } }
   function save(all){Store.setItem(STORAGE,JSON.stringify(all))}
@@ -208,6 +229,7 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
   function filterByLevel(list){return state.level==="ALL"?list:list.filter(x=>x.level===state.level)}
   function shuffle(a){a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]} return a}
 
+  /* ===== Queue & Render ===== */
   function buildQueue(){
     const all=filterByLevel(cards());
     const pools={ learn: all.filter(x=>x.status==="new"||x.status==="not"), review: all.filter(x=>x.status==="review"), drill: all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not")) };
@@ -219,10 +241,13 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
     if(mode!==state.mode){ state.mode=mode; $$(".pill").forEach(p=>p.classList.toggle("active",p.dataset.mode===mode)); }
     state.queue=shuffle(pool); state.current=null;
   }
-
-  function nextCard(){ if(state.queue.length===0){ state.current=null; updateEmptyState(); return; } state.current=state.queue.shift(); const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=true; rb.setAttribute('aria-disabled','true'); } drawCard(); }
+  function nextCard(){
+    if(state.queue.length===0){ state.current=null; updateEmptyState(); return; }
+    state.current=state.queue.shift();
+    const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=(state.mode==='drill'); rb.setAttribute('aria-disabled', state.mode==='drill'?'true':'false'); }
+    drawCard();
+  }
   function updateEmptyState(){ const has=!!state.current; $("#cardZone").classList.toggle('hidden-el',!has); $("#emptyState").classList.toggle('hidden-el',has); }
-
   function draw(){
     const all=filterByLevel(cards());
     const learned=all.filter(x=>x.status==="learned").length;
@@ -235,6 +260,7 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
     if(!state.current && state.queue.length>0){ nextCard(); return; }
     updateEmptyState();
   }
+  function simpleEN(m){ return (/^(to\s)/i.test(m) ? m.replace(/^to\s/i,"").replace(/^\w/,c=>c.toUpperCase()) : `This is ${m}.`).replace(/\.$/,"."); }
 
   function drawCard(){
     const c=state.current; if(!c){ updateEmptyState(); return; }
@@ -253,9 +279,7 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
       else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
       $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
 
-      // hide the answer until a choice is made
-      ansEl.classList.add('hidden-el');
-
+      ansEl.classList.add('hidden-el'); // keep hidden until choice
       choicesEl.innerHTML = state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
       choicesEl.classList.remove('hidden-el');
 
@@ -265,16 +289,13 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
       else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
       $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
 
-      // non-drill: show answer
-      ansEl.classList.remove('hidden-el');
+      $("#answerBlock").classList.remove('hidden-el');
       choicesEl.classList.add('hidden-el'); choicesEl.innerHTML='';
       const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
     }
     $("#reviewBtn").classList.add('hidden');
     updateEmptyState();
   }
-
-  function simpleEN(meaning){ return (/^(to\s)/i.test(meaning) ? meaning.replace(/^to\s/i,"").replace(/^\w/,m=>m.toUpperCase()) : `This is ${meaning}.`).replace(/\.$/,"."); }
 
   function markStatus(status){
     const c=state.current; if(!c) return; const all=cards();
@@ -290,6 +311,7 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
     nextCard();
   }
 
+  /* ===== Importers ===== */
   function importJSON(text,level){
     let arr=JSON.parse(text); arr=Array.isArray(arr)?arr:[arr];
     const now=Date.now();
@@ -303,7 +325,7 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
   }
   function importCSV(text,level){
     const lines=text.split(/\r?\n/).filter(Boolean); if(lines.length===0) return;
-    const header=lines[0].split(",").map(h=>h.trim().toLowerCase());
+    const header=lines[0].toLowerCase().split(",").map(h=>h.trim());
     const idx=(k)=>header.indexOf(k);
     const out=[];
     for(let i=1;i<lines.length;i++){
@@ -322,19 +344,21 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
     }
     r.push(cur); return r.map(s=>s.trim());
   }
-  function handleImportFile(e){
-    const f=e.target.files&&e.target.files[0]; if(!f) return;
-    const reader=new FileReader();
-    reader.onload=()=>{ try{ importJSON(String(reader.result)); alert('Import complete'); }catch(err){ alert('Import failed'); } finally { buildQueue(); draw(); } };
-    reader.readAsText(f); e.target.value='';
+
+  /* ===== Theme + BG ===== */
+  function setTheme(mode){ document.body.classList.toggle('dark', mode==='dark'); const btn=$("#themeBtn"); if(btn){ btn.textContent = mode==='dark' ? 'Light' : 'Dark'; btn.setAttribute('aria-pressed', mode==='dark'?'true':'false'); } state.theme=mode; saveSettings({theme:mode}); applyCardOpacity(); }
+  function applyBackground(){ if(state.bgDataUrl){ document.documentElement.style.setProperty('--bgimg', `url('${state.bgDataUrl}')`);} else { document.documentElement.style.removeProperty('--bgimg'); } document.documentElement.style.setProperty('--bgimgOpacity', String((state.bgOpacity||0)/100)); const s=$("#bgOpacity"); if(s) s.value=String(state.bgOpacity||0); }
+  function applyCardOpacity(){ const dark=document.body.classList.contains('dark'); const alpha=Math.max(0,Math.min(1,(state.cardOpacity||45)/100)); const val = dark ? `rgba(17,22,28,${alpha})` : `rgba(255,255,255,${alpha})`; document.documentElement.style.setProperty('--cardbg', val); const s=$("#cardOpacity"); if(s) s.value=String(state.cardOpacity||45); }
+  function parseBgList(text){ return String(text||'').replace(/\r\n/g,'\n').split(/\n+/).map(s=>s.trim()).filter(Boolean); }
+  function setRandomBgFromList(manual){
+    const list=parseBgList(state.bgRemoteList);
+    if(!list.length) return;
+    const pick=list[Math.floor(Math.random()*list.length)];
+    const url=pick+(pick.includes('?')?'&':'?')+'t='+(manual?Date.now():Math.floor(Date.now()/3600000));
+    state.bgDataUrl=url; saveSettings({bgDataUrl:state.bgDataUrl}); applyBackground();
   }
 
-  function setTheme(mode){ document.body.classList.toggle('dark', mode==='dark'); const btn=$("#themeBtn"); if(btn){ btn.textContent = mode==='dark' ? 'Light' : 'Dark'; btn.setAttribute('aria-pressed', mode==='dark'?'true':'false'); } state.theme=mode; saveSettings({theme:mode}); applyCardOpacity(); }
-  function applyBackground(){ if(state.bgDataUrl){ document.documentElement.style.setProperty('--bgimg', `url('${state.bgDataUrl}')`);} else { document.documentElement.style.removeProperty('--bgimg'); } document.documentElement.style.setProperty('--bgimgOpacity', String((state.bgOpacity||0)/100)); const slider=$("#bgOpacity"); if(slider) slider.value=String(state.bgOpacity||0); }
-  function applyCardOpacity(){ const dark=document.body.classList.contains('dark'); const alpha=Math.max(0,Math.min(1,(state.cardOpacity||45)/100)); const val = dark ? `rgba(17,22,28,${alpha})` : `rgba(255,255,255,${alpha})`; document.documentElement.style.setProperty('--cardbg', val); const s=$("#cardOpacity"); if(s) s.value=String(state.cardOpacity||45); }
-  (function(){ const prefersDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; setTheme(state.theme|| (prefersDark?'dark':'light')); applyBackground(); applyCardOpacity(); if(state.bgRemoteRandom) setRandomBgFromList(false); })();
-
-  function parseBgList(text){ return String(text||'').replace(/\r\n/g,'\n').split(/\n+/).map(s=>s.trim()).filter(Boolean); }
+  /* ===== Wire up controls ===== */
   const fileInput=$("#bgFile"), uploadBtn=$("#uploadBgBtn"), opacityInput=$("#bgOpacity"), cardOpacityInput=$("#cardOpacity"), clearBtn=$("#clearBgBtn");
   if(uploadBtn && fileInput){ uploadBtn.addEventListener('click',()=>fileInput.click()); }
   if(fileInput){ fileInput.addEventListener('change',e=>{ const f=e.target.files&&e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ state.bgDataUrl=String(r.result); saveSettings({bgDataUrl:state.bgDataUrl}); applyBackground(); }; r.readAsDataURL(f); e.target.value=''; }); }
@@ -342,43 +366,28 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
   if(cardOpacityInput){ cardOpacityInput.addEventListener('input',e=>{ state.cardOpacity=parseInt(e.target.value,10)||45; saveSettings({cardOpacity:state.cardOpacity}); applyCardOpacity(); }); }
   if(clearBtn){ clearBtn.addEventListener('click',()=>{ state.bgDataUrl=null; saveSettings({bgDataUrl:null}); applyBackground(); }); }
   const bgUrls=$("#bgUrls"), bgRandom=$("#bgRandom"), bgRandomNow=$("#bgRandomNow");
-  function setRandomBgFromList(manual){
-    const list=parseBgList(state.bgRemoteList);
-    if(!list.length) return;
-    const pick=list[Math.floor(Math.random()*list.length)];
-    const url=pick+(pick.includes('?')?'&':'?')+'t='+(manual?Date.now():Math.floor(Date.now()/3600000));
-    state.bgDataUrl=url;
-    if(!state.bgRemoteRandom){ saveSettings({bgDataUrl:state.bgDataUrl}); }
-    applyBackground();
-  }
   if(bgUrls){ bgUrls.value=state.bgRemoteList||''; bgUrls.addEventListener('change',e=>{ state.bgRemoteList=e.target.value; saveSettings({bgRemoteList:state.bgRemoteList}); }); }
   if(bgRandom){ bgRandom.checked=!!state.bgRemoteRandom; bgRandom.addEventListener('change',e=>{ state.bgRemoteRandom=!!e.target.checked; saveSettings({bgRemoteRandom:state.bgRemoteRandom}); }); }
   if(bgRandomNow){ bgRandomNow.addEventListener('click',()=>setRandomBgFromList(true)); }
 
-  // Drill: click to reveal, then Next
-  document.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.choice-btn');
-    if(!btn) return;
-    if(state.mode!=='drill' || state.answered) return;
-    const idx = parseInt(btn.getAttribute('data-idx'),10);
-    const opt = state.drillChoices[idx];
-    state.drillChoices.forEach((o,i)=>{
-      const el = document.querySelector(`.choice-btn[data-idx="${i}"]`);
-      if(!el) return;
-      if(o.correct) el.classList.add('correct');
-    });
-    if(!opt.correct) btn.classList.add('wrong');
-    state.answered=true;
-    // reveal the answer now
-    $("#answerBlock").classList.remove('hidden-el');
-    const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
-  });
+  /* ===== Swipe (optional) ===== */
+  (function(){
+    const zone=$("#cardZone"), badgeL=$("#badgeLeft"), badgeR=$("#badgeRight");
+    let startX=0, dx=0, dragging=false;
+    function down(e){ dragging=true; startX=(e.touches?e.touches[0].clientX:e.clientX); zone.classList.add('swiping'); }
+    function move(e){ if(!dragging) return; const x=(e.touches?e.touches[0].clientX:e.clientX); dx=x-startX; zone.style.transform=`translateX(${dx}px) rotate(${dx*0.03}deg)`; zone.classList.toggle('succeed',dx>60); zone.classList.toggle('fail',dx<-60); if(badgeR) badgeR.style.opacity=String(Math.min(1, Math.max(0,(dx-40)/100))); if(badgeL) badgeL.style.opacity=String(Math.min(1, Math.max(0,(-dx-40)/100))); }
+    function reset(){ zone.style.transition='transform .18s ease'; zone.style.transform='translateX(0) rotate(0)'; if(badgeR) badgeR.style.opacity='0'; if(badgeL) badgeL.style.opacity='0'; setTimeout(()=>{ zone.style.transition=''; }, 180); }
+    function commit(dir){ zone.style.transition='transform .18s ease'; const off=dir>0?600:-600; const rot=dir>0?15:-15; zone.style.transform=`translateX(${off}px) rotate(${rot}deg)`; if(badgeR) badgeR.style.opacity='0'; if(badgeL) badgeL.style.opacity='0'; setTimeout(()=>{ zone.style.transition=''; zone.style.transform=''; markStatus(dir>0?'learned':'not'); }, 160); }
+    function up(){ if(!dragging) return; dragging=false; zone.classList.remove('swiping','succeed','fail'); if(dx>120) { commit(1) } else if(dx<-120) { commit(-1) } else { reset() } dx=0; }
+    zone.addEventListener('pointerdown',down); window.addEventListener('pointermove',move); window.addEventListener('pointerup',up);
+    zone.addEventListener('touchstart',down,{passive:true}); window.addEventListener('touchmove',move,{passive:true}); window.addEventListener('touchend',up);
+  })();
 
-  // Controls and hotkeys
-  $("#levelFilter").addEventListener('change',e=>setLevel(e.target.value));
-  $$(".pill").forEach(p=>p.addEventListener('click',()=>setMode(p.dataset.mode)));
+  /* ===== Events ===== */
   function setMode(m){state.mode=m; $$(".pill").forEach(p=>p.classList.toggle("active",p.dataset.mode===m)); buildQueue(); draw()}
   function setLevel(v){state.level=v; buildQueue(); draw()}
+  $("#levelFilter").addEventListener('change',e=>setLevel(e.target.value));
+  $$(".pill").forEach(p=>p.addEventListener('click',()=>setMode(p.dataset.mode)));
   function onPrimaryClick(){ if(state.mode==='drill'){ if(!state.answered) return; markStatus('review'); return; } markStatus('review'); }
   $("#revealBtn").addEventListener('click', onPrimaryClick);
   $("#learnedBtn").addEventListener('click',()=>{ if(state.mode==='drill'&&!state.answered) return; markStatus('learned') });
@@ -396,11 +405,18 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
   $("#closeBatch").addEventListener('click',()=>{$("#batchModal").classList.add('hidden-el')});
   $("#addBatchJson").addEventListener('click',()=>{ const t=$("#batchInput").value.trim(); if(!t){alert('Paste JSON first');return} try{importJSON(t,$("#batchLevel").value); $("#batchInput").value=''; $("#batchModal").classList.add('hidden-el')}catch(e){alert('Invalid JSON')} });
   $("#addBatchCsv").addEventListener('click',()=>{ const t=$("#batchInput").value.trim(); if(!t){alert('Paste CSV first');return} try{importCSV(t,$("#batchLevel").value); $("#batchInput").value=''; $("#batchModal").classList.add('hidden-el')} });
-  $("#importFile").addEventListener('change',handleImportFile);
+  $("#importFile").addEventListener('change',function(e){
+    const f=e.target.files&&e.target.files[0]; if(!f) return;
+    const r=new FileReader(); r.onload=()=>{ try{ importJSON(String(r.result)); alert('Import complete'); }catch(_){ alert('Import failed'); } finally { buildQueue(); draw(); } };
+    r.readAsText(f); e.target.value='';
+  });
 
-  // Init
+  /* ===== Init ===== */
+  const prefersDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(state.theme|| (prefersDark?'dark':'light'));
   applyBackground(); applyCardOpacity();
   buildQueue(); draw();
+});
 </script>
 </body>
 </html>
