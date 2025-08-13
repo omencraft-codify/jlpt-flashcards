@@ -1,473 +1,291 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JLPT N3/N2 Flashcards</title>
-<style>
-  :root{--bg:#fff;--fg:#111;--muted:#666;--line:#e6e6e6;--btn:#f6f6f6;--btn2:#111;--btnfg:#111;--btn2fg:#fff;--radius:14px;--cardw:min(720px,92vw);--cardbg:rgba(255,255,255,0.45)}
-  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}
-  .wrap{max-width:920px;margin:0 auto;padding:18px}
-  header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
-  .group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  select{appearance:none;background:var(--btn);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-  .pill{border:1px solid var(--line);padding:10px 12px;border-radius:999px;background:var(--btn);cursor:pointer}
-  .pill.active{background:var(--fg);color:#fff;border-color:var(--fg)}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);padding:12px 14px;border-radius:12px;cursor:pointer}
-  .btn.primary{background:var(--btn2);color:var(--btn2fg);border-color:var(--btn2)}
-  .btn.block{width:100%}
-  .small{font-size:12px}
-  .muted{color:var(--muted)}
-  .hidden{display:none !important}
-  .hidden-el{display:none}
-  .center{text-align:center}
-  .row{display:flex;gap:10px;flex-wrap:wrap}
-  .spacer{height:8px}
-
-  .card{position:relative;width:var(--cardw);margin:10px auto;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.18);background:var(--cardbg);backdrop-filter:blur(4px)}
-  .badge{position:absolute;top:10px;padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid var(--line);opacity:0;transition:opacity .12s}
-  .badge.left{left:10px}
-  .badge.right{right:10px}
-  .word{font-size:32px;font-weight:700;margin:2px 0 6px}
-  .kana{font-size:22px;color:var(--muted);margin-top:2px}
-  .meaning{font-size:22px;margin-top:12px}
-  .ex{margin-top:10px;color:var(--muted)}
-  .controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px}
-  .bar{display:flex;gap:8px;align-items:center;justify-content:center;margin:8px 0 4px;color:var(--muted);font-size:12px}
-  .progress{height:8px;background:#f2f2f2;border-radius:999px;overflow:hidden}
-  .progress>span{display:block;height:100%;background:var(--fg);width:0}
-  .section{border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:var(--cardbg);backdrop-filter:blur(4px)}
-
-  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-  .choice-btn{border:1px solid var(--line);background:var(--btn);color:var(--btnfg);padding:12px 14px;border-radius:12px;cursor:pointer}
-  .choice-btn.correct{border-color:#22c55e}
-  .choice-btn.wrong{border-color:#ef4444}
-
-  body.dark{--bg:#0b0c0f; --fg:#eef0f3; --muted:#c8ced6; --line:#3b414b; --btn:#0f141a; --btn2:#eef0f3; --btnfg:#eef0f3; --btn2fg:#0b0c0f}
-  body.dark .card, body.dark .section{background:var(--cardbg);border-color:#3b414b}
-  body.dark select,body.dark textarea{background:#0d1218;color:var(--fg);border-color:#4a5160}
-  body.dark .pill{background:#121721;border-color:#6a7384;color:#e9edf5}
-  body.dark .pill.active{background:transparent;border-color:#e9edf5;color:#e9edf5;box-shadow:0 0 0 1px #e9edf5 inset}
-  body.dark .btn{background:#141a21;border-color:#4a5160;color:var(--fg)}
-  body.dark .btn.primary{background:var(--btn2);color:var(--btn2fg);border-color:var(--btn2)}
-  body.dark .choice-btn{background:#141a21;border-color:#4a5160;color:var(--fg)}
-
-  /* Background layer */
-  body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,linear-gradient(135deg,rgba(2,6,23,.85),rgba(30,58,138,.65)));background-size:cover;background-position:center;background-repeat:no-repeat;opacity:var(--bgimgOpacity,.2);transition:opacity .2s;pointer-events:none;z-index:-1}
-  details.bg-controls{position:fixed; top:12px; right:12px; z-index:1000}
-  details.bg-controls summary{list-style:none;cursor:pointer}
-  details.bg-controls summary::-webkit-details-marker{display:none}
-  .bg-button{background:rgba(17,17,17,.7);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font:13px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  .bg-panel{margin-top:8px;background:rgba(17,17,17,.85);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px;min-width:240px;box-shadow:0 12px 28px rgba(0,0,0,.45)}
-  .bg-panel .btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font-size:12px;width:100%}
-  .bg-panel .small{font-size:12px;opacity:.9}
-  .bg-panel input[type=range]{width:100%}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Nihongo Flashcards — Safe Minimal</title>
+  <meta name="theme-color" content="#0f1115">
+  <style>
+    :root {
+      --bg: #0f1115; --panel: #111827; --panel2: #141c2b; --text: #e9eef5;
+      --muted: #a7b6d3; --line: #253147; --chip: #121826; --chipLine:#2a3144;
+      --green:#1f6d3e; --amber:#7a5b1f; --red:#7a2430; --accent:#8db3ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,
+      "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Apple Color Emoji","Segoe UI Emoji",sans-serif;
+    }
+    .app{min-height:100%;max-width:900px;margin:0 auto;padding:16px;display:grid;gap:16px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    h1{margin:0;font-size:18px;color:#cfe3ff}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;
+      font-size:12px;background:var(--chip);border:1px solid var(--chipLine);color:#c6d7fb;white-space:nowrap
+    }
+    .board{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:16px;display:grid;gap:12px}
+    .counts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+    .card{
+      border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));
+      padding:22px 16px;display:grid;gap:10px;justify-items:center;text-align:center;max-width:820px;margin:0 auto
+    }
+    .jp{font-size:clamp(28px,8vw,56px);font-weight:800}
+    .reading{font-size:clamp(16px,4vw,22px);color:var(--accent)}
+    .meaning{font-size:clamp(16px,4vw,21px);color:#dbe7ff}
+    .example{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;max-width:760px;background:rgba(255,255,255,.02)}
+    .exjp{font-size:clamp(15px,3.8vw,20px)} .exen{font-size:clamp(14px,3.6vw,18px);color:#bcd0ff}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+    .buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:820px;margin:0 auto}
+    button{
+      appearance:none;border:0;border-radius:14px;padding:16px 14px;font-size:18px;font-weight:650;letter-spacing:.2px;cursor:pointer
+    }
+    .btnY{background:var(--green);color:#e9fff0}.btnM{background:var(--amber);color:#fff6e0}.btnN{background:var(--red);color:#ffe9ee}
+    .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:820px;margin:0 auto}
+    .row button,.toggle{background:var(--panel2);border:1px solid var(--line);color:#cdd9f0;border-radius:12px;padding:12px;font-weight:600}
+    .toggle{display:flex;align-items:center;justify-content:center;gap:8px}
+    .toggle input{width:18px;height:18px}
+    .status{text-align:center;font-size:12px;color:#9bb5e7}
+    .hidden{display:none!important}
+    @media (max-width:520px){.row{grid-template-columns:1fr 1fr}}
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.65);z-index:50}
+    .panel{width:min(94vw,840px);background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:10px}
+    .panel textarea{width:100%;min-height:200px;border-radius:12px;background:#0e1422;border:1px solid var(--line);color:#dbe7ff;padding:12px}
+  </style>
 </head>
 <body>
-<details class="bg-controls" id="bgMenu">
-  <summary class="bg-button">BG</summary>
-  <div class="bg-panel">
-    <button class="btn" id="uploadBgBtn">Upload Image</button>
-    <div style="height:8px"></div>
-    <div class="small">BG Opacity</div>
-    <input id="bgOpacity" type="range" min="0" max="100" value="20">
-    <input id="bgFile" type="file" accept="image/*" class="hidden">
-    <div style="height:8px"></div>
-    <div class="small">Card Opacity</div>
-    <input id="cardOpacity" type="range" min="20" max="95" value="45">
-    <div style="height:8px"></div>
-    <button class="btn" id="clearBgBtn">Clear</button>
-    <div style="height:8px"></div>
-    <div class="small">Remote BG URLs (one per line)</div>
-    <textarea id="bgUrls" placeholder="https://yourcdn.com/bg1.jpg
-https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
-    <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:6px">
-      <input type="checkbox" id="bgRandom"> Random on load
-    </label>
-    <button class="btn" id="bgRandomNow">Use Random Now</button>
-  </div>
-</details>
-
-<div class="wrap">
-  <header>
-    <div class="group">
-      <button class="pill active" data-mode="learn">Learn</button>
-      <button class="pill" data-mode="review">Review</button>
-      <button class="pill" data-mode="drill">Drill</button>
-    </div>
-    <div class="group">
-      <select id="levelFilter">
-        <option value="ALL">All Levels</option>
-        <option value="N3">N3</option>
-        <option value="N2">N2</option>
-      </select>
-      <div class="group">
-        <label class="small muted">Prompt</label>
-        <select id="promptMode">
-          <option value="JPEN">JP → EN</option>
-          <option value="ENJP">EN → JP</option>
-        </select>
+  <div class="app">
+    <header>
+      <h1>Nihongo Flashcards — Safe Minimal</h1>
+      <span class="chip" id="modeChip">Mixed practice</span>
+    </header>
+    <div class="board">
+      <div class="counts">
+        <span class="chip" id="countTotal">Total: 0</span>
+        <span class="chip" id="countKnown">Known: 0</span>
+        <span class="chip" id="countReview">Review: 0</span>
+        <span class="chip" id="countUnknown">Unknown: 0</span>
       </div>
-      <button class="btn" id="themeBtn" aria-pressed="false">Dark</button>
-      <button class="btn" id="addBatchBtn">Add Batch</button>
-      <label class="btn" for="importFile">Import</label>
-      <input id="importFile" type="file" accept=".json" class="hidden">
+      <div class="card">
+        <div class="jp" id="jp">Loading…</div>
+        <div class="reading" id="reading"></div>
+        <div class="meaning" id="meaning"></div>
+        <div class="example" id="exBox">
+          <div class="exjp" id="exjp"></div>
+          <div class="exen" id="exen"></div>
+        </div>
+        <div class="meta">
+          <span class="chip" id="levelChip"></span>
+          <span class="chip" id="posChip"></span>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="btnY" id="btnY">Know (Y)</button>
+        <button class="btnM" id="btnM">Review (M)</button>
+        <button class="btnN" id="btnN">Don’t know (N)</button>
+      </div>
+      <div class="row">
+        <label class="toggle"><input type="checkbox" id="togHideMeaning"> Hide meaning</label>
+        <label class="toggle"><input type="checkbox" id="togHideReading"> Hide reading</label>
+        <label class="toggle"><input type="checkbox" id="togHideExample"> Hide example</label>
+      </div>
+      <div class="row">
+        <button id="btnSkip">Skip</button>
+        <button id="btnUndo">Undo</button>
+        <button id="btnSummary">Summary</button>
+        <button id="btnExport">Export</button>
+        <button id="btnImport">Import</button>
+        <button id="btnAdd">Add Words</button>
+      </div>
+      <p class="status" id="status">Status: Initializing…</p>
     </div>
-  </header>
-
-  <div class="bar">
-    <span id="counts" class="muted"></span>
-  </div>
-  <div class="progress"><span id="progressFill"></span></div>
-
-  <div id="cardZone" class="card center hidden-el">
-    <div id="badgeLeft" class="badge left">Not</div>
-    <div id="badgeRight" class="badge right">Learned</div>
-
-    <div class="word" id="promptBig"></div>
-    <div class="kana" id="promptSub"></div>
-
-    <div class="meaning" id="answerBlock">
-      <div id="answerMain"></div>
-      <div class="ex" id="exampleBlock"></div>
-    </div>
-
-    <div id="choices" class="choices hidden-el"></div>
-
-    <div class="controls">
-      <button class="btn" id="notBtn">Not Learned</button>
-      <button class="btn primary" id="revealBtn">Next</button>
-      <button class="btn" id="learnedBtn">Learned</button>
-    </div>
-    <div class="spacer"></div>
-    <button class="btn block hidden" id="reviewBtn">Add To Review</button>
-  </div>
-
-  <div id="emptyState" class="section center">
-    <div class="muted">No cards in this view. Switch mode or add a batch.</div>
   </div>
 
-  <div id="batchModal" class="section hidden-el">
-    <div class="row">
-      <select id="batchLevel">
-        <option value="N3">N3</option>
-        <option value="N2">N2</option>
-      </select>
-      <button class="btn" id="closeBatch">Close</button>
+  <!-- Add words modal -->
+  <div class="modal" id="addModal">
+    <div class="panel">
+      <h3>Add a batch of words</h3>
+      <p>Format per line: <code>jp | reading | meaning | level | pos | example_jp | example_en</code></p>
+      <textarea id="addText" placeholder="確かめる | たしかめる | to confirm | N3 | verb | もう一度確かめてください。 | Please check once more."></textarea>
+      <div class="row">
+        <button id="addCancel">Cancel</button>
+        <button id="addSave">Add to Deck</button>
+      </div>
     </div>
-    <div class="spacer"></div>
-    <div class="muted small">Paste JSON with: kanji, kana, meaning, example. Optional: example_en, level.</div>
-    <div class="spacer"></div>
-    <textarea id="batchInput" placeholder='[{"kanji":"必要","kana":"ひつよう","meaning":"necessary","example":"これは必要です。","example_en":"This is necessary."}]' style="width:100%;min-height:140px"></textarea>
-    <div class="spacer"></div>
-    <div class="row">
-      <button class="btn primary" id="addBatchJson">Add JSON</button>
-      <button class="btn" id="addBatchCsv">Add CSV</button>
-    </div>
-    <div class="spacer"></div>
-    <div class="small muted">CSV header: kanji,kana,meaning,example,example_en</div>
   </div>
-</div>
 
-<script>
-/* show first runtime error on-screen */
-(function(){
-  window.addEventListener('error', function(ev){
-    var box = document.getElementById('errbox');
-    if(box) return;
-    box = document.createElement('div');
-    box.id='errbox';
-    box.style.cssText='position:fixed;left:12px;bottom:12px;max-width:90vw;background:#111;color:#fff;border:1px solid #f55;padding:10px 12px;border-radius:8px;z-index:99999;font:12px/1.4 ui-monospace,Menlo,monospace';
-    box.textContent = 'JS Error: ' + (ev.message||'') + (ev.filename?(' @ '+ev.filename+':'+ev.lineno):'');
-    document.body.appendChild(box);
-  });
-})();
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-
-  /* Utils + storage */
-  function uuidv4(){ if (crypto.randomUUID) return crypto.randomUUID(); return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16)}) }
-  const Store=(function(){ try{ const t='__t'; localStorage.setItem(t,'1'); localStorage.removeItem(t); return localStorage; }catch(_){ let mem={}; return {getItem:k=>mem[k]||null,setItem:(k,v)=>{mem[k]=String(v)},removeItem:k=>{delete mem[k]}} } })();
-  const STORAGE="jlpt_flash_v14";
-  const SETTINGS="jlpt_flash_settings";
-  const $=s=>document.querySelector(s);
-  const $$=s=>document.querySelectorAll(s);
-
-  /* Settings / State */
-  function loadSettings(){try{return JSON.parse(Store.getItem(SETTINGS)||"{}")}catch(_){return {}}}
-  function saveSettings(s){try{const cur=loadSettings();Store.setItem(SETTINGS,JSON.stringify(Object.assign({},cur,s)));}catch(e){Store.setItem(SETTINGS,JSON.stringify(s));}}
-  const settingsBootstrap=loadSettings();
-  const state={
-    mode:"learn",
-    level:"ALL",
-    queue:[],
-    current:null,
-    promptMode:settingsBootstrap.promptMode||"JPEN",
-    theme:settingsBootstrap.theme||null,
-    bgDataUrl:(settingsBootstrap.bgDataUrl??'./girl%201.jpg'),
-    bgOpacity:typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,
-    cardOpacity:typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,
-    answered:false,
-    drillChoices:[],
-    bgRemoteList:settingsBootstrap.bgRemoteList||"",
-    bgRemoteRandom:!!settingsBootstrap.bgRemoteRandom
-  };
-
-  /* Seeds */
-  const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."],["原因","げんいん","cause","原因は何ですか。","What is the cause?"],["役に立つ","やくにたつ","be useful","この本は役に立ちます。","This book is useful."],["到着","とうちゃく","arrival","電車が到着します。","The train arrives."],["出発","しゅっぱつ","departure","九時に出発します。","We depart at 9."],["予定","よてい","plan; schedule","明日の予定を確認します。","I’ll check tomorrow’s plan."],["準備","じゅんび","preparation","会議の準備をします。","I’ll prepare for the meeting."],["注意","ちゅうい","attention","車に注意してください。","Please watch out for cars."],["経験","けいけん","experience","経験がありません。","I have no experience."],["連絡","れんらく","contact","後で連絡します。","I’ll contact you later."],["比較","ひかく","comparison","価格を比較します。","I’ll compare prices."],["相談","そうだん","consultation","先生に相談します。","I’ll consult the teacher."],["確認","かくにん","confirmation","住所を確認してください。","Please confirm the address."],["返事","へんじ","reply","返事を待っています。","I’m waiting for your reply."],["遅刻","ちこく","tardiness","今日は遅刻しました。","I was late today."],["約束","やくそく","appointment","三時に約束があります。","I have an appointment at 3."],["事故","じこ","accident","事故が起きました。","An accident occurred."],["安心","あんしん","relief","安心してください。","Please don’t worry."],["運転","うんてん","driving","安全に運転してください。","Please drive safely."],["住所","じゅうしょ","address","新しい住所を書きます。","I’ll write my new address."]];
-  const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."],["改善","かいぜん","improvement","サービスを改善します。","Improve the service."],["対象","たいしょう","target","学生が対象です。","Students are the target."],["傾向","けいこう","tendency","増加の傾向があります。","There is an increasing trend."],["影響","えいきょう","influence","天気の影響を受けます。","It’s affected by weather."],["判断","はんだん","judgment","状況を判断します。","Judge the situation."],["証拠","しょうこ","evidence","証拠が足りません。","There isn’t enough evidence."],["主張","しゅちょう","assertion","彼は主張を通した。","He insisted on his claim."],["否定","ひてい","denial","関与を否定した。","He denied involvement."],["許可","きょか","permission","入場には許可が必要です。","Permission is required."]];
-  const N3=N3_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N3"}));
-  const N2=N2_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N2"}));
-
-  /* Data I/O */
-  function freshDeck(){ const now=Date.now(); return [...N3,...N2].map((x,i)=>({id:uuidv4(),...x,status:"new",seen:0,correct:0,addedAt:now+i})) }
-  function load(){ const raw=Store.getItem(STORAGE); if(!raw){ const init=freshDeck(); Store.setItem(STORAGE,JSON.stringify(init)); return init; } try{const p=JSON.parse(raw); if(!Array.isArray(p)||p.length===0) throw 0; return p;}catch(_){ Store.removeItem(STORAGE); const init=freshDeck(); Store.setItem(STORAGE,JSON.stringify(init)); return init; } }
-  function save(all){Store.setItem(STORAGE,JSON.stringify(all))}
-  function cards(){return load()} function setCards(list){save(list)}
-  function filterByLevel(list){return state.level==="ALL"?list:list.filter(x=>x.level===state.level)}
-  function shuffle(a){a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]} return a}
-
-  /* Helpers for Drill visibility */
-  function setAnswerVisible(v){
-    const ans=$("#answerBlock");
-    if(!ans) return;
-    ans.classList.toggle('hidden-el', !v);
-  }
-  function resetChoicesUI(){
-    const wrap=$("#choices");
-    if(!wrap) return;
-    wrap.querySelectorAll('.choice-btn').forEach(b=>{
-      b.classList.remove('correct','wrong');
-    });
-  }
-
-  /* Queue & Render */
-  function buildQueue(){
-    const all=filterByLevel(cards());
-    const pools={ learn: all.filter(x=>x.status==="new"||x.status==="not"), review: all.filter(x=>x.status==="review"), drill: all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not")) };
-    let mode=state.mode, pool=pools[mode];
-    if(pool.length===0){
-      const order = mode==="learn" ? ["review","drill","learn"] : mode==="review" ? ["drill","learn","review"] : ["learn","review","drill"];
-      for(const m of order){ if(pools[m].length){ mode=m; pool=pools[m]; break; } }
-    }
-    if(mode!==state.mode){ state.mode=mode; $$(".pill").forEach(p=>p.classList.toggle("active",p.dataset.mode===mode)); }
-    state.queue=shuffle(pool); state.current=null;
-  }
-  function nextCard(){
-    if(state.queue.length===0){ state.current=null; updateEmptyState(); return; }
-    state.current=state.queue.shift();
-
-    // hard reset visibility for Drill before drawing to avoid flashes
-    if(state.mode==='drill') setAnswerVisible(false);
-
-    const rb=$("#revealBtn");
-    if(rb){
-      rb.textContent='Next';
-      rb.disabled=(state.mode==='drill');
-      rb.setAttribute('aria-disabled', rb.disabled?'true':'false');
-    }
-    drawCard();
-  }
-  function updateEmptyState(){ const has=!!state.current; $("#cardZone").classList.toggle('hidden-el',!has); $("#emptyState").classList.toggle('hidden-el',has); }
-  function draw(){
-    const all=filterByLevel(cards());
-    const learned=all.filter(x=>x.status==="learned").length;
-    const review=all.filter(x=>x.status==="review").length;
-    const notl=all.filter(x=>x.status==="not").length;
-    const total=all.length;
-    $("#counts").textContent=`Total ${total} · Learned ${learned} · Review ${review} · Not ${notl}`;
-    $("#progressFill").style.width=(total?Math.round((learned/total)*100):0)+"%";
-    $("#promptMode").value=state.promptMode;
-    if(!state.current && state.queue.length>0){ nextCard(); return; }
-    updateEmptyState();
-  }
-  function simpleEN(m){ return (/^(to\s)/i.test(m) ? m.replace(/^to\s/i,"").replace(/^\w/,c=>c.toUpperCase()) : `This is ${m}.`).replace(/\.$/,"."); }
-
-  function drawCard(){
-    const c=state.current; if(!c){ updateEmptyState(); return; }
-    const en=c.meaning, jp=c.kanji||c.kana, kana=c.kana||"";
-    const exJP=c.example||`これは${c.meaning}です。`, exEN=c.example_en||simpleEN(c.meaning);
-    const choicesEl=$("#choices");
-
-    // Always clear old choices & UI
-    if(choicesEl){ choicesEl.innerHTML=''; choicesEl.classList.add('hidden-el'); }
-    resetChoicesUI();
-
-    if(state.mode==='drill'){
-      state.answered=false;
-
-      const pool=filterByLevel(cards());
-      const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);
-      const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));
-      state.drillChoices=shuffle(opts);
-
-      if(state.promptMode==="JPEN"){ $("#promptBig").textContent=jp; $("#promptSub").textContent=kana; $("#answerMain").textContent=en; }
-      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
-      $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
-
-      // keep hidden until a choice (redundant safety)
-      setAnswerVisible(false);
-
-      choicesEl.innerHTML = state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
-      choicesEl.classList.remove('hidden-el');
-
-      const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=true; rb.setAttribute('aria-disabled','true'); }
-    } else {
-      if(state.promptMode==="JPEN"){ $("#promptBig").textContent=jp; $("#promptSub").textContent=kana; $("#answerMain").textContent=en; }
-      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
-      $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
-
-      setAnswerVisible(true);
-      const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
-    }
-    $("#reviewBtn").classList.add('hidden');
-    updateEmptyState();
-  }
-
-  function markStatus(status){
-    const c=state.current; if(!c) return; const all=cards();
-    const idx=all.findIndex(x=>x.id===c.id);
-    if(idx!==-1){
-      const item={...all[idx]};
-      item.seen=(item.seen||0)+1;
-      if(status==='learned'){ item.status='learned'; item.correct=(item.correct||0)+1; }
-      else if(status==='review'){ item.status='review'; }
-      else if(status==='not'){ item.status='not'; }
-      all[idx]=item; setCards(all);
-    }
-    nextCard();
-  }
-
-  /* Importers */
-  function importJSON(text,level){
-    let arr=JSON.parse(text); arr=Array.isArray(arr)?arr:[arr];
-    const now=Date.now();
-    const cleaned=arr.map((x,i)=>({
-      id:uuidv4(), kanji:String(x.kanji||"").trim(), kana:String(x.kana||"").trim(),
-      meaning:String(x.meaning||"").trim(), example:String(x.example||"").trim(),
-      example_en:String(x.example_en||"").trim(), level:level||String(x.level||"N3").toUpperCase(),
-      status:"new",seen:0,correct:0,addedAt:now+i
-    })).filter(x=>x.meaning && (x.kanji||x.kana));
-    const all=cards().concat(cleaned); setCards(all); buildQueue(); draw();
-  }
-  function importCSV(text,level){
-    const lines=text.split(/\r?\n/).filter(Boolean); if(lines.length===0) return;
-    const header=lines[0].toLowerCase().split(",").map(h=>h.trim());
-    const idx=(k)=>header.indexOf(k);
-    const out=[];
-    for(let i=1;i<lines.length;i++){
-      const cols=splitCSVLine(lines[i]);
-      out.push({ kanji:cols[idx("kanji")]||"", kana:cols[idx("kana")]||"", meaning:cols[idx("meaning")]||"", example:cols[idx("example")]||"", example_en:cols[idx("example_en")]||"" });
-    }
-    importJSON(JSON.stringify(out),level);
-  }
-  function splitCSVLine(line){
-    const r=[];let cur="";let q=false;
-    for(let i=0;i<line.length;i++){
-      const ch=line[i];
-      if(ch=='"'){ if(q&&line[i+1]=='"'){cur+='"';i++;} else{q=!q} }
-      else if(ch===','&&!q){r.push(cur);cur="";}
-      else{cur+=ch}
-    }
-    r.push(cur); return r.map(s=>s.trim());
-  }
-
-  /* Theme + BG */
-  function setTheme(mode){ document.body.classList.toggle('dark', mode==='dark'); const btn=$("#themeBtn"); if(btn){ btn.textContent = mode==='dark' ? 'Light' : 'Dark'; btn.setAttribute('aria-pressed', mode==='dark'?'true':'false'); } state.theme=mode; saveSettings({theme:mode}); applyCardOpacity(); }
-  function applyBackground(){ if(state.bgDataUrl){ document.documentElement.style.setProperty('--bgimg', `url('${state.bgDataUrl}')`);} else { document.documentElement.style.removeProperty('--bgimg'); } document.documentElement.style.setProperty('--bgimgOpacity', String((state.bgOpacity||0)/100)); const s=$("#bgOpacity"); if(s) s.value=String(state.bgOpacity||0); }
-  function applyCardOpacity(){ const dark=document.body.classList.contains('dark'); const alpha=Math.max(0,Math.min(1,(state.cardOpacity||45)/100)); const val = dark ? `rgba(17,22,28,${alpha})` : `rgba(255,255,255,${alpha})`; document.documentElement.style.setProperty('--cardbg', val); const s=$("#cardOpacity"); if(s) s.value=String(state.cardOpacity||45); }
-  function parseBgList(text){ return String(text||'').replace(/\r\n/g,'\n').split(/\n+/).map(s=>s.trim()).filter(Boolean); }
-  function setRandomBgFromList(manual){
-    const list=parseBgList(state.bgRemoteList);
-    if(!list.length) return;
-    const pick=list[Math.floor(Math.random()*list.length)];
-    const url=pick+(pick.includes('?')?'&':'?')+'t='+(manual?Date.now():Math.floor(Date.now()/3600000));
-    state.bgDataUrl=url; saveSettings({bgDataUrl:state.bgDataUrl}); applyBackground();
-  }
-
-  /* Wire up controls */
-  const fileInput=$("#bgFile"), uploadBtn=$("#uploadBgBtn"), opacityInput=$("#bgOpacity"), cardOpacityInput=$("#cardOpacity"), clearBtn=$("#clearBgBtn");
-  if(uploadBtn && fileInput){ uploadBtn.addEventListener('click',()=>fileInput.click()); }
-  if(fileInput){ fileInput.addEventListener('change',e=>{ const f=e.target.files&&e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ state.bgDataUrl=String(r.result); saveSettings({bgDataUrl:state.bgDataUrl}); applyBackground(); }; r.readAsDataURL(f); e.target.value=''; }); }
-  if(opacityInput){ opacityInput.addEventListener('input',e=>{ state.bgOpacity=parseInt(e.target.value,10)||0; saveSettings({bgOpacity:state.bgOpacity}); applyBackground(); }); }
-  if(cardOpacityInput){ cardOpacityInput.addEventListener('input',e=>{ state.cardOpacity=parseInt(e.target.value,10)||45; saveSettings({cardOpacity:state.cardOpacity}); applyCardOpacity(); }); }
-  if(clearBtn){ clearBtn.addEventListener('click',()=>{ state.bgDataUrl=null; saveSettings({bgDataUrl:null}); applyBackground(); }); }
-  const bgUrls=$("#bgUrls"), bgRandom=$("#bgRandom"), bgRandomNow=$("#bgRandomNow");
-  if(bgUrls){ bgUrls.value=state.bgRemoteList||''; bgUrls.addEventListener('change',e=>{ state.bgRemoteList=e.target.value; saveSettings({bgRemoteList:state.bgRemoteList}); }); }
-  if(bgRandom){ bgRandom.checked=!!state.bgRemoteRandom; bgRandom.addEventListener('change',e=>{ state.bgRemoteRandom=!!e.target.checked; saveSettings({bgRemoteRandom:state.bgRemoteRandom}); }); }
-  if(bgRandomNow){ bgRandomNow.addEventListener('click',()=>setRandomBgFromList(true)); }
-
-  /* Swipe */
+  <script>
   (function(){
-    const zone=$("#cardZone"), badgeL=$("#badgeLeft"), badgeR=$("#badgeRight");
-    let startX=0, dx=0, dragging=false;
-    function down(e){ dragging=true; startX=(e.touches?e.touches[0].clientX:e.clientX); zone.classList.add('swiping'); }
-    function move(e){ if(!dragging) return; const x=(e.touches?e.touches[0].clientX:e.clientX); dx=x-startX; zone.style.transform=`translateX(${dx}px) rotate(${dx*0.03}deg)`; zone.classList.toggle('succeed',dx>60); zone.classList.toggle('fail',dx<-60); if(badgeR) badgeR.style.opacity=String(Math.min(1, Math.max(0,(dx-40)/100))); if(badgeL) badgeL.style.opacity=String(Math.min(1, Math.max(0,(-dx-40)/100))); }
-    function reset(){ zone.style.transition='transform .18s ease'; zone.style.transform='translateX(0) rotate(0)'; if(badgeR) badgeR.style.opacity='0'; if(badgeL) badgeL.style.opacity='0'; setTimeout(()=>{ zone.style.transition=''; }, 180); }
-    function commit(dir){ zone.style.transition='transform .18s ease'; const off=dir>0?600:-600; const rot=dir>0?15:-15; zone.style.transform=`translateX(${off}px) rotate(${rot}deg)`; if(badgeR) badgeR.style.opacity='0'; if(badgeL) badgeL.style.opacity='0'; setTimeout(()=>{ zone.style.transition=''; zone.style.transform=''; markStatus(dir>0?'learned':'not'); }, 160); }
-    function up(){ if(!dragging) return; dragging=false; zone.classList.remove('swiping','succeed','fail'); if(dx>120) { commit(1) } else if(dx<-120) { commit(-1) } else { reset() } dx=0; }
-    zone.addEventListener('pointerdown',down); window.addEventListener('pointermove',move); window.addEventListener('pointerup',up);
-    zone.addEventListener('touchstart',down,{passive:true}); window.addEventListener('touchmove',move,{passive:true}); window.addEventListener('touchend',up);
-  })();
+    // ---- Safe storage (fallback to memory if blocked) ----
+    const memory = {};
+    const store = (()=>{
+      try{
+        const k = "__t"+Math.random();
+        localStorage.setItem(k,"1"); localStorage.removeItem(k);
+        return {get:(x)=>localStorage.getItem(x), set:(x,v)=>localStorage.setItem(x,v), ok:true};
+      }catch(e){
+        return {get:(x)=>memory[x]||null, set:(x,v)=>memory[x]=String(v), ok:false};
+      }
+    })();
+    const statusEl = document.getElementById("status");
+    const setStatus = (msg)=>{ if(statusEl) statusEl.textContent = "Status: " + msg; };
 
-  /* Events */
-  function setMode(m){state.mode=m; $$(".pill").forEach(p=>p.classList.toggle("active",p.dataset.mode===m)); buildQueue(); draw()}
-  function setLevel(v){state.level=v; buildQueue(); draw()}
-  $("#levelFilter").addEventListener('change',e=>setLevel(e.target.value));
-  $$(".pill").forEach(p=>p.addEventListener('click',()=>setMode(p.dataset.mode)));
-  function onPrimaryClick(){ if(state.mode==='drill'){ if(!state.answered) return; markStatus('review'); return; } markStatus('review'); }
-  $("#revealBtn").addEventListener('click', onPrimaryClick);
-  $("#learnedBtn").addEventListener('click',()=>{ if(state.mode==='drill'&&!state.answered) return; markStatus('learned') });
-  $("#notBtn").addEventListener('click',()=>{ if(state.mode==='drill'&&!state.answered) return; markStatus('not') });
-  $("#reviewBtn").addEventListener('click',()=>{ if(state.mode==='drill'&&!state.answered) return; markStatus('review') });
-  document.addEventListener('keydown',e=>{
-    if(e.key==='ArrowLeft') $("#notBtn").click();
-    if(e.key==='ArrowRight') $("#learnedBtn").click();
-    if(e.key===' '||e.key==='Enter') $("#revealBtn").click();
-    if(e.key && e.key.toLowerCase()==='t'){ const next=document.body.classList.contains('dark')?'light':'dark'; setTheme(next); }
-  });
-  $("#promptMode").addEventListener('change',e=>{ state.promptMode=e.target.value; saveSettings({promptMode:state.promptMode}); drawCard(); });
-  $("#themeBtn").addEventListener('click',()=>{ const next=document.body.classList.contains('dark')?'light':'dark'; setTheme(next); });
-  $("#addBatchBtn").addEventListener('click',()=>{$("#batchModal").classList.remove('hidden-el')});
-  $("#closeBatch").addEventListener('click',()=>{$("#batchModal").classList.add('hidden-el')});
-  $("#addBatchJson").addEventListener('click',()=>{ const t=$("#batchInput").value.trim(); if(!t){alert('Paste JSON first');return} try{importJSON(t,$("#batchLevel").value); $("#batchInput").value=''; $("#batchModal").classList.add('hidden-el')}catch(e){alert('Invalid JSON')} });
-  $("#addBatchCsv").addEventListener('click',()=>{ const t=$("#batchInput").value.trim(); if(!t){alert('Paste CSV first');return} try{importCSV(t,$("#batchLevel").value); $("#batchInput").value=''; $("#batchModal").classList.add('hidden-el')} catch(e){alert('Invalid CSV')} });
-  $("#importFile").addEventListener('change',function(e){
-    const f=e.target.files&&e.target.files[0]; if(!f) return;
-    const r=new FileReader(); r.onload=()=>{ try{ importJSON(String(r.result)); alert('Import complete'); }catch(_){ alert('Import failed'); } finally { buildQueue(); draw(); } };
-    r.readAsText(f); e.target.value='';
-  });
+    // ---- Seed data (with simple examples) ----
+    const SEED = [
+      {id:"taberu", jp:"食べる", reading:"たべる", en:"to eat", level:"-", pos:"verb", ex_jp:"ゆっくり食べてください。", ex_en:"Please eat slowly."},
+      {id:"nomu", jp:"飲む", reading:"のむ", en:"to drink", level:"-", pos:"verb", ex_jp:"水をたくさん飲みます。", ex_en:"I drink a lot of water."},
+      {id:"miru", jp:"見る", reading:"みる", en:"to see; to watch", level:"-", pos:"verb", ex_jp:"映画を見るのが好きです。", ex_en:"I like watching movies."},
+      {id:"tsukuru", jp:"作る", reading:"つくる", en:"to make; to create", level:"-", pos:"verb", ex_jp:"朝ごはんを作りました。", ex_en:"I made breakfast."},
+      {id:"tsukau", jp:"使う", reading:"つかう", en:"to use", level:"-", pos:"verb", ex_jp:"このアプリを毎日使います。", ex_en:"I use this app every day."},
+      {id:"akeru", jp:"開ける", reading:"あける", en:"to open", level:"N3", pos:"verb", ex_jp:"窓を開けてもいいですか。", ex_en:"May I open the window?"},
+      {id:"shimeru", jp:"閉める", reading:"しめる", en:"to close", level:"N3", pos:"verb", ex_jp:"ドアを閉めてください。", ex_en:"Please close the door."},
+      {id:"yobu", jp:"呼ぶ", reading:"よぶ", en:"to call; to invite", level:"N3", pos:"verb", ex_jp:"タクシーを呼びましょう。", ex_en:"Let’s call a taxi."},
+      {id:"atsukau", jp:"扱う", reading:"あつかう", en:"to handle; to treat", level:"N2", pos:"verb", ex_jp:"丁寧に扱ってください。", ex_en:"Please handle it carefully."},
+      {id:"tamotsu", jp:"保つ", reading:"たもつ", en:"to keep; to maintain", level:"N2", pos:"verb", ex_jp:"品質を保つ。", ex_en:"Maintain quality."},
+      {id:"hakaru", jp:"測る", reading:"はかる", en:"to measure", level:"N3", pos:"verb", ex_jp:"体温を測りましたか。", ex_en:"Did you measure your temperature?"},
+      {id:"kaizen", jp:"改善", reading:"かいぜん", en:"improvement", level:"N2", pos:"noun", ex_jp:"改善が必要です。", ex_en:"Improvement is needed."},
+      {id:"fuyasu", jp:"増やす", reading:"ふやす", en:"to increase", level:"N3", pos:"verb", ex_jp:"在庫を増やす。", ex_en:"Increase the stock."},
+      {id:"herasu", jp:"減らす", reading:"へらす", en:"to reduce", level:"N3", pos:"verb", ex_jp:"無駄を減らす。", ex_en:"Reduce waste."},
+      {id:"aratameru", jp:"改める", reading:"あらためる", en:"to revise; to change", level:"N2", pos:"verb", ex_jp:"計画を改める。", ex_en:"Revise the plan."}
+    ];
 
-  /* Drill: click to reveal, then enable Next */
-  document.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.choice-btn');
-    if(!btn) return;
-    if(state.mode!=='drill' || state.answered) return;
-    const idx = parseInt(btn.getAttribute('data-idx'),10);
-    const opt = state.drillChoices[idx];
+    // ---- State & storage helpers ----
+    const KEY_P = "nihongo_safe_progress";
+    const KEY_C = "nihongo_safe_custom";
+    const get = (k,d)=>{ try{ const v=store.get(k); return v?JSON.parse(v):d; }catch(_){ return d; } };
+    const set = (k,v)=>{ try{ store.set(k, JSON.stringify(v)); }catch(_){} };
 
-    // mark correct/incorrect
-    state.drillChoices.forEach((o,i)=>{
-      const el = document.querySelector(`.choice-btn[data-idx="${i}"]`);
-      if(!el) return;
-      if(o.correct) el.classList.add('correct');
+    const state = {
+      base: SEED.slice(),
+      custom: get(KEY_C, []),
+      progress: get(KEY_P, {Y:["taberu","nomu","miru","tsukuru","tsukau","akeru","shimeru"],
+                            M:["yobu","tamotsu","hakaru"],
+                            N:["atsukau","kaizen","fuyasu","herasu","aratameru"]}),
+      history: [], order: [], current: null,
+      hideMeaning:false, hideReading:false, hideExample:false
+    };
+
+    function deck(){ return state.base.concat(state.custom); }
+    function byId(id){ return deck().find(d=>d.id===id); }
+    function ensure(){
+      const ids = new Set(deck().map(d=>d.id));
+      ["Y","M","N"].forEach(k => state.progress[k] = (state.progress[k]||[]).filter(x=>ids.has(x)));
+      const known = new Set([...state.progress.Y, ...state.progress.M, ...state.progress.N]);
+      deck().forEach(d => { if(!known.has(d.id)) state.progress.N.push(d.id); });
+      ["Y","M","N"].forEach(k => state.progress[k]=Array.from(new Set(state.progress[k])));
+      set(KEY_P, state.progress);
+    }
+    ensure();
+
+    // ---- Queue & rendering ----
+    function buildQueue(){ state.order = deck().map(d=>d.id).filter(id => state.progress.M.includes(id) || state.progress.N.includes(id)); }
+    function nextCard(){
+      if(state.order.length===0) buildQueue();
+      if(state.order.length===0){
+        setText("#jp","No cards"); setText("#reading",""); setText("#meaning",""); setText("#exjp",""); setText("#exen","");
+        show("#exBox", false); updateCounts(); setStatus("Ready • No cards in queue"); return;
+      }
+      state.current = state.order.shift();
+      render();
+      setStatus("Ready • Cards in queue: " + (state.order.length+1));
+    }
+    function setText(sel, val){ const el=document.querySelector(sel); if(el) el.textContent = val || ""; }
+    function show(sel, on){ const el=document.querySelector(sel); if(el) el.classList.toggle("hidden", !on); }
+    function render(){
+      const d = byId(state.current); if(!d) return;
+      setText("#jp", d.jp); setText("#reading", d.reading); setText("#meaning", d.en);
+      setText("#exjp", d.ex_jp||""); setText("#exen", d.ex_en||""); show("#exBox", (!!d.ex_jp||!!d.ex_en) && !state.hideExample);
+      document.getElementById("reading").classList.toggle("hidden", state.hideReading);
+      document.getElementById("meaning").classList.toggle("hidden", state.hideMeaning);
+      setText("#levelChip", d.level||""); setText("#posChip", d.pos||"");
+      updateCounts();
+    }
+    function updateCounts(){
+      document.getElementById("countTotal").textContent = "Total: " + deck().length;
+      document.getElementById("countKnown").textContent = "Known: " + state.progress.Y.length;
+      document.getElementById("countReview").textContent = "Review: " + state.progress.M.length;
+      document.getElementById("countUnknown").textContent = "Unknown: " + state.progress.N.length;
+    }
+
+    // ---- Actions ----
+    function moveTo(id,to){
+      const p=state.progress; const from = ["Y","M","N"].find(k=>p[k].includes(id))||"N";
+      if(from!==to){
+        ["Y","M","N"].forEach(k=>p[k]=p[k].filter(x=>x!==id));
+        p[to].push(id); set(KEY_P,p); state.history.push({id,from,to});
+      }
+      nextCard();
+    }
+    function undo(){ const last = state.history.pop(); if(!last) return;
+      ["Y","M","N"].forEach(k=>state.progress[k]=state.progress[k].filter(x=>x!==last.id));
+      state.progress[last.from].push(last.id); set(KEY_P,state.progress); state.order.unshift(last.id); nextCard(); }
+    function skip(){ if(!state.current) return; state.order.push(state.current); nextCard(); }
+
+    function exportData(){
+      const payload = {progress:state.progress, custom:state.custom, version:"safe-min"};
+      const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob); const a=document.createElement("a");
+      a.href=url; a.download="nihongo-flashcards-data.json"; a.click(); setTimeout(()=>URL.revokeObjectURL(url), 800);
+    }
+    function importData(txt){
+      try{
+        const obj = JSON.parse(txt);
+        if(!obj || !obj.progress || !("custom" in obj)) return alert("Invalid file format.");
+        state.custom = Array.isArray(obj.custom)? obj.custom : []; set(KEY_C, state.custom);
+        state.progress = obj.progress; ensure(); buildQueue(); nextCard();
+      }catch(e){ alert("Could not parse JSON."); }
+    }
+
+    function addWordsFrom(text){
+      const lines = (text||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+      if(!lines.length) return 0; let added=0;
+      const existing = new Set(deck().map(d=>`${d.jp}|${d.reading}|${d.en}`));
+      lines.forEach(line=>{
+        const parts = line.split(/[|,]/).map(s=>s.trim());
+        if(parts.length<5) return;
+        const [jp,reading,en,level,pos,ex_jp="",ex_en=""]=parts;
+        const key=`${jp}|${reading}|${en}`; if(existing.has(key)) return;
+        const id="id_"+Math.random().toString(36).slice(2,10);
+        state.custom.push({id,jp,reading,en,level,pos,ex_jp,ex_en}); state.progress.N.push(id); added++; existing.add(key);
+      });
+      set(KEY_C,state.custom); ensure(); buildQueue(); nextCard(); return added;
+    }
+
+    // ---- Bind UI ----
+    const $ = (s)=>document.querySelector(s);
+    $("#btnY").addEventListener("click", ()=>moveTo(state.current,"Y"));
+    $("#btnM").addEventListener("click", ()=>moveTo(state.current,"M"));
+    $("#btnN").addEventListener("click", ()=>moveTo(state.current,"N"));
+    $("#btnUndo").addEventListener("click", undo);
+    $("#btnSkip").addEventListener("click", skip);
+    $("#btnSummary").addEventListener("click", ()=>{
+      const p=state.progress;
+      const fmt = (ids)=>ids.map(id=>{const d=byId(id);return d?`${d.jp}（${d.reading}） — ${d.en}`:id;}).join("\n");
+      alert(`Known (${p.Y.length}):\n${fmt(p.Y)}\n\nReview (${p.M.length}):\n${fmt(p.M)}\n\nUnknown (${p.N.length}):\n${fmt(p.N)}`);
     });
-    if(!opt.correct) btn.classList.add('wrong');
+    $("#btnExport").addEventListener("click", exportData);
+    $("#btnImport").addEventListener("click", ()=>{ const t=prompt("Paste exported JSON:"); if(t) importData(t); });
+    $("#btnAdd").addEventListener("click", ()=>{ $("#addText").value=""; $("#addModal").style.display="grid"; });
+    $("#addCancel").addEventListener("click", ()=>{ $("#addModal").style.display="none"; });
+    $("#addSave").addEventListener("click", ()=>{
+      const c = addWordsFrom($("#addText").value); alert(c+" word(s) added."); $("#addModal").style.display="none";
+    });
+    $("#togHideMeaning").addEventListener("change", e=>{ state.hideMeaning=e.target.checked; render(); });
+    $("#togHideReading").addEventListener("change", e=>{ state.hideReading=e.target.checked; render(); });
+    $("#togHideExample").addEventListener("change", e=>{ state.hideExample=e.target.checked; render(); });
 
-    // reveal answer and enable Next
-    state.answered=true;
-    setAnswerVisible(true);
-    const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
-  });
-
-  /* Init */
-  const prefersDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  setTheme(state.theme|| (prefersDark?'dark':'light'));
-  applyBackground(); applyCardOpacity();
-  buildQueue(); draw();
-});
-</script>
+    // ---- Init ----
+    function updateCounts(){
+      document.getElementById("countTotal").textContent = "Total: " + deck().length;
+      document.getElementById("countKnown").textContent = "Known: " + state.progress.Y.length;
+      document.getElementById("countReview").textContent = "Review: " + state.progress.M.length;
+      document.getElementById("countUnknown").textContent = "Unknown: " + state.progress.N.length;
+    }
+    buildQueue(); nextCard();
+    setStatus("Ready • Buttons active");
+  })();
+  </script>
 </body>
 </html>
