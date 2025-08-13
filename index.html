@@ -127,7 +127,7 @@ https://yourcdn.com/bg2.jpg" style="width:100%;min-height:80px"></textarea>
     <div class="word" id="promptBig"></div>
     <div class="kana" id="promptSub"></div>
 
-    <div class="meaning hidden-el" id="answerBlock">
+    <div class="meaning" id="answerBlock">
       <div id="answerMain"></div>
       <div class="ex" id="exampleBlock"></div>
     </div>
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function(){
   /* Utils + storage */
   function uuidv4(){ if (crypto.randomUUID) return crypto.randomUUID(); return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16)}) }
   const Store=(function(){ try{ const t='__t'; localStorage.setItem(t,'1'); localStorage.removeItem(t); return localStorage; }catch(_){ let mem={}; return {getItem:k=>mem[k]||null,setItem:(k,v)=>{mem[k]=String(v)},removeItem:k=>{delete mem[k]}} } })();
-  const STORAGE="jlpt_flash_v12"; /* bump to reseed */
+  const STORAGE="jlpt_flash_v14";
   const SETTINGS="jlpt_flash_settings";
   const $=s=>document.querySelector(s);
   const $$=s=>document.querySelectorAll(s);
@@ -229,6 +229,20 @@ document.addEventListener('DOMContentLoaded', function(){
   function filterByLevel(list){return state.level==="ALL"?list:list.filter(x=>x.level===state.level)}
   function shuffle(a){a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]} return a}
 
+  /* Helpers for Drill visibility */
+  function setAnswerVisible(v){
+    const ans=$("#answerBlock");
+    if(!ans) return;
+    ans.classList.toggle('hidden-el', !v);
+  }
+  function resetChoicesUI(){
+    const wrap=$("#choices");
+    if(!wrap) return;
+    wrap.querySelectorAll('.choice-btn').forEach(b=>{
+      b.classList.remove('correct','wrong');
+    });
+  }
+
   /* Queue & Render */
   function buildQueue(){
     const all=filterByLevel(cards());
@@ -244,7 +258,16 @@ document.addEventListener('DOMContentLoaded', function(){
   function nextCard(){
     if(state.queue.length===0){ state.current=null; updateEmptyState(); return; }
     state.current=state.queue.shift();
-    const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=(state.mode==='drill'); rb.setAttribute('aria-disabled', state.mode==='drill'?'true':'false'); }
+
+    // hard reset visibility for Drill before drawing to avoid flashes
+    if(state.mode==='drill') setAnswerVisible(false);
+
+    const rb=$("#revealBtn");
+    if(rb){
+      rb.textContent='Next';
+      rb.disabled=(state.mode==='drill');
+      rb.setAttribute('aria-disabled', rb.disabled?'true':'false');
+    }
     drawCard();
   }
   function updateEmptyState(){ const has=!!state.current; $("#cardZone").classList.toggle('hidden-el',!has); $("#emptyState").classList.toggle('hidden-el',has); }
@@ -266,10 +289,15 @@ document.addEventListener('DOMContentLoaded', function(){
     const c=state.current; if(!c){ updateEmptyState(); return; }
     const en=c.meaning, jp=c.kanji||c.kana, kana=c.kana||"";
     const exJP=c.example||`これは${c.meaning}です。`, exEN=c.example_en||simpleEN(c.meaning);
-    const choicesEl=$("#choices"), ansEl=$("#answerBlock");
+    const choicesEl=$("#choices");
+
+    // Always clear old choices & UI
+    if(choicesEl){ choicesEl.innerHTML=''; choicesEl.classList.add('hidden-el'); }
+    resetChoicesUI();
 
     if(state.mode==='drill'){
       state.answered=false;
+
       const pool=filterByLevel(cards());
       const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);
       const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));
@@ -279,7 +307,9 @@ document.addEventListener('DOMContentLoaded', function(){
       else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
       $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
 
-      ansEl.classList.add('hidden-el'); // hidden until a choice
+      // keep hidden until a choice (redundant safety)
+      setAnswerVisible(false);
+
       choicesEl.innerHTML = state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
       choicesEl.classList.remove('hidden-el');
 
@@ -289,8 +319,7 @@ document.addEventListener('DOMContentLoaded', function(){
       else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
       $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
 
-      $("#answerBlock").classList.remove('hidden-el');
-      choicesEl.classList.add('hidden-el'); choicesEl.innerHTML='';
+      setAnswerVisible(true);
       const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
     }
     $("#reviewBtn").classList.add('hidden');
@@ -404,12 +433,33 @@ document.addEventListener('DOMContentLoaded', function(){
   $("#addBatchBtn").addEventListener('click',()=>{$("#batchModal").classList.remove('hidden-el')});
   $("#closeBatch").addEventListener('click',()=>{$("#batchModal").classList.add('hidden-el')});
   $("#addBatchJson").addEventListener('click',()=>{ const t=$("#batchInput").value.trim(); if(!t){alert('Paste JSON first');return} try{importJSON(t,$("#batchLevel").value); $("#batchInput").value=''; $("#batchModal").classList.add('hidden-el')}catch(e){alert('Invalid JSON')} });
-  /* FIXED: add missing catch here */
   $("#addBatchCsv").addEventListener('click',()=>{ const t=$("#batchInput").value.trim(); if(!t){alert('Paste CSV first');return} try{importCSV(t,$("#batchLevel").value); $("#batchInput").value=''; $("#batchModal").classList.add('hidden-el')} catch(e){alert('Invalid CSV')} });
   $("#importFile").addEventListener('change',function(e){
     const f=e.target.files&&e.target.files[0]; if(!f) return;
     const r=new FileReader(); r.onload=()=>{ try{ importJSON(String(r.result)); alert('Import complete'); }catch(_){ alert('Import failed'); } finally { buildQueue(); draw(); } };
     r.readAsText(f); e.target.value='';
+  });
+
+  /* Drill: click to reveal, then enable Next */
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.choice-btn');
+    if(!btn) return;
+    if(state.mode!=='drill' || state.answered) return;
+    const idx = parseInt(btn.getAttribute('data-idx'),10);
+    const opt = state.drillChoices[idx];
+
+    // mark correct/incorrect
+    state.drillChoices.forEach((o,i)=>{
+      const el = document.querySelector(`.choice-btn[data-idx="${i}"]`);
+      if(!el) return;
+      if(o.correct) el.classList.add('correct');
+    });
+    if(!opt.correct) btn.classList.add('wrong');
+
+    // reveal answer and enable Next
+    state.answered=true;
+    setAnswerVisible(true);
+    const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
   });
 
   /* Init */
