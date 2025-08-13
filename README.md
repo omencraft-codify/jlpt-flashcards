@@ -14,9 +14,6 @@ Static app. Ready for GitHub Pages.
 5. Wait a minute. Your site will be at:
    `https://<your-username>.github.io/jlpt-flashcards/`
 
-## Embed in Squarespace or Google Sites
-Use a Code Block or Embed and paste:
-<iframe src="https://<your-username>.github.io/jlpt-flashcards/" width="100%" height="900" style="border:0;"></iframe>
 
 ## Random Backgrounds
 - Open the app's BG menu (top-right).
