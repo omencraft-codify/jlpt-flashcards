@@ -199,6 +199,16 @@ document.addEventListener('DOMContentLoaded', function(){
   function loadSettings(){try{return JSON.parse(Store.getItem(SETTINGS)||"{}")}catch(_){return {}}}
   function saveSettings(s){try{const cur=loadSettings();Store.setItem(SETTINGS,JSON.stringify(Object.assign({},cur,s)));}catch(e){Store.setItem(SETTINGS,JSON.stringify(s));}}
   const settingsBootstrap=loadSettings();
+
+  /* NEW: your default pool of BGs */
+  const defaultBgList = [
+    "./girl%205_t.png",
+    "./girl%204_t.png",
+    "./girl%203_t.jpg",
+    "./girl%202_t.png",
+    "./girl%201_t.jpg"
+  ].join("\n");
+
   const state={
     mode:"learn",
     level:"ALL",
@@ -206,13 +216,16 @@ document.addEventListener('DOMContentLoaded', function(){
     current:null,
     promptMode:settingsBootstrap.promptMode||"JPEN",
     theme:settingsBootstrap.theme||null,
-    bgDataUrl:(settingsBootstrap.bgDataUrl??'./girl%201.jpg'),
+    /* CHANGED: stop forcing girl 1.jpg; let random choose */
+    bgDataUrl:(settingsBootstrap.bgDataUrl??null),
     bgOpacity:typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,
     cardOpacity:typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,
     answered:false,
     drillChoices:[],
-    bgRemoteList:settingsBootstrap.bgRemoteList||"",
-    bgRemoteRandom:!!settingsBootstrap.bgRemoteRandom
+    /* CHANGED: seed list with your 5 if none saved */
+    bgRemoteList: (settingsBootstrap.bgRemoteList && settingsBootstrap.bgRemoteList.trim()) ? settingsBootstrap.bgRemoteList : defaultBgList,
+    /* CHANGED: default random to true if unset */
+    bgRemoteRandom: (typeof settingsBootstrap.bgRemoteRandom==='boolean' ? settingsBootstrap.bgRemoteRandom : true)
   };
 
   /* Seeds */
@@ -259,7 +272,6 @@ document.addEventListener('DOMContentLoaded', function(){
     if(state.queue.length===0){ state.current=null; updateEmptyState(); return; }
     state.current=state.queue.shift();
 
-    // hard reset visibility for Drill before drawing to avoid flashes
     if(state.mode==='drill') setAnswerVisible(false);
 
     const rb=$("#revealBtn");
@@ -291,7 +303,6 @@ document.addEventListener('DOMContentLoaded', function(){
     const exJP=c.example||`これは${c.meaning}です。`, exEN=c.example_en||simpleEN(c.meaning);
     const choicesEl=$("#choices");
 
-    // Always clear old choices & UI
     if(choicesEl){ choicesEl.innerHTML=''; choicesEl.classList.add('hidden-el'); }
     resetChoicesUI();
 
@@ -307,7 +318,6 @@ document.addEventListener('DOMContentLoaded', function(){
       else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
       $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
 
-      // keep hidden until a choice (redundant safety)
       setAnswerVisible(false);
 
       choicesEl.innerHTML = state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
@@ -448,7 +458,6 @@ document.addEventListener('DOMContentLoaded', function(){
     const idx = parseInt(btn.getAttribute('data-idx'),10);
     const opt = state.drillChoices[idx];
 
-    // mark correct/incorrect
     state.drillChoices.forEach((o,i)=>{
       const el = document.querySelector(`.choice-btn[data-idx="${i}"]`);
       if(!el) return;
@@ -456,7 +465,6 @@ document.addEventListener('DOMContentLoaded', function(){
     });
     if(!opt.correct) btn.classList.add('wrong');
 
-    // reveal answer and enable Next
     state.answered=true;
     setAnswerVisible(true);
     const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
@@ -465,7 +473,9 @@ document.addEventListener('DOMContentLoaded', function(){
   /* Init */
   const prefersDark=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   setTheme(state.theme|| (prefersDark?'dark':'light'));
-  applyBackground(); applyCardOpacity();
+  /* CHANGED: load random BG from your list by default */
+  if(state.bgRemoteRandom) { setRandomBgFromList(false); } else { applyBackground(); }
+  applyCardOpacity();
   buildQueue(); draw();
 });
 </script>
