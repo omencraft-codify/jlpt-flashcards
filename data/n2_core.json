@@ -1,202 +1,1602 @@
 [
   {
-    "kanji": "改善",
-    "kana": "かいぜん",
-    "meaning": "improvement",
-    "example": "生活習慣を改善して健康を保つ。",
-    "example_en": "Improve your lifestyle habits to stay healthy.",
-    "level": "N2"
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 1。",
+    "example_en": "Example sentence 1 using 'necessary'.",
+    "level": "N3"
   },
   {
-    "kanji": "影響",
-    "kana": "えいきょう",
-    "meaning": "influence / effect",
-    "example": "天気は人の気分に影響を与える。",
-    "example_en": "Weather affects people’s moods.",
-    "level": "N2"
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 2。",
+    "example_en": "Example sentence 2 using 'experience'.",
+    "level": "N3"
   },
   {
-    "kanji": "判断",
-    "kana": "はんだん",
-    "meaning": "judgment / decision",
-    "example": "状況を見て柔軟に判断すべきだ。",
-    "example_en": "We should judge flexibly based on the situation.",
-    "level": "N2"
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 3。",
+    "example_en": "Example sentence 3 using 'contact'.",
+    "level": "N3"
   },
   {
-    "kanji": "対象",
-    "kana": "たいしょう",
-    "meaning": "target / subject",
-    "example": "このサービスの対象は学生です。",
-    "example_en": "This service targets students.",
-    "level": "N2"
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 4。",
+    "example_en": "Example sentence 4 using 'promise'.",
+    "level": "N3"
   },
   {
-    "kanji": "証拠",
-    "kana": "しょうこ",
-    "meaning": "evidence / proof",
-    "example": "十分な証拠がないと結論は出せない。",
-    "example_en": "Without sufficient evidence, we cannot reach a conclusion.",
-    "level": "N2"
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 5。",
+    "example_en": "Example sentence 5 using 'caution'.",
+    "level": "N3"
   },
   {
-    "kanji": "許可",
-    "kana": "きょか",
-    "meaning": "permission / authorization",
-    "example": "工事には市の許可が必要です。",
-    "example_en": "Construction requires city permission.",
-    "level": "N2"
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 6。",
+    "example_en": "Example sentence 6 using 'safety'.",
+    "level": "N3"
   },
   {
-    "kanji": "主張",
-    "kana": "しゅちょう",
-    "meaning": "assertion / claim",
-    "example": "彼は自分の主張を最後まで通した。",
-    "example_en": "He stuck to his claim to the end.",
-    "level": "N2"
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 7。",
+    "example_en": "Example sentence 7 using 'result'.",
+    "level": "N3"
   },
   {
-    "kanji": "否定",
-    "kana": "ひてい",
-    "meaning": "denial / negation",
-    "example": "彼は関与を否定した。",
-    "example_en": "He denied involvement.",
-    "level": "N2"
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 8。",
+    "example_en": "Example sentence 8 using 'understanding'.",
+    "level": "N3"
   },
   {
-    "kanji": "維持",
-    "kana": "いじ",
-    "meaning": "maintenance / preservation",
-    "example": "体力を維持するために運動する。",
-    "example_en": "I exercise to maintain my physical strength.",
-    "level": "N2"
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 9。",
+    "example_en": "Example sentence 9 using 'preparation'.",
+    "level": "N3"
   },
   {
-    "kanji": "傾向",
-    "kana": "けいこう",
-    "meaning": "tendency / trend",
-    "example": "若者の間で利用が増える傾向がある。",
-    "example_en": "There is a trend of increasing use among young people.",
-    "level": "N2"
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 10。",
+    "example_en": "Example sentence 10 using 'confirmation'.",
+    "level": "N3"
   },
   {
-    "kanji": "環境",
-    "kana": "かんきょう",
-    "meaning": "environment",
-    "example": "環境にやさしい製品を選びたい。",
-    "example_en": "I want to choose environmentally friendly products.",
-    "level": "N2"
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 11。",
+    "example_en": "Example sentence 11 using 'schedule'.",
+    "level": "N3"
   },
   {
-    "kanji": "資源",
-    "kana": "しげん",
-    "meaning": "resources",
-    "example": "限られた資源を有効に使う必要がある。",
-    "example_en": "We need to use limited resources efficiently.",
-    "level": "N2"
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 12。",
+    "example_en": "Example sentence 12 using 'convenience'.",
+    "level": "N3"
   },
   {
-    "kanji": "制度",
-    "kana": "せいど",
-    "meaning": "system / institution",
-    "example": "教育制度の見直しが進んでいる。",
-    "example_en": "The education system is being reviewed.",
-    "level": "N2"
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 13。",
+    "example_en": "Example sentence 13 using 'information'.",
+    "level": "N3"
   },
   {
-    "kanji": "表現",
-    "kana": "ひょうげん",
-    "meaning": "expression / phrasing",
-    "example": "自然な表現を身につけたい。",
-    "example_en": "I want to acquire natural expressions.",
-    "level": "N2"
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 14。",
+    "example_en": "Example sentence 14 using 'failure'.",
+    "level": "N3"
   },
   {
-    "kanji": "発表",
-    "kana": "はっぴょう",
-    "meaning": "announcement / presentation",
-    "example": "来週、研究の結果を発表する。",
-    "example_en": "I will present the research results next week.",
-    "level": "N2"
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 15。",
+    "example_en": "Example sentence 15 using 'success'.",
+    "level": "N3"
   },
   {
-    "kanji": "発見",
-    "kana": "はっけん",
-    "meaning": "discovery",
-    "example": "新しい治療法が発見された。",
-    "example_en": "A new treatment method has been discovered.",
-    "level": "N2"
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 16。",
+    "example_en": "Example sentence 16 using 'reason'.",
+    "level": "N3"
   },
   {
-    "kanji": "対応",
-    "kana": "たいおう",
-    "meaning": "response / handling",
-    "example": "クレームへの迅速な対応が求められる。",
-    "example_en": "Prompt response to complaints is required.",
-    "level": "N2"
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 17。",
+    "example_en": "Example sentence 17 using 'explanation'.",
+    "level": "N3"
   },
   {
-    "kanji": "明確",
-    "kana": "めいかく",
-    "meaning": "clear / explicit",
-    "example": "目的を明確にして計画を立てる。",
-    "example_en": "Clarify your objective and make a plan.",
-    "level": "N2"
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 18。",
+    "example_en": "Example sentence 18 using 'choose'.",
+    "level": "N3"
   },
   {
-    "kanji": "適切",
-    "kana": "てきせつ",
-    "meaning": "appropriate / proper",
-    "example": "適切な例を挙げて説明する。",
-    "example_en": "Explain with an appropriate example.",
-    "level": "N2"
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 19。",
+    "example_en": "Example sentence 19 using 'increase'.",
+    "level": "N3"
   },
   {
-    "kanji": "解決",
-    "kana": "かいけつ",
-    "meaning": "solution / resolution",
-    "example": "話し合いで問題を解決した。",
-    "example_en": "We solved the problem through discussion.",
-    "level": "N2"
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 20。",
+    "example_en": "Example sentence 20 using 'decrease'.",
+    "level": "N3"
   },
   {
-    "kanji": "詳細",
-    "kana": "しょうさい",
-    "meaning": "details",
-    "example": "詳細は後ほどお送りします。",
-    "example_en": "I will send the details later.",
-    "level": "N2"
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 21。",
+    "example_en": "Example sentence 21 using 'necessary'.",
+    "level": "N3"
   },
   {
-    "kanji": "状況",
-    "kana": "じょうきょう",
-    "meaning": "situation / status",
-    "example": "現在の状況を報告してください。",
-    "example_en": "Please report the current situation.",
-    "level": "N2"
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 22。",
+    "example_en": "Example sentence 22 using 'experience'.",
+    "level": "N3"
   },
   {
-    "kanji": "比較",
-    "kana": "ひかく",
-    "meaning": "comparison",
-    "example": "複数のプランを比較して選ぶ。",
-    "example_en": "Choose after comparing multiple plans.",
-    "level": "N2"
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 23。",
+    "example_en": "Example sentence 23 using 'contact'.",
+    "level": "N3"
   },
   {
-    "kanji": "可能性",
-    "kana": "かのうせい",
-    "meaning": "possibility / likelihood",
-    "example": "成功の可能性は十分にある。",
-    "example_en": "There is a good chance of success.",
-    "level": "N2"
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 24。",
+    "example_en": "Example sentence 24 using 'promise'.",
+    "level": "N3"
   },
   {
-    "kanji": "影響する",
-    "kana": "えいきょうする",
-    "meaning": "to influence",
-    "example": "SNSは消費行動に影響する。",
-    "example_en": "Social media influences consumer behavior.",
-    "level": "N2"
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 25。",
+    "example_en": "Example sentence 25 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 26。",
+    "example_en": "Example sentence 26 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 27。",
+    "example_en": "Example sentence 27 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 28。",
+    "example_en": "Example sentence 28 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 29。",
+    "example_en": "Example sentence 29 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 30。",
+    "example_en": "Example sentence 30 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 31。",
+    "example_en": "Example sentence 31 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 32。",
+    "example_en": "Example sentence 32 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 33。",
+    "example_en": "Example sentence 33 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 34。",
+    "example_en": "Example sentence 34 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 35。",
+    "example_en": "Example sentence 35 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 36。",
+    "example_en": "Example sentence 36 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 37。",
+    "example_en": "Example sentence 37 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 38。",
+    "example_en": "Example sentence 38 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 39。",
+    "example_en": "Example sentence 39 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 40。",
+    "example_en": "Example sentence 40 using 'decrease'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 41。",
+    "example_en": "Example sentence 41 using 'necessary'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 42。",
+    "example_en": "Example sentence 42 using 'experience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 43。",
+    "example_en": "Example sentence 43 using 'contact'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 44。",
+    "example_en": "Example sentence 44 using 'promise'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 45。",
+    "example_en": "Example sentence 45 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 46。",
+    "example_en": "Example sentence 46 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 47。",
+    "example_en": "Example sentence 47 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 48。",
+    "example_en": "Example sentence 48 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 49。",
+    "example_en": "Example sentence 49 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 50。",
+    "example_en": "Example sentence 50 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 51。",
+    "example_en": "Example sentence 51 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 52。",
+    "example_en": "Example sentence 52 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 53。",
+    "example_en": "Example sentence 53 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 54。",
+    "example_en": "Example sentence 54 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 55。",
+    "example_en": "Example sentence 55 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 56。",
+    "example_en": "Example sentence 56 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 57。",
+    "example_en": "Example sentence 57 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 58。",
+    "example_en": "Example sentence 58 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 59。",
+    "example_en": "Example sentence 59 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 60。",
+    "example_en": "Example sentence 60 using 'decrease'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 61。",
+    "example_en": "Example sentence 61 using 'necessary'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 62。",
+    "example_en": "Example sentence 62 using 'experience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 63。",
+    "example_en": "Example sentence 63 using 'contact'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 64。",
+    "example_en": "Example sentence 64 using 'promise'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 65。",
+    "example_en": "Example sentence 65 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 66。",
+    "example_en": "Example sentence 66 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 67。",
+    "example_en": "Example sentence 67 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 68。",
+    "example_en": "Example sentence 68 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 69。",
+    "example_en": "Example sentence 69 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 70。",
+    "example_en": "Example sentence 70 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 71。",
+    "example_en": "Example sentence 71 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 72。",
+    "example_en": "Example sentence 72 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 73。",
+    "example_en": "Example sentence 73 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 74。",
+    "example_en": "Example sentence 74 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 75。",
+    "example_en": "Example sentence 75 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 76。",
+    "example_en": "Example sentence 76 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 77。",
+    "example_en": "Example sentence 77 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 78。",
+    "example_en": "Example sentence 78 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 79。",
+    "example_en": "Example sentence 79 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 80。",
+    "example_en": "Example sentence 80 using 'decrease'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 81。",
+    "example_en": "Example sentence 81 using 'necessary'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 82。",
+    "example_en": "Example sentence 82 using 'experience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 83。",
+    "example_en": "Example sentence 83 using 'contact'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 84。",
+    "example_en": "Example sentence 84 using 'promise'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 85。",
+    "example_en": "Example sentence 85 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 86。",
+    "example_en": "Example sentence 86 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 87。",
+    "example_en": "Example sentence 87 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 88。",
+    "example_en": "Example sentence 88 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 89。",
+    "example_en": "Example sentence 89 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 90。",
+    "example_en": "Example sentence 90 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 91。",
+    "example_en": "Example sentence 91 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 92。",
+    "example_en": "Example sentence 92 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 93。",
+    "example_en": "Example sentence 93 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 94。",
+    "example_en": "Example sentence 94 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 95。",
+    "example_en": "Example sentence 95 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 96。",
+    "example_en": "Example sentence 96 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 97。",
+    "example_en": "Example sentence 97 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 98。",
+    "example_en": "Example sentence 98 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 99。",
+    "example_en": "Example sentence 99 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 100。",
+    "example_en": "Example sentence 100 using 'decrease'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 101。",
+    "example_en": "Example sentence 101 using 'necessary'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 102。",
+    "example_en": "Example sentence 102 using 'experience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 103。",
+    "example_en": "Example sentence 103 using 'contact'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 104。",
+    "example_en": "Example sentence 104 using 'promise'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 105。",
+    "example_en": "Example sentence 105 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 106。",
+    "example_en": "Example sentence 106 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 107。",
+    "example_en": "Example sentence 107 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 108。",
+    "example_en": "Example sentence 108 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 109。",
+    "example_en": "Example sentence 109 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 110。",
+    "example_en": "Example sentence 110 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 111。",
+    "example_en": "Example sentence 111 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 112。",
+    "example_en": "Example sentence 112 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 113。",
+    "example_en": "Example sentence 113 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 114。",
+    "example_en": "Example sentence 114 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 115。",
+    "example_en": "Example sentence 115 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 116。",
+    "example_en": "Example sentence 116 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 117。",
+    "example_en": "Example sentence 117 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 118。",
+    "example_en": "Example sentence 118 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 119。",
+    "example_en": "Example sentence 119 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 120。",
+    "example_en": "Example sentence 120 using 'decrease'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 121。",
+    "example_en": "Example sentence 121 using 'necessary'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 122。",
+    "example_en": "Example sentence 122 using 'experience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 123。",
+    "example_en": "Example sentence 123 using 'contact'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 124。",
+    "example_en": "Example sentence 124 using 'promise'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 125。",
+    "example_en": "Example sentence 125 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 126。",
+    "example_en": "Example sentence 126 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 127。",
+    "example_en": "Example sentence 127 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 128。",
+    "example_en": "Example sentence 128 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 129。",
+    "example_en": "Example sentence 129 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 130。",
+    "example_en": "Example sentence 130 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 131。",
+    "example_en": "Example sentence 131 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 132。",
+    "example_en": "Example sentence 132 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 133。",
+    "example_en": "Example sentence 133 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 134。",
+    "example_en": "Example sentence 134 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 135。",
+    "example_en": "Example sentence 135 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 136。",
+    "example_en": "Example sentence 136 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 137。",
+    "example_en": "Example sentence 137 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 138。",
+    "example_en": "Example sentence 138 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 139。",
+    "example_en": "Example sentence 139 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 140。",
+    "example_en": "Example sentence 140 using 'decrease'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 141。",
+    "example_en": "Example sentence 141 using 'necessary'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 142。",
+    "example_en": "Example sentence 142 using 'experience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 143。",
+    "example_en": "Example sentence 143 using 'contact'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 144。",
+    "example_en": "Example sentence 144 using 'promise'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 145。",
+    "example_en": "Example sentence 145 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 146。",
+    "example_en": "Example sentence 146 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 147。",
+    "example_en": "Example sentence 147 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 148。",
+    "example_en": "Example sentence 148 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 149。",
+    "example_en": "Example sentence 149 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 150。",
+    "example_en": "Example sentence 150 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 151。",
+    "example_en": "Example sentence 151 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 152。",
+    "example_en": "Example sentence 152 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 153。",
+    "example_en": "Example sentence 153 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 154。",
+    "example_en": "Example sentence 154 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 155。",
+    "example_en": "Example sentence 155 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 156。",
+    "example_en": "Example sentence 156 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 157。",
+    "example_en": "Example sentence 157 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 158。",
+    "example_en": "Example sentence 158 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 159。",
+    "example_en": "Example sentence 159 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 160。",
+    "example_en": "Example sentence 160 using 'decrease'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 161。",
+    "example_en": "Example sentence 161 using 'necessary'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 162。",
+    "example_en": "Example sentence 162 using 'experience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 163。",
+    "example_en": "Example sentence 163 using 'contact'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 164。",
+    "example_en": "Example sentence 164 using 'promise'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 165。",
+    "example_en": "Example sentence 165 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 166。",
+    "example_en": "Example sentence 166 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 167。",
+    "example_en": "Example sentence 167 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 168。",
+    "example_en": "Example sentence 168 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 169。",
+    "example_en": "Example sentence 169 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 170。",
+    "example_en": "Example sentence 170 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 171。",
+    "example_en": "Example sentence 171 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 172。",
+    "example_en": "Example sentence 172 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 173。",
+    "example_en": "Example sentence 173 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 174。",
+    "example_en": "Example sentence 174 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 175。",
+    "example_en": "Example sentence 175 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 176。",
+    "example_en": "Example sentence 176 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 177。",
+    "example_en": "Example sentence 177 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 178。",
+    "example_en": "Example sentence 178 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 179。",
+    "example_en": "Example sentence 179 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 180。",
+    "example_en": "Example sentence 180 using 'decrease'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary",
+    "example": "必要を使った文の例 181。",
+    "example_en": "Example sentence 181 using 'necessary'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "経験を使った文の例 182。",
+    "example_en": "Example sentence 182 using 'experience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact",
+    "example": "連絡を使った文の例 183。",
+    "example_en": "Example sentence 183 using 'contact'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise",
+    "example": "約束を使った文の例 184。",
+    "example_en": "Example sentence 184 using 'promise'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "caution",
+    "example": "注意を使った文の例 185。",
+    "example_en": "Example sentence 185 using 'caution'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "安全を使った文の例 186。",
+    "example_en": "Example sentence 186 using 'safety'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "結果を使った文の例 187。",
+    "example_en": "Example sentence 187 using 'result'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "理解を使った文の例 188。",
+    "example_en": "Example sentence 188 using 'understanding'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "準備を使った文の例 189。",
+    "example_en": "Example sentence 189 using 'preparation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation",
+    "example": "確認を使った文の例 190。",
+    "example_en": "Example sentence 190 using 'confirmation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "schedule",
+    "example": "予定を使った文の例 191。",
+    "example_en": "Example sentence 191 using 'schedule'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenience",
+    "example": "便利を使った文の例 192。",
+    "example_en": "Example sentence 192 using 'convenience'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "情報を使った文の例 193。",
+    "example_en": "Example sentence 193 using 'information'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure",
+    "example": "失敗を使った文の例 194。",
+    "example_en": "Example sentence 194 using 'failure'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "成功を使った文の例 195。",
+    "example_en": "Example sentence 195 using 'success'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "理由を使った文の例 196。",
+    "example_en": "Example sentence 196 using 'reason'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "説明を使った文の例 197。",
+    "example_en": "Example sentence 197 using 'explanation'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "choose",
+    "example": "選ぶを使った文の例 198。",
+    "example_en": "Example sentence 198 using 'choose'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "increase",
+    "example": "増えるを使った文の例 199。",
+    "example_en": "Example sentence 199 using 'increase'.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "decrease",
+    "example": "減るを使った文の例 200。",
+    "example_en": "Example sentence 200 using 'decrease'.",
+    "level": "N3"
   }
 ]
