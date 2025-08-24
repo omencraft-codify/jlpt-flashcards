@@ -1,0 +1,202 @@
+[
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "生活習慣を改善して健康を保つ。",
+    "example_en": "Improve your lifestyle habits to stay healthy.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence / effect",
+    "example": "天気は人の気分に影響を与える。",
+    "example_en": "Weather affects people’s moods.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment / decision",
+    "example": "状況を見て柔軟に判断すべきだ。",
+    "example_en": "We should judge flexibly based on the situation.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target / subject",
+    "example": "このサービスの対象は学生です。",
+    "example_en": "This service targets students.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence / proof",
+    "example": "十分な証拠がないと結論は出せない。",
+    "example_en": "Without sufficient evidence, we cannot reach a conclusion.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission / authorization",
+    "example": "工事には市の許可が必要です。",
+    "example_en": "Construction requires city permission.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion / claim",
+    "example": "彼は自分の主張を最後まで通した。",
+    "example_en": "He stuck to his claim to the end.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial / negation",
+    "example": "彼は関与を否定した。",
+    "example_en": "He denied involvement.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance / preservation",
+    "example": "体力を維持するために運動する。",
+    "example_en": "I exercise to maintain my physical strength.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "tendency / trend",
+    "example": "若者の間で利用が増える傾向がある。",
+    "example_en": "There is a trend of increasing use among young people.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境にやさしい製品を選びたい。",
+    "example_en": "I want to choose environmentally friendly products.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "限られた資源を有効に使う必要がある。",
+    "example_en": "We need to use limited resources efficiently.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system / institution",
+    "example": "教育制度の見直しが進んでいる。",
+    "example_en": "The education system is being reviewed.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression / phrasing",
+    "example": "自然な表現を身につけたい。",
+    "example_en": "I want to acquire natural expressions.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement / presentation",
+    "example": "来週、研究の結果を発表する。",
+    "example_en": "I will present the research results next week.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "新しい治療法が発見された。",
+    "example_en": "A new treatment method has been discovered.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response / handling",
+    "example": "クレームへの迅速な対応が求められる。",
+    "example_en": "Prompt response to complaints is required.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear / explicit",
+    "example": "目的を明確にして計画を立てる。",
+    "example_en": "Clarify your objective and make a plan.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate / proper",
+    "example": "適切な例を挙げて説明する。",
+    "example_en": "Explain with an appropriate example.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution / resolution",
+    "example": "話し合いで問題を解決した。",
+    "example_en": "We solved the problem through discussion.",
+    "level": "N2"
+  },
+  {
+    "kanji": "詳細",
+    "kana": "しょうさい",
+    "meaning": "details",
+    "example": "詳細は後ほどお送りします。",
+    "example_en": "I will send the details later.",
+    "level": "N2"
+  },
+  {
+    "kanji": "状況",
+    "kana": "じょうきょう",
+    "meaning": "situation / status",
+    "example": "現在の状況を報告してください。",
+    "example_en": "Please report the current situation.",
+    "level": "N2"
+  },
+  {
+    "kanji": "比較",
+    "kana": "ひかく",
+    "meaning": "comparison",
+    "example": "複数のプランを比較して選ぶ。",
+    "example_en": "Choose after comparing multiple plans.",
+    "level": "N2"
+  },
+  {
+    "kanji": "可能性",
+    "kana": "かのうせい",
+    "meaning": "possibility / likelihood",
+    "example": "成功の可能性は十分にある。",
+    "example_en": "There is a good chance of success.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響する",
+    "kana": "えいきょうする",
+    "meaning": "to influence",
+    "example": "SNSは消費行動に影響する。",
+    "example_en": "Social media influences consumer behavior.",
+    "level": "N2"
+  }
+]
