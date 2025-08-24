@@ -2,182 +2,679 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JLPT N3/N2 Flashcards</title>
+<title>JLPT N3/N2 Flashcards (Clean)</title>
 <style>
-  :root{--bg:#fff;--fg:#111;--muted:#666;--line:#e6e6e6;--btn:#f6f6f6;--btn2:#111;--btnfg:#111;--btn2fg:#fff;--radius:14px;--cardw:min(720px,92vw);--cardbg:rgba(255,255,255,0.45)}
-  *{box-sizing:border-box} html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}
-  .wrap{max-width:920px;margin:0 auto;padding:18px}
-  header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:12px}
-  h1{font-size:18px;margin:0 12px 0 0;letter-spacing:.2px}
-  .toolbar{display:flex;flex-wrap:wrap;gap:8px}
-  .btn{border:1px solid var(--line);background:var(--btn);color:var(--btnfg);padding:10px 14px;border-radius:999px;cursor:pointer}
-  .btn.primary{background:var(--btn2);color:var(--btn2fg)}
-  .spacer{flex:1}
-  .stats{margin:6px 0 14px;font-variant-numeric:tabular-nums;color:#222}
-  .panel{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff}
-  .card{background:var(--cardbg);border:1px solid var(--line);border-radius:16px;padding:24px;min-height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-  .kana{font-size:18px;color:var(--muted);margin-bottom:8px}
-  .word{font-size:36px;line-height:1.1;margin:2px 0}
-  .meaning{font-size:18px;margin:10px 0 4px}
-  .example{font-size:15px;color:var(--muted)}
-  .controls{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
-  .footer{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  select{appearance:none;background:var(--btn);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:160px}
-  .small{font-size:13px;color:var(--muted)}
+:root{--bg:#fff;--fg:#111;--muted:#666;--line:#e6e6e6;--btn:#f6f6f6;--btn2:#111;--btnfg:#111;--btn2fg:#fff;--radius:14px;--cardw:min(720px,90vw);--cardbg:rgba(255,255,255,0.45)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}
+.wrap{max-width:920px;margin:0 auto;padding:18px}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+select{appearance:none;background:var(--btn);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.pill{border:1px solid var(--line);background:var(--btn);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;height:var(--pill-h,40px);padding:0 14px;border-radius:var(--pill-radius,999px);font-size:14px;line-height:1}
+.pill.active{background:var(--fg);color:#fff;border-color:var(--fg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);padding:12px 14px;border-radius:12px;cursor:pointer}
+.btn.primary{background:var(--btn2);color:var(--btn2fg);border-color:var(--btn2)}
+.hidden{display:none}
+.hidden-el{display:none}
+
+/* BG overlay */
+body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,linear-gradient(135deg,rgba(2,6,23,.85),rgba(30,58,138,.65)));background-size:cover;background-position:center 30%;background-repeat:no-repeat;opacity:var(--bgimgOpacity,.2);transition:opacity .2s;pointer-events:none;z-index:-1}
+
+/* Floating BG panel (kept for parity) */
+details.bg-controls{position:fixed;top:12px;right:12px;z-index:1000}
+details.bg-controls summary{list-style:none;cursor:pointer}
+details.bg-controls summary::-webkit-details-marker{display:none}
+.bg-button{background:rgba(17,17,17,.7);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font:13px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+.bg-panel{margin-top:8px;background:rgba(17,17,17,.85);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px;min-width:240px;box-shadow:0 12px 28px rgba(0,0,0,.45)}
+.bg-panel .btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font-size:12px;width:100%}
+.bg-panel .small{font-size:12px;opacity:.9}
+.bg-panel input[type=range]{width:100%}
+
+/* Inline controls (inside header) */
+details.inline-controls{position:relative;display:inline-block}
+details.inline-controls summary{list-style:none}
+details.inline-controls summary::-webkit-details-marker{display:none}
+details.inline-controls > summary.btn{padding:10px 12px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);border-radius:12px}
+details.inline-controls .bg-panel{position:absolute;top:100%;right:0;margin-top:6px;min-width:260px;z-index:1000;background:var(--cardbg);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+details.inline-controls .bg-panel .btn{background:var(--btn);color:var(--btnfg);border:1px solid var(--line);width:100%}
+
+/* Layout sections */
+.section{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff}
+.center{display:flex;align-items:center;justify-content:center;text-align:center}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+/* Card zone */
+#cardZone{position:relative;background:var(--cardbg);border:1px solid var(--line);border-radius:16px;padding:24px;min-height:220px;display:flex;flex-direction:column;gap:8px}
+#promptBig{font-size:36px;line-height:1.1}
+#promptSub{font-size:18px;color:var(--muted)}
+#answerMain{font-size:20px}
+#exampleBlock{font-size:15px;color:var(--muted)}
+#choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:6px}
+.choice-btn{border:1px solid var(--line);background:var(--btn);border-radius:12px;padding:10px;cursor:pointer}
+.choice-btn.correct{outline:2px solid #1f6d3e}
+.choice-btn.wrong{outline:2px solid #7a2430}
+
+/* Feedback flash */
+.result{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transform:scale(.9);transition:opacity .12s,transform .2s}
+.result.show{opacity:1;transform:scale(1)}
+.result.ok .icon{font-size:72px}
+.result.ng .icon{font-size:72px}
+.flash-ok{animation:flashok .35s}
+.flash-ng{animation:flashng .35s}
+@keyframes flashok{0%{box-shadow:0 0 0 0 rgba(31,109,62,.5)}100%{box-shadow:0 0 0 16px rgba(31,109,62,0)}}
+@keyframes flashng{0%{box-shadow:0 0 0 0 rgba(122,36,48,.45)}100%{box-shadow:0 0 0 16px rgba(122,36,48,0)}}
+.shake{animation:shake .28s}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
+
+/* Simple grid helpers */
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.hidden-el{display:none}
 </style>
 </head>
 <body>
+
+<!-- (optional) floating BG panel (kept for parity) -->
+<details class="bg-controls" id="bgMenu">
+  <summary class="bg-button">BG</summary>
+  <div class="bg-panel">
+    <button class="btn" id="uploadBgBtn">Upload Image</button>
+    <div style="height:8px"></div>
+    <div class="small">BG Opacity</div>
+    <input id="bgOpacity" type="range" min="0" max="100" value="20">
+    <input id="bgFile" type="file" accept="image/*" class="hidden">
+    <div style="height:8px"></div>
+    <div class="small">Card Opacity</div>
+    <input id="cardOpacity" type="range" min="20" max="95" value="45">
+    <div style="height:8px"></div>
+    <button class="btn" id="clearBgBtn">Clear</button>
+    <div style="height:8px"></div>
+    <div class="small">Remote BG URLs (one per line)</div>
+    <textarea id="bgUrls" style="width:100%;min-height:80px"></textarea>
+    <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <input type="checkbox" id="bgRandom"> Random on load
+    </label>
+    <button class="btn" id="bgRandomNow">Use Random Now</button>
+  </div>
+</details>
+
 <div class="wrap">
   <header>
-    <h1>JLPT N3/N2 Flashcards</h1>
-    <div class="toolbar">
-      <button class="btn primary" id="btnStudy">Study</button>
-      <button class="btn" id="btnReview">Review</button>
-      <button class="btn" id="btnReset">Reset Progress</button>
+    <div class="group">
+      <button class="pill" id="learnTab">Learn</button>
+      <button class="pill" id="drillTab">Drill</button>
+      <select id="promptMode">
+        <option value="JPEN">JP → EN</option>
+        <option value="ENJP">EN → JP</option>
+      </select>
+      <select id="levelFilter">
+        <option value="ALL">All Levels</option>
+        <option value="N3">N3</option>
+        <option value="N2">N2</option>
+      </select>
     </div>
-    <span class="spacer"></span>
-    <select id="deckSelect"></select>
+
+    <div class="group">
+      <button class="btn" id="themeBtn" aria-pressed="false">Dark</button>
+      <button class="btn" id="addBatchBtn">Add Batch</button>
+      <label class="btn" for="importFile">Import</label>
+      <input id="importFile" type="file" accept=".json,.csv" class="hidden">
+
+      <!-- Inline BG panel -->
+      <details class="inline-controls" id="bgMenuInline">
+        <summary class="btn">BG</summary>
+        <div class="bg-panel">
+          <button class="btn" id="uploadBgBtn2">Upload Image</button>
+          <div style="height:8px"></div>
+          <div class="small">BG Opacity</div>
+          <input id="bgOpacity2" type="range" min="0" max="100" value="20">
+          <input id="bgFile2" type="file" accept="image/*" class="hidden">
+          <div style="height:8px"></div>
+          <div class="small">Card Opacity</div>
+          <input id="cardOpacity2" type="range" min="20" max="95" value="45">
+          <div style="height:8px"></div>
+          <button class="btn" id="clearBgBtn2">Clear</button>
+          <div style="height:8px"></div>
+          <div class="small">Remote BG URLs (one per line)</div>
+          <textarea id="bgUrls2" style="width:100%;min-height:80px"></textarea>
+          <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:6px">
+            <input type="checkbox" id="bgRandom2" checked> Random on load
+          </label>
+          <button class="btn" id="bgRandomNow2">Use Random Now</button>
+        </div>
+      </details>
+
+      <!-- Inline Deck panel -->
+      <details class="inline-controls" id="deckMenuInline">
+        <summary class="btn">Decks</summary>
+        <div class="bg-panel">
+          <div class="small">Remote deck URLs (.json or .csv), one per line</div>
+          <textarea id="deckUrls" style="width:100%;min-height:96px" placeholder="https://cdn.jsdelivr.net/gh/USER/REPO@main/data/n3_core.json
+https://cdn.jsdelivr.net/gh/USER/REPO@main/data/n2_core.json"></textarea>
+          <div style="height:8px"></div>
+          <div class="row" style="gap:6px;align-items:center">
+            <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckReplace"> Replace existing</label>
+            <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckDedupe" checked> De‑dupe</label>
+          </div>
+          <div style="height:8px"></div>
+          <div class="small">Optional level override</div>
+          <select id="deckLevelOverride" style="width:100%">
+            <option value="">(auto)</option>
+            <option value="N3">N3</option>
+            <option value="N2">N2</option>
+          </select>
+          <div style="height:8px"></div>
+          <button class="btn" id="loadDeckBtn">Load decks</button>
+          <div class="small" style="margin-top:6px">Tip: autoload via query: <code>?deck=&lt;url&gt;&amp;level=N3</code></div>
+        </div>
+      </details>
+    </div>
   </header>
 
-  <div class="stats" id="statsLine">Total 0 · Learned 0 · Review 0 · Not 0</div>
+  <!-- Stats line (kept simple) -->
+  <div class="small" id="statsLine">Total 0 · Learned 0 · Review 0 · Not 0</div>
 
-  <div class="panel">
-    <div class="card" id="card">
-      <div class="kana" id="cardKana">かな</div>
-      <div class="word" id="cardWord">言葉</div>
-      <div class="meaning" id="cardMeaning">word; vocabulary</div>
-      <div class="example" id="cardExample">例文：新しい言葉を毎日覚えたい。</div>
-    </div>
-    <div class="controls">
-      <button class="btn" id="markReview">Mark Review</button>
-      <button class="btn" id="markLearned">Mark Learned</button>
-      <button class="btn" id="nextCard">Next ▶</button>
-    </div>
-    <div class="footer">
-      <select id="modeSelect">
-        <option value="all">All cards</option>
-        <option value="not">Only Not</option>
-        <option value="review">Only Review</option>
-        <option value="learned">Only Learned</option>
+  <!-- Card section -->
+  <div id="cardZone" class="section" role="region" aria-live="polite">
+    <div id="promptBig">言葉</div>
+    <div id="promptSub" class="muted">ことば</div>
+    <div id="answerMain">word; vocabulary</div>
+    <div id="exampleBlock" class="muted">例: これは必要です。 / This is necessary.</div>
+    <div id="choices" class="hidden-el"></div>
+    <div id="result" class="result"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="row" style="margin-top:10px">
+    <button class="btn" id="notBtn">Mark Not</button>
+    <button class="btn" id="reviewBtn">Mark Review</button>
+    <button class="btn primary" id="learnedBtn">Mark Learned</button>
+    <span class="spacer"></span>
+    <button class="btn" id="revealBtn">Next</button>
+  </div>
+
+  <!-- Empty state -->
+  <div id="emptyState" class="section center hidden-el">
+    <div class="muted">No cards in this view. Load a deck from the Decks panel or switch mode.</div>
+  </div>
+
+  <!-- Add Batch modal -->
+  <div id="batchModal" class="section hidden-el" style="margin-top:12px">
+    <div class="row">
+      <select id="batchLevel">
+        <option value="N3">N3</option>
+        <option value="N2">N2</option>
       </select>
-      <select id="shuffleSelect">
-        <option value="on">Shuffled</option>
-        <option value="off">In order</option>
-      </select>
-      <span class="spacer"></span>
-      <div class="small" id="cursorInfo">Card 0 / 0</div>
+      <button class="btn" id="closeBatch">Close</button>
     </div>
+    <div class="spacer"></div>
+    <div class="muted small">Paste JSON with: kanji, kana, meaning, example. Optional: example_en, level.</div>
+    <div class="spacer"></div>
+    <textarea id="batchInput" style="width:100%;min-height:140px"></textarea>
+    <div class="spacer"></div>
+    <div class="row">
+      <button class="btn primary" id="addBatchJson">Add JSON</button>
+      <button class="btn" id="addBatchCsv">Add CSV</button>
+    </div>
+    <div class="spacer"></div>
+    <div class="small muted">CSV header: kanji,kana,meaning,example,example_en</div>
   </div>
 </div>
 
 <script>
-  const STORAGE_KEY="nihongo_status_v2";
-  const state={decks:{},order:[],currentDeckKey:null,pool:[],cursor:0,statuses:{}};
-  const DECK_MANIFEST=["data/n2_core.json","data/n3_core.json"];
+/* ---------- Utilities & storage ---------- */
+const $=s=>document.querySelector(s);
+const STORAGE_KEY="nihongo_cards_v1";
+const SETTINGS_KEY="nihongo_settings_v1";
 
-  function loadStatuses(){try{state.statuses=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}")}catch(e){state.statuses={}}}
-  function saveStatuses(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state.statuses))}
-  function setStatus(id,val){state.statuses[id]=val;saveStatuses()}
-  function getStatus(id){return state.statuses[id]||"not"}
-  function uid(c,i){return c.id||(c.kanji+"|"+(c.kana||"")+"|"+i)}
+function loadSettings(){
+  try{return JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}")}catch(_){return {}}
+}
+function saveSettings(obj){const cur=loadSettings();localStorage.setItem(SETTINGS_KEY,JSON.stringify({...cur,...obj}))}
+function getCards(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]")}catch(_){return []}}
+function setCards(arr){localStorage.setItem(STORAGE_KEY,JSON.stringify(arr));updateStats()}
 
-  async function loadDecks(){
-    state.decks={};
-    for(const path of DECK_MANIFEST){
-      try{
-        const res=await fetch(path,{cache:"no-store"});
-        if(!res.ok) continue;
-        const arr=await res.json();
-        if(!Array.isArray(arr)) continue;
-        const key=path.split("/").pop().replace(".json","");
-        state.decks[key]=arr.map((c,i)=>({...c,id:uid(c,i)}));
-      }catch(e){}
+/* ---------- App state ---------- */
+const settingsBootstrap=loadSettings();
+const defaultBgList=["./girl-7_t.jpg","./girl-6_t.jpg","./girl-5_t.png","./girl-4_t.png","./girl-3_t.png","./girl-2_t.png","./girl-1_t.jpg"].join("\\n");
+const state={
+  mode:"learn",
+  level:"ALL",
+  queue:[],
+  current:null,
+  promptMode:settingsBootstrap.promptMode||"JPEN",
+  theme:settingsBootstrap.theme||null,
+  bgDataUrl:(settingsBootstrap.bgDataUrl??null),
+  bgOpacity: typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,
+  cardOpacity: typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,
+  answered:false,
+  drillChoices:[],
+  bgRemoteList:(settingsBootstrap.bgRemoteList&&settingsBootstrap.bgRemoteList.trim())?settingsBootstrap.bgRemoteList:defaultBgList,
+  bgRemoteRandom:(typeof settingsBootstrap.bgRemoteRandom==='boolean'?settingsBootstrap.bgRemoteRandom:true)
+};
+
+/* ---------- Seed (small) to keep your original demo feel ---------- */
+const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."]];
+const N2_RAW=[["改善","かいぜん","improvement","サービスを改善します。","Improve the service."]];
+const N3=N3_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N3"}));
+const N2=N2_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N2"}));
+
+/* On first run, seed cards if empty */
+(function seedOnce(){
+  const cur=getCards();
+  if(cur.length===0){
+    setCards([...N3.map(addMeta), ...N2.map(addMeta)]);
+  }
+})();
+function addMeta(x,i){
+  return {id:cryptoRandomId(),status:"new",seen:0,correct:0,addedAt:Date.now()+i,...x};
+}
+function cryptoRandomId(){
+  try{ return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)); }
+  catch(_){ return "id-"+Math.random().toString(36).slice(2); }
+}
+
+/* ---------- Filters & queue ---------- */
+function cards(){
+  const all=getCards();
+  if(state.level==="ALL") return all;
+  return all.filter(x=>String(x.level||"").toUpperCase()===state.level);
+}
+function filterByLevel(list){
+  if(state.level==="ALL") return list;
+  return list.filter(x=>String(x.level||"").toUpperCase()===state.level);
+}
+function buildQueue(){
+  const base=filterByLevel(getCards());
+  // simple shuffle
+  const arr=[...base];
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}
+  state.queue=arr; state.current=arr[0]||null;
+}
+function nextCard(){
+  if(state.queue.length===0){state.current=null;drawCard();return}
+  state.queue.push(state.queue.shift());
+  state.current=state.queue[0]||null;
+  drawCard();
+}
+
+/* ---------- UI drawing ---------- */
+function simpleEN(m){
+  return (/^(to\s)/i.test(m)?m.replace(/^to\s/i,"").replace(/^\w/,c=>c.toUpperCase()):`This is ${m}.`).replace(/\.$/,".");
+}
+function setAnswerVisible(show){
+  $("#answerMain").style.visibility=show?"visible":"hidden";
+  $("#exampleBlock").style.visibility=show?"visible":"hidden";
+}
+function resetChoicesUI(){ /* reserved for future */ }
+
+function drawCard(){
+  const c=state.current;
+  const empty = !c;
+  $("#emptyState").classList.toggle("hidden-el", !empty);
+  $("#cardZone").classList.toggle("hidden-el", empty);
+  if(empty) return;
+
+  const en=c.meaning, jp=c.kanji||c.kana, kana=c.kana||"";
+  const exJP=c.example||`これは${c.meaning}です。`;
+  const exEN=c.example_en||simpleEN(c.meaning);
+  const choicesEl=$("#choices");
+
+  clearResult();
+  resetChoicesUI();
+
+  if(state.mode==='drill'){
+    state.answered=false;
+    const pool=filterByLevel(cards());
+    const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);
+    const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));
+    state.drillChoices=shuffle(opts);
+
+    if(state.promptMode==="JPEN"){
+      $("#promptBig").textContent=jp;
+      $("#promptSub").textContent=kana;
+      $("#answerMain").textContent=en;
+    }else{
+      $("#promptBig").textContent=en;
+      $("#promptSub").textContent="";
+      $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`;
     }
-    state.order=Object.keys(state.decks);
-    state.currentDeckKey=state.order[0]||null;
-  }
+    $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
+    setAnswerVisible(false);
 
-  function updateDeckSelect(){
-    const sel=document.getElementById("deckSelect");
-    sel.innerHTML="";
-    state.order.forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=k;sel.appendChild(o)});
-    if(state.currentDeckKey) sel.value=state.currentDeckKey;
-  }
-
-  function allCards(){return state.order.flatMap(k=>state.decks[k]||[])}
-
-  function updateStats(){
-    const cards=allCards();
-    const total=cards.length;
-    let learned=0,review=0,nots=0;
-    for(const c of cards){
-      const s=getStatus(c.id);
-      if(s==="learned") learned++; else if(s==="review") review++; else nots++;
+    choicesEl.innerHTML=state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
+    choicesEl.classList.remove('hidden-el');
+    const rb=$("#revealBtn"); if(rb){rb.textContent='Next'; rb.disabled=true; rb.setAttribute('aria-disabled','true')}
+  }else{
+    if(state.promptMode==="JPEN"){
+      $("#promptBig").textContent=jp;
+      $("#promptSub").textContent=kana;
+      $("#answerMain").textContent=en;
+    }else{
+      $("#promptBig").textContent=en;
+      $("#promptSub").textContent="";
+      $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`;
     }
-    document.getElementById("statsLine").textContent=`Total ${total} · Learned ${learned} · Review ${review} · Not ${nots}`;
+    $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
+    setAnswerVisible(true);
+    $("#choices").classList.add("hidden-el");
+    const rb=$("#revealBtn"); if(rb){rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'}
   }
+}
 
-  function buildPool(){
-    const mode=document.getElementById("modeSelect").value;
-    const shuffleOn=document.getElementById("shuffleSelect").value==="on";
-    const base=state.currentDeckKey?(state.decks[state.currentDeckKey]||[]):allCards();
-    let pool=base.filter(c=>{
-      const s=getStatus(c.id);
-      if(mode==="all") return true;
-      return s===mode;
+/* ---------- Status + counters (GLOBAL across all cards) ---------- */
+function markStatus(status){
+  const c=state.current; if(!c) return;
+  const all=getCards();
+  const idx=all.findIndex(x=>x.id===c.id);
+  if(idx!==-1){
+    const item={...all[idx]};
+    item.seen=(item.seen||0)+1;
+    if(status==='learned'){item.status='learned'; item.correct=(item.correct||0)+1}
+    else if(status==='review'){item.status='review'}
+    else if(status==='not'){item.status='not'}
+    all[idx]=item;
+    setCards(all); // also updates stats
+  }
+  nextCard();
+}
+
+// sum across ALL cards (not just current view)
+function updateStats(){
+  const all=getCards();
+  let learned=0, review=0, nots=0;
+  for(const c of all){
+    const s=c.status||"new";
+    if(s==="learned") learned++;
+    else if(s==="review") review++;
+    else nots++;
+  }
+  $("#statsLine").textContent = `Total ${all.length} · Learned ${learned} · Review ${review} · Not ${nots}`;
+}
+
+/* ---------- Import / CSV / Remote decks ---------- */
+function importJSON(text,level){
+  let arr=JSON.parse(text);
+  arr=Array.isArray(arr)?arr:[arr];
+  const now=Date.now();
+  const cleaned=arr.map((x,i)=>({
+    id: cryptoRandomId(),
+    kanji: String(x.kanji||x.word||"").trim(),
+    kana: String(x.kana||x.reading||"").trim(),
+    meaning: String(x.meaning||x.gloss||x.translation||"").trim(),
+    example: String(x.example||"").trim(),
+    example_en: String(x.example_en||x.exampleEN||x.en||"").trim(),
+    level: (level||String(x.level||"N3").toUpperCase()),
+    status: "new", seen:0, correct:0, addedAt: now+i
+  })).filter(x=>x.meaning && (x.kanji||x.kana));
+  const all=getCards().concat(cleaned);
+  setCards(all); buildQueue(); drawCard();
+}
+function importCSV(text,level){
+  const lines=text.split(/\r?\n/).filter(Boolean); if(lines.length===0) return;
+  const header=lines[0].toLowerCase().split(",").map(h=>h.trim());
+  const idx=k=>header.indexOf(k);
+  const out=[];
+  for(let i=1;i<lines.length;i++){
+    const cols=splitCSVLine(lines[i]);
+    out.push({
+      kanji: cols[idx("kanji")]||cols[idx("word")]||"",
+      kana: cols[idx("kana")]||cols[idx("reading")]||"",
+      meaning: cols[idx("meaning")]||cols[idx("gloss")]||cols[idx("translation")]||"",
+      example: cols[idx("example")]||"",
+      example_en: cols[idx("example_en")]||cols[idx("exampleen")]||cols[idx("en")]||""
     });
-    if(shuffleOn){
-      for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+  }
+  importJSON(JSON.stringify(out),level);
+}
+function splitCSVLine(line){
+  const r=[]; let cur=""; let q=false;
+  for(let i=0;i<line.length;i++){
+    const ch=line[i];
+    if(ch=='"'){ if(q&&line[i+1]=='"'){cur+='"'; i++} else { q=!q } }
+    else if(ch===',' && !q){ r.push(cur); cur="" }
+    else { cur+=ch }
+  }
+  r.push(cur); return r.map(s=>s.trim());
+}
+
+function dedupeByKey(list, keyFn){
+  const seen=new Set(), out=[];
+  for(const it of list){ const k=keyFn(it); if(seen.has(k)) continue; seen.add(k); out.push(it) }
+  return out;
+}
+
+async function loadRemoteDeck(url, levelOverride=null){
+  const res=await fetch(url,{cache:'no-cache'});
+  if(!res.ok) throw new Error('Failed to fetch deck: '+res.status);
+  const text=await res.text();
+  const lower=url.toLowerCase();
+  if(lower.endsWith('.json')){
+    const arr=JSON.parse(text);
+    if(!Array.isArray(arr)) throw new Error('JSON must be an array');
+    addCardsFromArray(arr, levelOverride||undefined);
+  }else if(lower.endsWith('.csv')){
+    const lines=text.split(/\r?\n/).filter(Boolean);
+    if(!lines.length) return;
+    const header=lines[0].toLowerCase().split(',').map(h=>h.trim());
+    const idx=k=>header.indexOf(k);
+    const rows=[];
+    for(let i=1;i<lines.length;i++){
+      const cols=splitCSVLine(lines[i]);
+      rows.push({
+        kanji: cols[idx('kanji')]||cols[idx('word')]||"",
+        kana: cols[idx('kana')]||cols[idx('reading')]||"",
+        meaning: cols[idx('meaning')]||cols[idx('gloss')]||cols[idx('translation')]||"",
+        example: cols[idx('example')]||"",
+        example_en: cols[idx('example_en')]||cols[idx('exampleen')]||cols[idx('en')]||"",
+        level: levelOverride||""
+      });
     }
-    state.pool=pool; state.cursor=0; updateCursor();
+    addCardsFromArray(rows, levelOverride||undefined);
+  }else{
+    throw new Error('Unsupported format (use .json or .csv)');
   }
+  buildQueue(); drawCard(); updateStats();
+}
+function addCardsFromArray(arr, levelOverride){
+  const now=Date.now();
+  const cleaned=(Array.isArray(arr)?arr:[arr]).map((x,i)=>({
+    id: cryptoRandomId(),
+    kanji: String(x.kanji||x.word||"").trim(),
+    kana: String(x.kana||x.reading||"").trim(),
+    meaning: String(x.meaning||x.gloss||x.translation||"").trim(),
+    example: String(x.example||"").trim(),
+    example_en: String(x.example_en||x.exampleEN||x.en||"").trim(),
+    level: (levelOverride||String((x.level||"N3")).toUpperCase()),
+    status: "new", seen:0, correct:0, addedAt: now+i
+  })).filter(x=>x.meaning && (x.kanji||x.kana));
+  const all=getCards().concat(cleaned);
+  setCards(all);
+}
 
-  function showCard(){
-    if(state.pool.length===0){
-      document.getElementById("cardKana").textContent="—";
-      document.getElementById("cardWord").textContent="No cards";
-      document.getElementById("cardMeaning").textContent="Add decks or change filters";
-      document.getElementById("cardExample").textContent="";
-      updateCursor(); return;
-    }
-    const c=state.pool[state.cursor];
-    document.getElementById("cardKana").textContent=c.kana||"";
-    document.getElementById("cardWord").textContent=c.kanji||c.kana||"";
-    document.getElementById("cardMeaning").textContent=c.meaning||"";
-    document.getElementById("cardExample").textContent=c.example?("例文："+c.example):"";
-    updateCursor();
+/* ---------- BG helpers ---------- */
+function setTheme(mode){
+  document.body.classList.toggle('dark',mode==='dark');
+  const btn=$("#themeBtn");
+  if(btn){btn.textContent=mode==='dark'?'Light':'Dark';btn.setAttribute('aria-pressed',mode==='dark'?'true':'false')}
+  state.theme=mode; saveSettings({theme:mode}); applyCardOpacity();
+}
+function applyBackground(){
+  if(state.bgDataUrl){document.documentElement.style.setProperty('--bgimg',`url('${state.bgDataUrl}')`)}
+  else{document.documentElement.style.removeProperty('--bgimg')}
+  document.documentElement.style.setProperty('--bgimgOpacity',String((state.bgOpacity||0)/100));
+  const s=$("#bgOpacity"); if(s) s.value=String(state.bgOpacity||0);
+  const s2=$("#bgOpacity2"); if(s2) s2.value=String(state.bgOpacity||0);
+}
+function applyCardOpacity(){
+  const dark=document.body.classList.contains('dark');
+  const alpha=Math.max(0,Math.min(1,(state.cardOpacity||45)/100));
+  const val=dark?`rgba(17,22,28,${alpha})`:`rgba(255,255,255,${alpha})`;
+  document.documentElement.style.setProperty('--cardbg',val);
+  const s=$("#cardOpacity"); if(s) s.value=String(state.cardOpacity||45);
+  const s2=$("#cardOpacity2"); if(s2) s2.value=String(state.cardOpacity||45);
+}
+
+/* ---------- Interactions ---------- */
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('.choice-btn'); if(!btn) return;
+  if(state.mode!=='drill'||state.answered) return;
+  const idx=parseInt(btn.getAttribute('data-idx'),10);
+  const opt=state.drillChoices[idx];
+  state.drillChoices.forEach((o,i)=>{
+    const el=document.querySelector(`.choice-btn[data-idx="${i}"]`);
+    if(!el) return; if(o.correct) el.classList.add('correct');
+  });
+  if(!opt.correct) btn.classList.add('wrong');
+  state.answered=true; setAnswerVisible(true); showResult(!!opt.correct);
+  const rb=$("#revealBtn"); if(rb){rb.disabled=false;rb.removeAttribute('aria-disabled');rb.textContent='Next'}
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft') $("#notBtn").click();
+  if(e.key==='ArrowRight') $("#learnedBtn").click();
+  if(e.key===' '||e.key==='Enter') $("#revealBtn").click();
+  if(e.key && e.key.toLowerCase()==='t'){
+    const next=document.body.classList.contains('dark')?'light':'dark'; setTheme(next);
   }
+});
 
-  function updateCursor(){
-    const pos=state.pool.length?(state.cursor+1):0;
-    document.getElementById("cursorInfo").textContent=`Card ${pos} / ${state.pool.length}`;
+/* Buttons */
+$("#learnTab").addEventListener('click',()=>{state.mode='learn'; setAnswerVisible(true); $("#choices").classList.add('hidden-el'); drawCard(); setActiveTab('learn')});
+$("#drillTab").addEventListener('click',()=>{state.mode='drill'; drawCard(); setActiveTab('drill')});
+function setActiveTab(which){
+  $("#learnTab").classList.toggle('active',which==='learn');
+  $("#drillTab").classList.toggle('active',which==='drill');
+}
+$("#promptMode").addEventListener('change',e=>{state.promptMode=e.target.value; saveSettings({promptMode:state.promptMode}); drawCard()});
+$("#levelFilter").addEventListener('change',e=>{state.level=e.target.value; buildQueue(); drawCard()});
+$("#themeBtn").addEventListener('click',()=>{const next=document.body.classList.contains('dark')?'light':'dark'; setTheme(next)});
+
+$("#addBatchBtn").addEventListener('click',()=>{$("#batchModal").classList.remove('hidden-el')});
+$("#closeBatch").addEventListener('click',()=>{$("#batchModal").classList.add('hidden-el')});
+$("#addBatchJson").addEventListener('click',()=>{
+  const t=$("#batchInput").value.trim(); if(!t){alert('Paste JSON first');return}
+  try{ importJSON(t,$("#batchLevel").value); $("#batchInput").value=''; $("#batchModal").classList.add('hidden-el') }catch(e){ alert('Invalid JSON') }
+});
+$("#addBatchCsv").addEventListener('click',()=>{
+  const t=$("#batchInput").value.trim(); if(!t){alert('Paste CSV first');return}
+  try{ importCSV(t,$("#batchLevel").value); $("#batchInput").value=''; $("#batchModal").classList.add('hidden-el') }catch(e){ alert('Invalid CSV') }
+});
+$("#importFile").addEventListener('change',function(e){
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ const txt=String(r.result||""); if(f.name.toLowerCase().endsWith('.csv')) importCSV(txt,$("#batchLevel").value); else importJSON(txt,$("#batchLevel").value); buildQueue(); drawCard(); };
+  r.readAsText(f); e.target.value='';
+});
+
+$("#notBtn").addEventListener('click',()=>markStatus('not'));
+$("#reviewBtn").addEventListener('click',()=>markStatus('review'));
+$("#learnedBtn").addEventListener('click',()=>markStatus('learned'));
+$("#revealBtn").addEventListener('click',()=>nextCard());
+
+/* Inline BG panel wiring (mirrors floating) */
+function syncInlineBgPanel(fromFloating=false){
+  if(!fromFloating){
+    $("#bgUrls2").value = state.bgRemoteList;
+    $("#bgRandom2").checked = !!state.bgRemoteRandom;
+  }else{
+    $("#bgUrls").value = state.bgRemoteList;
+    $("#bgRandom").checked = !!state.bgRemoteRandom;
   }
+}
+$("#uploadBgBtn").addEventListener('click',()=>$("#bgFile").click());
+$("#bgFile").addEventListener('change',e=>readBgFile(e.target.files));
+$("#clearBgBtn").addEventListener('click',()=>{state.bgDataUrl=null; saveSettings({bgDataUrl:null}); applyBackground()});
+$("#bgOpacity").addEventListener('input',e=>{state.bgOpacity=Number(e.target.value||0); saveSettings({bgOpacity:state.bgOpacity}); applyBackground()});
+$("#cardOpacity").addEventListener('input',e=>{state.cardOpacity=Number(e.target.value||45); saveSettings({cardOpacity:state.cardOpacity}); applyCardOpacity()});
+$("#bgRandom").addEventListener('change',e=>{state.bgRemoteRandom=!!e.target.checked; saveSettings({bgRemoteRandom:state.bgRemoteRandom})});
+$("#bgUrls").addEventListener('change',e=>{state.bgRemoteList=e.target.value; saveSettings({bgRemoteList:state.bgRemoteList})});
+$("#bgRandomNow").addEventListener('click',()=>useRandomBg());
 
-  function nextCard(){ if(state.pool.length){ state.cursor=(state.cursor+1)%state.pool.length; showCard(); } }
-  function mark(val){ if(!state.pool.length) return; const c=state.pool[state.cursor]; setStatus(c.id,val); updateStats(); nextCard(); }
+$("#uploadBgBtn2").addEventListener('click',()=>$("#bgFile2").click());
+$("#bgFile2").addEventListener('change',e=>readBgFile(e.target.files));
+$("#clearBgBtn2").addEventListener('click',()=>{state.bgDataUrl=null; saveSettings({bgDataUrl:null}); applyBackground()});
+$("#bgOpacity2").addEventListener('input',e=>{state.bgOpacity=Number(e.target.value||0); saveSettings({bgOpacity:state.bgOpacity}); applyBackground()});
+$("#cardOpacity2").addEventListener('input',e=>{state.cardOpacity=Number(e.target.value||45); saveSettings({cardOpacity:state.cardOpacity}); applyCardOpacity()});
+$("#bgRandom2").addEventListener('change',e=>{state.bgRemoteRandom=!!e.target.checked; saveSettings({bgRemoteRandom:state.bgRemoteRandom})});
+$("#bgUrls2").addEventListener('change',e=>{state.bgRemoteList=e.target.value; saveSettings({bgRemoteList:state.bgRemoteList})});
+$("#bgRandomNow2").addEventListener('click',()=>useRandomBg());
+syncInlineBgPanel();
 
-  function attachUI(){
-    document.getElementById("deckSelect").addEventListener("change",e=>{state.currentDeckKey=e.target.value||null; buildPool(); showCard();});
-    document.getElementById("modeSelect").addEventListener("change",()=>{buildPool(); showCard();});
-    document.getElementById("shuffleSelect").addEventListener("change",()=>{buildPool(); showCard();});
-    document.getElementById("btnStudy").addEventListener("click",()=>{document.getElementById("modeSelect").value="all"; buildPool(); showCard();});
-    document.getElementById("btnReview").addEventListener("click",()=>{document.getElementById("modeSelect").value="review"; buildPool(); showCard();});
-    document.getElementById("btnReset").addEventListener("click",()=>{if(confirm("Reset all progress?")){state.statuses={};saveStatuses();updateStats();buildPool();showCard();}});
-    document.getElementById("nextCard").addEventListener("click",nextCard);
-    document.getElementById("markLearned").addEventListener("click",()=>mark("learned"));
-    document.getElementById("markReview").addEventListener("click",()=>mark("review"));
-  }
+function readBgFile(files){
+  const f=files&&files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ state.bgDataUrl=String(r.result||""); saveSettings({bgDataUrl:state.bgDataUrl}); applyBackground(); };
+  r.readAsDataURL(f);
+}
+function useRandomBg(){
+  const list=(state.bgRemoteList||"").split(/[\r\n]+/).map(s=>s.trim()).filter(Boolean);
+  if(!list.length) return;
+  const pick = list[Math.floor(Math.random()*list.length)];
+  state.bgDataUrl=pick; saveSettings({bgDataUrl:pick}); applyBackground();
+}
 
-  (async function init(){
-    loadStatuses();
-    await loadDecks();
-    updateDeckSelect();
-    updateStats();
-    buildPool();
-    showCard();
-    attachUI();
-  })();
+/* Deck panel */
+(function deckPanel(){
+  const urlsTA=$("#deckUrls");
+  const btn=$("#loadDeckBtn");
+  const replace=$("#deckReplace");
+  const dedupe=$("#deckDedupe");
+  const levelSel=$("#deckLevelOverride");
+  try{const s=loadSettings(); if(s.deckUrls && urlsTA) urlsTA.value=s.deckUrls}catch(_){}
+  if(!btn) return;
+  btn.addEventListener('click', async ()=>{
+    const urls=(urlsTA.value||'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
+    if(!urls.length){alert('Paste at least one URL');return}
+    saveSettings({deckUrls: urlsTA.value});
+    try{
+      if(replace.checked){ setCards([]); }
+      for(const u of urls){ await loadRemoteDeck(u, levelSel.value||null); }
+      if(dedupe.checked){
+        const all=getCards();
+        const uniq=dedupeByKey(all, x=> (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
+        setCards(uniq);
+      }
+      buildQueue(); drawCard();
+      alert('Loaded '+urls.length+' deck file(s). Total: '+getCards().length);
+    }catch(e){ alert('Deck load failed: '+(e&&e.message?e.message:e)) }
+  });
+})();
+
+/* Autoload via query */
+(function autoLoadFromQuery(){
+  try{
+    const q=new URLSearchParams(location.search);
+    const deck=q.get('deck'); const level=q.get('level');
+    if(deck){ loadRemoteDeck(deck, level||null).then(()=>{buildQueue();drawCard();alert('Remote deck loaded')}).catch(err=>alert('Deck load failed: '+err.message)); }
+  }catch(_){}
+})();
+
+/* Feedback */
+function showResult(ok){
+  const res=$("#result"),card=$("#cardZone"); if(!res||!card) return;
+  res.className='result '+(ok?'ok show':'ng show');
+  res.innerHTML=`<div class="icon">${ok?'✓':'✕'}</div>`;
+  card.classList.remove('flash-ok','flash-ng','shake');
+  if(ok){card.classList.add('flash-ok')}else{card.classList.add('flash-ng','shake')}
+  if(navigator.vibrate){try{navigator.vibrate(ok?[30]:[10,80,10])}catch(_){}}}
+function clearResult(){const res=$("#result"),card=$("#cardZone"); if(res){res.className='result';res.innerHTML=''} if(card){card.classList.remove('flash-ok','flash-ng','shake')}}
+
+/* Helpers */
+function shuffle(arr){const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]} return a}
+
+/* ---------- Init ---------- */
+(function init(){
+  setActiveTab('learn');
+  state.level='ALL';
+  $("#promptMode").value=state.promptMode;
+  $("#levelFilter").value=state.level;
+  if(settingsBootstrap.theme){ setTheme(settingsBootstrap.theme) }
+  applyCardOpacity(); applyBackground();
+  buildQueue(); drawCard(); updateStats();
+})();
 </script>
 </body>
 </html>
