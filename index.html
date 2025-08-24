@@ -2,48 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nihongo Flashcards — JLPT N3/N2</title>
-<meta name="theme-color" content="#0f1115">
+<title>JLPT N3/N2 Flashcards</title>
 <style>
-:root{--bg:#0f1115;--panel:#111827;--panel2:#141c2b;--text:#e9eef5;--muted:#a7b6d3;--line:#253147;--chip:#121826;--chipLine:#2a3144;--green:#1f6d3e;--amber:#7a5b1f;--red:#7a2430;--accent:#8db3ff;--radius:14px;--maxw:min(980px,92vw)}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:18px}
-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:14px}
-h1{font-size:18px;margin:0 12px 0 0;letter-spacing:.2px}
-.toolbar{display:flex;flex-wrap:wrap;gap:8px}
-.btn{border:1px solid var(--chipLine);background:var(--chip);color:var(--text);padding:10px 14px;border-radius:999px;cursor:pointer;transition:transform .05s ease;user-select:none}
-.btn:active{transform:translateY(1px)}
-.btn.primary{background:var(--text);color:#0b0e13;border-color:transparent}
-.btn.ghost{background:transparent;border-color:var(--chipLine)}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--chipLine);border-radius:999px;background:var(--panel2);font-size:14px}
-.badge strong{font-variant-numeric:tabular-nums}
-.row{display:flex;flex-wrap:wrap;gap:12px}
-.panel{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.00));border:1px solid var(--line);border-radius:20px;padding:16px}
-.statbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.stat{padding:6px 10px;border-radius:999px;border:1px solid var(--chipLine);background:var(--panel2);font-variant-numeric:tabular-nums}
-.stat.total{background:#182235}
-.stat.learned{background:#12251a}
-.stat.review{background:#241e12}
-.stat.not{background:#241216}
-.flex{display:flex;gap:12px}
-.spacer{flex:1}
-.card{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:20px;padding:24px;min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-.word{font-size:38px;line-height:1.15;margin:2px 0}
-.kana{font-size:18px;color:var(--muted);margin-bottom:8px}
-.meaning{font-size:18px;margin:8px 0 4px}
-.example{font-size:16px;color:var(--muted)}
-.controls{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
-.selects{display:flex;flex-wrap:wrap;gap:8px}
-select{appearance:none;background:var(--chip);color:var(--text);border:1px solid var(--chipLine);border-radius:12px;padding:10px 14px;min-width:180px}
-.footer{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.small{font-size:13px;color:var(--muted)}
-hr{border:0;border-top:1px solid var(--line);margin:16px 0}
-@media (max-width:720px){
-  .word{font-size:32px}
-  .meaning{font-size:17px}
-}
+  :root{--bg:#fff;--fg:#111;--muted:#666;--line:#e6e6e6;--btn:#f6f6f6;--btn2:#111;--btnfg:#111;--btn2fg:#fff;--radius:14px;--cardw:min(720px,92vw);--cardbg:rgba(255,255,255,0.45)}
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}
+  .wrap{max-width:920px;margin:0 auto;padding:18px}
+  header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:12px}
+  h1{font-size:18px;margin:0 12px 0 0;letter-spacing:.2px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px}
+  .btn{border:1px solid var(--line);background:var(--btn);color:var(--btnfg);padding:10px 14px;border-radius:999px;cursor:pointer}
+  .btn.primary{background:var(--btn2);color:var(--btn2fg)}
+  .spacer{flex:1}
+  .stats{margin:6px 0 14px;font-variant-numeric:tabular-nums;color:#222}
+  .panel{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff}
+  .card{background:var(--cardbg);border:1px solid var(--line);border-radius:16px;padding:24px;min-height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+  .kana{font-size:18px;color:var(--muted);margin-bottom:8px}
+  .word{font-size:36px;line-height:1.1;margin:2px 0}
+  .meaning{font-size:18px;margin:10px 0 4px}
+  .example{font-size:15px;color:var(--muted)}
+  .controls{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .footer{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  select{appearance:none;background:var(--btn);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:160px}
+  .small{font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -53,20 +34,15 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     <div class="toolbar">
       <button class="btn primary" id="btnStudy">Study</button>
       <button class="btn" id="btnReview">Review</button>
-      <button class="btn ghost" id="btnReset">Reset Progress</button>
+      <button class="btn" id="btnReset">Reset Progress</button>
     </div>
     <span class="spacer"></span>
-    <div class="badge"><span>Deck</span><select id="deckSelect"></select></div>
+    <select id="deckSelect"></select>
   </header>
 
+  <div class="stats" id="statsLine">Total 0 · Learned 0 · Review 0 · Not 0</div>
+
   <div class="panel">
-    <div class="statbar" id="stats">
-      <div class="stat total" id="statTotal">Total 0</div>
-      <div class="stat learned" id="statLearned">Learned 0</div>
-      <div class="stat review" id="statReview">Review 0</div>
-      <div class="stat not" id="statNot">Not 0</div>
-    </div>
-    <hr>
     <div class="card" id="card">
       <div class="kana" id="cardKana">かな</div>
       <div class="word" id="cardWord">言葉</div>
@@ -79,18 +55,16 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
       <button class="btn" id="nextCard">Next ▶</button>
     </div>
     <div class="footer">
-      <div class="selects">
-        <select id="modeSelect">
-          <option value="all">All cards</option>
-          <option value="not">Only Not</option>
-          <option value="review">Only Review</option>
-          <option value="learned">Only Learned</option>
-        </select>
-        <select id="shuffleSelect">
-          <option value="on">Shuffled</option>
-          <option value="off">In order</option>
-        </select>
-      </div>
+      <select id="modeSelect">
+        <option value="all">All cards</option>
+        <option value="not">Only Not</option>
+        <option value="review">Only Review</option>
+        <option value="learned">Only Learned</option>
+      </select>
+      <select id="shuffleSelect">
+        <option value="on">Shuffled</option>
+        <option value="off">In order</option>
+      </select>
       <span class="spacer"></span>
       <div class="small" id="cursorInfo">Card 0 / 0</div>
     </div>
@@ -98,157 +72,112 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 </div>
 
 <script>
-const STORAGE_KEY="nihongo_status_v2";
-const state={ decks:{}, order:[], currentDeckKey:null, pool:[], cursor:0, statuses:{} };
+  const STORAGE_KEY="nihongo_status_v2";
+  const state={decks:{},order:[],currentDeckKey:null,pool:[],cursor:0,statuses:{}};
+  const DECK_MANIFEST=["data/n2_core.json","data/n3_core.json"];
 
-// 🔹 Your deck files
-const DECK_MANIFEST=[
-  "data/n2_core.json",
-  "data/n3_core.json"
-];
+  function loadStatuses(){try{state.statuses=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}")}catch(e){state.statuses={}}}
+  function saveStatuses(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state.statuses))}
+  function setStatus(id,val){state.statuses[id]=val;saveStatuses()}
+  function getStatus(id){return state.statuses[id]||"not"}
+  function uid(c,i){return c.id||(c.kanji+"|"+(c.kana||"")+"|"+i)}
 
-const INLINE_DECKS={};
-
-function loadStatuses(){
-  try{ state.statuses=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}"); }catch(e){ state.statuses={}; }
-}
-function saveStatuses(){ localStorage.setItem(STORAGE_KEY,JSON.stringify(state.statuses)); }
-function setStatus(id,val){ state.statuses[id]=val; saveStatuses(); }
-function getStatus(id){ return state.statuses[id]||"not"; }
-
-function uniqId(card,idx){ return card.id || (card.kanji+"|"+card.kana+"|"+idx); }
-
-async function loadDecks(){
-  state.decks={};
-  Object.keys(INLINE_DECKS).forEach(k=>{
-    state.decks[k]=INLINE_DECKS[k].map((c,i)=>({...c,id:uniqId(c,i)}));
-  });
-  for(const path of DECK_MANIFEST){
-    try{
-      const res=await fetch(path,{cache:"no-store"});
-      if(!res.ok) continue;
-      const arr=await res.json();
-      const key=path.split("/").pop().replace(".json","");
-      state.decks[key]=arr.map((c,i)=>({...c,id:uniqId(c,i)}));
-    }catch(e){}
-  }
-  state.order=Object.keys(state.decks);
-  state.currentDeckKey=state.order[0]||null;
-}
-
-function updateDeckSelect(){
-  const sel=document.getElementById("deckSelect");
-  sel.innerHTML="";
-  state.order.forEach(k=>{
-    const opt=document.createElement("option");
-    opt.value=k; opt.textContent=k;
-    sel.appendChild(opt);
-  });
-  if(state.currentDeckKey) sel.value=state.currentDeckKey;
-}
-
-function allCards(){
-  return state.order.flatMap(k=>state.decks[k]||[]);
-}
-
-function recomputeStats(){
-  const cards=allCards();
-  const total=cards.length;
-  let learned=0, review=0, nots=0;
-  for(const c of cards){
-    const s=getStatus(c.id);
-    if(s==="learned") learned++;
-    else if(s==="review") review++;
-    else nots++;
-  }
-  document.getElementById("statTotal").textContent="Total "+total;
-  document.getElementById("statLearned").textContent="Learned "+learned;
-  document.getElementById("statReview").textContent="Review "+review;
-  document.getElementById("statNot").textContent="Not "+nots;
-}
-
-function buildPool(){
-  const mode=document.getElementById("modeSelect").value;
-  const shuffleOn=document.getElementById("shuffleSelect").value==="on";
-  const base=state.currentDeckKey? (state.decks[state.currentDeckKey]||[]) : allCards();
-  let pool=base.filter(c=>{
-    const s=getStatus(c.id);
-    if(mode==="all") return true;
-    return s===mode;
-  });
-  if(shuffleOn){
-    for(let i=pool.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));
-      [pool[i],pool[j]]=[pool[j],pool[i]];
+  async function loadDecks(){
+    state.decks={};
+    for(const path of DECK_MANIFEST){
+      try{
+        const res=await fetch(path,{cache:"no-store"});
+        if(!res.ok) continue;
+        const arr=await res.json();
+        if(!Array.isArray(arr)) continue;
+        const key=path.split("/").pop().replace(".json","");
+        state.decks[key]=arr.map((c,i)=>({...c,id:uid(c,i)}));
+      }catch(e){}
     }
+    state.order=Object.keys(state.decks);
+    state.currentDeckKey=state.order[0]||null;
   }
-  state.pool=pool;
-  state.cursor=0;
-  updateCursorInfo();
-}
 
-function showCurrent(){
-  if(state.pool.length===0){
-    document.getElementById("cardKana").textContent="—";
-    document.getElementById("cardWord").textContent="No cards";
-    document.getElementById("cardMeaning").textContent="Adjust filters or add decks";
-    document.getElementById("cardExample").textContent="";
-    updateCursorInfo();
-    return;
+  function updateDeckSelect(){
+    const sel=document.getElementById("deckSelect");
+    sel.innerHTML="";
+    state.order.forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=k;sel.appendChild(o)});
+    if(state.currentDeckKey) sel.value=state.currentDeckKey;
   }
-  const c=state.pool[state.cursor];
-  document.getElementById("cardKana").textContent=c.kana||"";
-  document.getElementById("cardWord").textContent=c.kanji||c.kana||"";
-  document.getElementById("cardMeaning").textContent=c.meaning||"";
-  document.getElementById("cardExample").textContent=c.example?("例文："+c.example):"";
-  updateCursorInfo();
-}
 
-function updateCursorInfo(){
-  const pos=state.pool.length? (state.cursor+1):0;
-  document.getElementById("cursorInfo").textContent=`Card ${pos} / ${state.pool.length}`;
-}
+  function allCards(){return state.order.flatMap(k=>state.decks[k]||[])}
 
-function nextCard(){
-  if(state.pool.length===0) return;
-  state.cursor=(state.cursor+1)%state.pool.length;
-  showCurrent();
-}
+  function updateStats(){
+    const cards=allCards();
+    const total=cards.length;
+    let learned=0,review=0,nots=0;
+    for(const c of cards){
+      const s=getStatus(c.id);
+      if(s==="learned") learned++; else if(s==="review") review++; else nots++;
+    }
+    document.getElementById("statsLine").textContent=`Total ${total} · Learned ${learned} · Review ${review} · Not ${nots}`;
+  }
 
-function mark(val){
-  if(state.pool.length===0) return;
-  const c=state.pool[state.cursor];
-  setStatus(c.id,val);
-  recomputeStats();
-  nextCard();
-}
+  function buildPool(){
+    const mode=document.getElementById("modeSelect").value;
+    const shuffleOn=document.getElementById("shuffleSelect").value==="on";
+    const base=state.currentDeckKey?(state.decks[state.currentDeckKey]||[]):allCards();
+    let pool=base.filter(c=>{
+      const s=getStatus(c.id);
+      if(mode==="all") return true;
+      return s===mode;
+    });
+    if(shuffleOn){
+      for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+    }
+    state.pool=pool; state.cursor=0; updateCursor();
+  }
 
-function attachUI(){
-  document.getElementById("deckSelect").addEventListener("change",e=>{
-    state.currentDeckKey=e.target.value||null;
-    buildPool(); showCurrent();
-  });
-  document.getElementById("modeSelect").addEventListener("change",()=>{ buildPool(); showCurrent(); });
-  document.getElementById("shuffleSelect").addEventListener("change",()=>{ buildPool(); showCurrent(); });
-  document.getElementById("btnStudy").addEventListener("click",()=>{ document.getElementById("modeSelect").value="all"; buildPool(); showCurrent(); });
-  document.getElementById("btnReview").addEventListener("click",()=>{ document.getElementById("modeSelect").value="review"; buildPool(); showCurrent(); });
-  document.getElementById("btnReset").addEventListener("click",()=>{
-    if(confirm("Reset all progress?")){ state.statuses={}; saveStatuses(); recomputeStats(); buildPool(); showCurrent(); }
-  });
-  document.getElementById("nextCard").addEventListener("click",nextCard);
-  document.getElementById("markLearned").addEventListener("click",()=>mark("learned"));
-  document.getElementById("markReview").addEventListener("click",()=>mark("review"));
-}
+  function showCard(){
+    if(state.pool.length===0){
+      document.getElementById("cardKana").textContent="—";
+      document.getElementById("cardWord").textContent="No cards";
+      document.getElementById("cardMeaning").textContent="Add decks or change filters";
+      document.getElementById("cardExample").textContent="";
+      updateCursor(); return;
+    }
+    const c=state.pool[state.cursor];
+    document.getElementById("cardKana").textContent=c.kana||"";
+    document.getElementById("cardWord").textContent=c.kanji||c.kana||"";
+    document.getElementById("cardMeaning").textContent=c.meaning||"";
+    document.getElementById("cardExample").textContent=c.example?("例文："+c.example):"";
+    updateCursor();
+  }
 
-(async function init(){
-  loadStatuses();
-  await loadDecks();
-  updateDeckSelect();
-  recomputeStats();
-  buildPool();
-  showCurrent();
-  attachUI();
-})();
+  function updateCursor(){
+    const pos=state.pool.length?(state.cursor+1):0;
+    document.getElementById("cursorInfo").textContent=`Card ${pos} / ${state.pool.length}`;
+  }
+
+  function nextCard(){ if(state.pool.length){ state.cursor=(state.cursor+1)%state.pool.length; showCard(); } }
+  function mark(val){ if(!state.pool.length) return; const c=state.pool[state.cursor]; setStatus(c.id,val); updateStats(); nextCard(); }
+
+  function attachUI(){
+    document.getElementById("deckSelect").addEventListener("change",e=>{state.currentDeckKey=e.target.value||null; buildPool(); showCard();});
+    document.getElementById("modeSelect").addEventListener("change",()=>{buildPool(); showCard();});
+    document.getElementById("shuffleSelect").addEventListener("change",()=>{buildPool(); showCard();});
+    document.getElementById("btnStudy").addEventListener("click",()=>{document.getElementById("modeSelect").value="all"; buildPool(); showCard();});
+    document.getElementById("btnReview").addEventListener("click",()=>{document.getElementById("modeSelect").value="review"; buildPool(); showCard();});
+    document.getElementById("btnReset").addEventListener("click",()=>{if(confirm("Reset all progress?")){state.statuses={};saveStatuses();updateStats();buildPool();showCard();}});
+    document.getElementById("nextCard").addEventListener("click",nextCard);
+    document.getElementById("markLearned").addEventListener("click",()=>mark("learned"));
+    document.getElementById("markReview").addEventListener("click",()=>mark("review"));
+  }
+
+  (async function init(){
+    loadStatuses();
+    await loadDecks();
+    updateDeckSelect();
+    updateStats();
+    buildPool();
+    showCard();
+    attachUI();
+  })();
 </script>
 </body>
 </html>
