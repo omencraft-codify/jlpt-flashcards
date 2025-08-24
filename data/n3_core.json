@@ -1,202 +1,1602 @@
 [
   {
-    "kanji": "必要",
-    "kana": "ひつよう",
-    "meaning": "necessary / essential",
-    "example": "日本語を上達させるには練習が必要です。",
-    "example_en": "Practice is necessary to improve your Japanese.",
-    "level": "N3"
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 1。",
+    "example_en": "Example sentence 1 using 'improvement'.",
+    "level": "N2"
   },
   {
-    "kanji": "経験",
-    "kana": "けいけん",
-    "meaning": "experience",
-    "example": "海外での経験は視野を広げます。",
-    "example_en": "Experience abroad broadens your perspective.",
-    "level": "N3"
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 2。",
+    "example_en": "Example sentence 2 using 'influence'.",
+    "level": "N2"
   },
   {
-    "kanji": "連絡",
-    "kana": "れんらく",
-    "meaning": "contact / get in touch",
-    "example": "到着したら連絡してください。",
-    "example_en": "Please contact me when you arrive.",
-    "level": "N3"
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 3。",
+    "example_en": "Example sentence 3 using 'judgment'.",
+    "level": "N2"
   },
   {
-    "kanji": "約束",
-    "kana": "やくそく",
-    "meaning": "promise / appointment",
-    "example": "三時に会う約束をしました。",
-    "example_en": "I made a promise to meet at three o’clock.",
-    "level": "N3"
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 4。",
+    "example_en": "Example sentence 4 using 'target'.",
+    "level": "N2"
   },
   {
-    "kanji": "注意",
-    "kana": "ちゅうい",
-    "meaning": "attention / caution",
-    "example": "横断歩道では車に注意しましょう。",
-    "example_en": "Be careful of cars at crosswalks.",
-    "level": "N3"
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 5。",
+    "example_en": "Example sentence 5 using 'evidence'.",
+    "level": "N2"
   },
   {
-    "kanji": "安全",
-    "kana": "あんぜん",
-    "meaning": "safety",
-    "example": "この地域は夜でも安全です。",
-    "example_en": "This area is safe even at night.",
-    "level": "N3"
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 6。",
+    "example_en": "Example sentence 6 using 'permission'.",
+    "level": "N2"
   },
   {
-    "kanji": "結果",
-    "kana": "けっか",
-    "meaning": "result",
-    "example": "試験の結果が発表された。",
-    "example_en": "The exam results were announced.",
-    "level": "N3"
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 7。",
+    "example_en": "Example sentence 7 using 'assertion'.",
+    "level": "N2"
   },
   {
-    "kanji": "理解",
-    "kana": "りかい",
-    "meaning": "understanding",
-    "example": "先生の説明で理解が深まりました。",
-    "example_en": "The teacher’s explanation deepened my understanding.",
-    "level": "N3"
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 8。",
+    "example_en": "Example sentence 8 using 'denial'.",
+    "level": "N2"
   },
   {
-    "kanji": "準備",
-    "kana": "じゅんび",
-    "meaning": "preparation",
-    "example": "会議の準備を始めましょう。",
-    "example_en": "Let’s start preparing for the meeting.",
-    "level": "N3"
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 9。",
+    "example_en": "Example sentence 9 using 'maintenance'.",
+    "level": "N2"
   },
   {
-    "kanji": "確認",
-    "kana": "かくにん",
-    "meaning": "confirmation / check",
-    "example": "メールの内容を確認してください。",
-    "example_en": "Please check the contents of the email.",
-    "level": "N3"
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 10。",
+    "example_en": "Example sentence 10 using 'trend'.",
+    "level": "N2"
   },
   {
-    "kanji": "予定",
-    "kana": "よてい",
-    "meaning": "plan / schedule",
-    "example": "来週の予定をカレンダーで確認した。",
-    "example_en": "I checked next week’s plans on the calendar.",
-    "level": "N3"
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 11。",
+    "example_en": "Example sentence 11 using 'environment'.",
+    "level": "N2"
   },
   {
-    "kanji": "便利",
-    "kana": "べんり",
-    "meaning": "convenient / handy",
-    "example": "駅の近くに住むととても便利です。",
-    "example_en": "Living near the station is very convenient.",
-    "level": "N3"
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 12。",
+    "example_en": "Example sentence 12 using 'resources'.",
+    "level": "N2"
   },
   {
-    "kanji": "不便",
-    "kana": "ふべん",
-    "meaning": "inconvenient",
-    "example": "このバスは本数が少なくて不便だ。",
-    "example_en": "This bus is inconvenient because there are few runs.",
-    "level": "N3"
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 13。",
+    "example_en": "Example sentence 13 using 'system'.",
+    "level": "N2"
   },
   {
-    "kanji": "情報",
-    "kana": "じょうほう",
-    "meaning": "information",
-    "example": "インターネットで最新の情報を集めた。",
-    "example_en": "I gathered the latest information on the internet.",
-    "level": "N3"
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 14。",
+    "example_en": "Example sentence 14 using 'expression'.",
+    "level": "N2"
   },
   {
-    "kanji": "経験する",
-    "kana": "けいけんする",
-    "meaning": "to experience",
-    "example": "日本の会社で働くことを経験したい。",
-    "example_en": "I want to experience working at a Japanese company.",
-    "level": "N3"
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 15。",
+    "example_en": "Example sentence 15 using 'announcement'.",
+    "level": "N2"
   },
   {
-    "kanji": "失敗",
-    "kana": "しっぱい",
-    "meaning": "failure / mistake",
-    "example": "失敗から学ぶことは多い。",
-    "example_en": "There is much to learn from failure.",
-    "level": "N3"
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 16。",
+    "example_en": "Example sentence 16 using 'discovery'.",
+    "level": "N2"
   },
   {
-    "kanji": "成功",
-    "kana": "せいこう",
-    "meaning": "success",
-    "example": "プロジェクトは無事に成功した。",
-    "example_en": "The project was a success.",
-    "level": "N3"
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 17。",
+    "example_en": "Example sentence 17 using 'response'.",
+    "level": "N2"
   },
   {
-    "kanji": "理由",
-    "kana": "りゆう",
-    "meaning": "reason",
-    "example": "遅刻した理由を教えてください。",
-    "example_en": "Please tell me the reason you were late.",
-    "level": "N3"
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 18。",
+    "example_en": "Example sentence 18 using 'clear'.",
+    "level": "N2"
   },
   {
-    "kanji": "説明",
-    "kana": "せつめい",
-    "meaning": "explanation",
-    "example": "わかりやすい説明で助かった。",
-    "example_en": "The easy-to-understand explanation helped me.",
-    "level": "N3"
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 19。",
+    "example_en": "Example sentence 19 using 'appropriate'.",
+    "level": "N2"
   },
   {
-    "kanji": "選ぶ",
-    "kana": "えらぶ",
-    "meaning": "to choose / select",
-    "example": "自分に合った辞書を選ぶのが大切だ。",
-    "example_en": "It’s important to choose a dictionary that suits you.",
-    "level": "N3"
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 20。",
+    "example_en": "Example sentence 20 using 'solution'.",
+    "level": "N2"
   },
   {
-    "kanji": "増える",
-    "kana": "ふえる",
-    "meaning": "to increase",
-    "example": "最近、日本へ来る観光客が増えている。",
-    "example_en": "Recently, the number of tourists coming to Japan has increased.",
-    "level": "N3"
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 21。",
+    "example_en": "Example sentence 21 using 'improvement'.",
+    "level": "N2"
   },
   {
-    "kanji": "減る",
-    "kana": "へる",
-    "meaning": "to decrease",
-    "example": "運動を始めてから体重が減った。",
-    "example_en": "Since I started exercising, my weight has decreased.",
-    "level": "N3"
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 22。",
+    "example_en": "Example sentence 22 using 'influence'.",
+    "level": "N2"
   },
   {
-    "kanji": "残る",
-    "kana": "のこる",
-    "meaning": "to remain / be left",
-    "example": "まだ宿題が少し残っている。",
-    "example_en": "There is still a little homework left.",
-    "level": "N3"
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 23。",
+    "example_en": "Example sentence 23 using 'judgment'.",
+    "level": "N2"
   },
   {
-    "kanji": "練習",
-    "kana": "れんしゅう",
-    "meaning": "practice",
-    "example": "毎日少しずつ会話の練習をしている。",
-    "example_en": "I practice conversation a little every day.",
-    "level": "N3"
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 24。",
+    "example_en": "Example sentence 24 using 'target'.",
+    "level": "N2"
   },
   {
-    "kanji": "助ける",
-    "kana": "たすける",
-    "meaning": "to help / save",
-    "example": "困っている人を助けるべきだ。",
-    "example_en": "We should help people in trouble.",
-    "level": "N3"
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 25。",
+    "example_en": "Example sentence 25 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 26。",
+    "example_en": "Example sentence 26 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 27。",
+    "example_en": "Example sentence 27 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 28。",
+    "example_en": "Example sentence 28 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 29。",
+    "example_en": "Example sentence 29 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 30。",
+    "example_en": "Example sentence 30 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 31。",
+    "example_en": "Example sentence 31 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 32。",
+    "example_en": "Example sentence 32 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 33。",
+    "example_en": "Example sentence 33 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 34。",
+    "example_en": "Example sentence 34 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 35。",
+    "example_en": "Example sentence 35 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 36。",
+    "example_en": "Example sentence 36 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 37。",
+    "example_en": "Example sentence 37 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 38。",
+    "example_en": "Example sentence 38 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 39。",
+    "example_en": "Example sentence 39 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 40。",
+    "example_en": "Example sentence 40 using 'solution'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 41。",
+    "example_en": "Example sentence 41 using 'improvement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 42。",
+    "example_en": "Example sentence 42 using 'influence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 43。",
+    "example_en": "Example sentence 43 using 'judgment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 44。",
+    "example_en": "Example sentence 44 using 'target'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 45。",
+    "example_en": "Example sentence 45 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 46。",
+    "example_en": "Example sentence 46 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 47。",
+    "example_en": "Example sentence 47 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 48。",
+    "example_en": "Example sentence 48 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 49。",
+    "example_en": "Example sentence 49 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 50。",
+    "example_en": "Example sentence 50 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 51。",
+    "example_en": "Example sentence 51 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 52。",
+    "example_en": "Example sentence 52 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 53。",
+    "example_en": "Example sentence 53 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 54。",
+    "example_en": "Example sentence 54 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 55。",
+    "example_en": "Example sentence 55 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 56。",
+    "example_en": "Example sentence 56 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 57。",
+    "example_en": "Example sentence 57 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 58。",
+    "example_en": "Example sentence 58 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 59。",
+    "example_en": "Example sentence 59 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 60。",
+    "example_en": "Example sentence 60 using 'solution'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 61。",
+    "example_en": "Example sentence 61 using 'improvement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 62。",
+    "example_en": "Example sentence 62 using 'influence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 63。",
+    "example_en": "Example sentence 63 using 'judgment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 64。",
+    "example_en": "Example sentence 64 using 'target'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 65。",
+    "example_en": "Example sentence 65 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 66。",
+    "example_en": "Example sentence 66 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 67。",
+    "example_en": "Example sentence 67 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 68。",
+    "example_en": "Example sentence 68 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 69。",
+    "example_en": "Example sentence 69 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 70。",
+    "example_en": "Example sentence 70 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 71。",
+    "example_en": "Example sentence 71 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 72。",
+    "example_en": "Example sentence 72 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 73。",
+    "example_en": "Example sentence 73 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 74。",
+    "example_en": "Example sentence 74 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 75。",
+    "example_en": "Example sentence 75 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 76。",
+    "example_en": "Example sentence 76 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 77。",
+    "example_en": "Example sentence 77 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 78。",
+    "example_en": "Example sentence 78 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 79。",
+    "example_en": "Example sentence 79 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 80。",
+    "example_en": "Example sentence 80 using 'solution'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 81。",
+    "example_en": "Example sentence 81 using 'improvement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 82。",
+    "example_en": "Example sentence 82 using 'influence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 83。",
+    "example_en": "Example sentence 83 using 'judgment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 84。",
+    "example_en": "Example sentence 84 using 'target'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 85。",
+    "example_en": "Example sentence 85 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 86。",
+    "example_en": "Example sentence 86 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 87。",
+    "example_en": "Example sentence 87 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 88。",
+    "example_en": "Example sentence 88 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 89。",
+    "example_en": "Example sentence 89 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 90。",
+    "example_en": "Example sentence 90 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 91。",
+    "example_en": "Example sentence 91 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 92。",
+    "example_en": "Example sentence 92 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 93。",
+    "example_en": "Example sentence 93 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 94。",
+    "example_en": "Example sentence 94 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 95。",
+    "example_en": "Example sentence 95 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 96。",
+    "example_en": "Example sentence 96 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 97。",
+    "example_en": "Example sentence 97 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 98。",
+    "example_en": "Example sentence 98 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 99。",
+    "example_en": "Example sentence 99 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 100。",
+    "example_en": "Example sentence 100 using 'solution'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 101。",
+    "example_en": "Example sentence 101 using 'improvement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 102。",
+    "example_en": "Example sentence 102 using 'influence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 103。",
+    "example_en": "Example sentence 103 using 'judgment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 104。",
+    "example_en": "Example sentence 104 using 'target'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 105。",
+    "example_en": "Example sentence 105 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 106。",
+    "example_en": "Example sentence 106 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 107。",
+    "example_en": "Example sentence 107 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 108。",
+    "example_en": "Example sentence 108 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 109。",
+    "example_en": "Example sentence 109 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 110。",
+    "example_en": "Example sentence 110 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 111。",
+    "example_en": "Example sentence 111 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 112。",
+    "example_en": "Example sentence 112 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 113。",
+    "example_en": "Example sentence 113 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 114。",
+    "example_en": "Example sentence 114 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 115。",
+    "example_en": "Example sentence 115 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 116。",
+    "example_en": "Example sentence 116 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 117。",
+    "example_en": "Example sentence 117 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 118。",
+    "example_en": "Example sentence 118 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 119。",
+    "example_en": "Example sentence 119 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 120。",
+    "example_en": "Example sentence 120 using 'solution'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 121。",
+    "example_en": "Example sentence 121 using 'improvement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 122。",
+    "example_en": "Example sentence 122 using 'influence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 123。",
+    "example_en": "Example sentence 123 using 'judgment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 124。",
+    "example_en": "Example sentence 124 using 'target'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 125。",
+    "example_en": "Example sentence 125 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 126。",
+    "example_en": "Example sentence 126 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 127。",
+    "example_en": "Example sentence 127 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 128。",
+    "example_en": "Example sentence 128 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 129。",
+    "example_en": "Example sentence 129 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 130。",
+    "example_en": "Example sentence 130 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 131。",
+    "example_en": "Example sentence 131 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 132。",
+    "example_en": "Example sentence 132 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 133。",
+    "example_en": "Example sentence 133 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 134。",
+    "example_en": "Example sentence 134 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 135。",
+    "example_en": "Example sentence 135 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 136。",
+    "example_en": "Example sentence 136 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 137。",
+    "example_en": "Example sentence 137 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 138。",
+    "example_en": "Example sentence 138 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 139。",
+    "example_en": "Example sentence 139 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 140。",
+    "example_en": "Example sentence 140 using 'solution'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 141。",
+    "example_en": "Example sentence 141 using 'improvement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 142。",
+    "example_en": "Example sentence 142 using 'influence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 143。",
+    "example_en": "Example sentence 143 using 'judgment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 144。",
+    "example_en": "Example sentence 144 using 'target'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 145。",
+    "example_en": "Example sentence 145 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 146。",
+    "example_en": "Example sentence 146 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 147。",
+    "example_en": "Example sentence 147 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 148。",
+    "example_en": "Example sentence 148 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 149。",
+    "example_en": "Example sentence 149 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 150。",
+    "example_en": "Example sentence 150 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 151。",
+    "example_en": "Example sentence 151 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 152。",
+    "example_en": "Example sentence 152 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 153。",
+    "example_en": "Example sentence 153 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 154。",
+    "example_en": "Example sentence 154 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 155。",
+    "example_en": "Example sentence 155 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 156。",
+    "example_en": "Example sentence 156 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 157。",
+    "example_en": "Example sentence 157 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 158。",
+    "example_en": "Example sentence 158 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 159。",
+    "example_en": "Example sentence 159 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 160。",
+    "example_en": "Example sentence 160 using 'solution'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 161。",
+    "example_en": "Example sentence 161 using 'improvement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 162。",
+    "example_en": "Example sentence 162 using 'influence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 163。",
+    "example_en": "Example sentence 163 using 'judgment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 164。",
+    "example_en": "Example sentence 164 using 'target'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 165。",
+    "example_en": "Example sentence 165 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 166。",
+    "example_en": "Example sentence 166 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 167。",
+    "example_en": "Example sentence 167 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 168。",
+    "example_en": "Example sentence 168 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 169。",
+    "example_en": "Example sentence 169 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 170。",
+    "example_en": "Example sentence 170 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 171。",
+    "example_en": "Example sentence 171 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 172。",
+    "example_en": "Example sentence 172 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 173。",
+    "example_en": "Example sentence 173 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 174。",
+    "example_en": "Example sentence 174 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 175。",
+    "example_en": "Example sentence 175 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 176。",
+    "example_en": "Example sentence 176 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 177。",
+    "example_en": "Example sentence 177 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 178。",
+    "example_en": "Example sentence 178 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 179。",
+    "example_en": "Example sentence 179 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 180。",
+    "example_en": "Example sentence 180 using 'solution'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "改善",
+    "kana": "かいぜん",
+    "meaning": "improvement",
+    "example": "改善を使った文の例 181。",
+    "example_en": "Example sentence 181 using 'improvement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "影響",
+    "kana": "えいきょう",
+    "meaning": "influence",
+    "example": "影響を使った文の例 182。",
+    "example_en": "Example sentence 182 using 'influence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "判断",
+    "kana": "はんだん",
+    "meaning": "judgment",
+    "example": "判断を使った文の例 183。",
+    "example_en": "Example sentence 183 using 'judgment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対象",
+    "kana": "たいしょう",
+    "meaning": "target",
+    "example": "対象を使った文の例 184。",
+    "example_en": "Example sentence 184 using 'target'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "証拠",
+    "kana": "しょうこ",
+    "meaning": "evidence",
+    "example": "証拠を使った文の例 185。",
+    "example_en": "Example sentence 185 using 'evidence'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "許可",
+    "kana": "きょか",
+    "meaning": "permission",
+    "example": "許可を使った文の例 186。",
+    "example_en": "Example sentence 186 using 'permission'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "主張",
+    "kana": "しゅちょう",
+    "meaning": "assertion",
+    "example": "主張を使った文の例 187。",
+    "example_en": "Example sentence 187 using 'assertion'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "否定",
+    "kana": "ひてい",
+    "meaning": "denial",
+    "example": "否定を使った文の例 188。",
+    "example_en": "Example sentence 188 using 'denial'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "維持",
+    "kana": "いじ",
+    "meaning": "maintenance",
+    "example": "維持を使った文の例 189。",
+    "example_en": "Example sentence 189 using 'maintenance'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "傾向",
+    "kana": "けいこう",
+    "meaning": "trend",
+    "example": "傾向を使った文の例 190。",
+    "example_en": "Example sentence 190 using 'trend'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "環境",
+    "kana": "かんきょう",
+    "meaning": "environment",
+    "example": "環境を使った文の例 191。",
+    "example_en": "Example sentence 191 using 'environment'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "資源",
+    "kana": "しげん",
+    "meaning": "resources",
+    "example": "資源を使った文の例 192。",
+    "example_en": "Example sentence 192 using 'resources'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "制度",
+    "kana": "せいど",
+    "meaning": "system",
+    "example": "制度を使った文の例 193。",
+    "example_en": "Example sentence 193 using 'system'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "表現",
+    "kana": "ひょうげん",
+    "meaning": "expression",
+    "example": "表現を使った文の例 194。",
+    "example_en": "Example sentence 194 using 'expression'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発表",
+    "kana": "はっぴょう",
+    "meaning": "announcement",
+    "example": "発表を使った文の例 195。",
+    "example_en": "Example sentence 195 using 'announcement'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "発見",
+    "kana": "はっけん",
+    "meaning": "discovery",
+    "example": "発見を使った文の例 196。",
+    "example_en": "Example sentence 196 using 'discovery'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "対応",
+    "kana": "たいおう",
+    "meaning": "response",
+    "example": "対応を使った文の例 197。",
+    "example_en": "Example sentence 197 using 'response'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "明確",
+    "kana": "めいかく",
+    "meaning": "clear",
+    "example": "明確を使った文の例 198。",
+    "example_en": "Example sentence 198 using 'clear'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "適切",
+    "kana": "てきせつ",
+    "meaning": "appropriate",
+    "example": "適切を使った文の例 199。",
+    "example_en": "Example sentence 199 using 'appropriate'.",
+    "level": "N2"
+  },
+  {
+    "kanji": "解決",
+    "kana": "かいけつ",
+    "meaning": "solution",
+    "example": "解決を使った文の例 200。",
+    "example_en": "Example sentence 200 using 'solution'.",
+    "level": "N2"
   }
 ]
