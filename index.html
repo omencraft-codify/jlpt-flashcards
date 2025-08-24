@@ -240,7 +240,45 @@ document.addEventListener('DOMContentLoaded',function(){
   function buildQueue(){const all=filterByLevel(cards());const pools={learn:all.filter(x=>x.status==="new"||x.status==="not"),review:all.filter(x=>x.status==="review"),drill:all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not"))};let mode=state.mode,pool=pools[mode];if(pool.length===0){const order=mode==="learn"?["review","drill","learn"]:mode==="review"?["drill","learn","review"]:["learn","review","drill"];for(const m of order){if(pools[m].length){mode=m;pool=pools[m];break}}}if(mode!==state.mode){state.mode=mode;$$('.pill').forEach(p=>p.classList.toggle('active',p.dataset.mode===mode))}state.queue=shuffle(pool);state.current=null}
   function nextCard(){if(state.queue.length===0){state.current=null;updateEmptyState();return}state.current=state.queue.shift();if(state.mode==='drill')setAnswerVisible(false);const rb=$("#revealBtn");if(rb){rb.textContent='Next';rb.disabled=(state.mode==='drill');rb.setAttribute('aria-disabled',rb.disabled?'true':'false')}clearResult();drawCard()}
   function updateEmptyState(){const has=!!state.current;$("#cardZone").classList.toggle('hidden-el',!has);$("#emptyState").classList.toggle('hidden-el',has)}
-  function draw(){const all=filterByLevel(cards());const learned=all.filter(x=>x.status==="learned").length;const review=all.filter(x=>x.status==="review").length;const notl=all.filter(x=>x.status==="not").length;const total=all.length;$("#counts").textContent=`Total ${total} · Learned ${learned} · Review ${review} · Not ${notl}`;$("#progressFill").style.width=(total?Math.round((learned/total)*100):0)+"%";$("#promptMode").value=state.promptMode;if(!state.current&&state.queue.length>0){nextCard();return}updateEmptyState()}
+ function draw(){
+  // Global vs filtered stats for accurate tracking
+  const allAll = cards();
+  const allView = filterByLevel(allAll);
+
+  const countStats = (list)=>({
+    total: list.length,
+    learned: list.filter(x=>x.status==='learned').length,
+    review: list.filter(x=>x.status==='review').length,
+    not: list.filter(x=>x.status==='not').length,
+    New: list.filter(x=>x.status==='new').length
+  });
+
+  const g = countStats(allAll);
+  const v = countStats(allView);
+
+  const showView = (state.level !== 'ALL');
+  const parts = [
+    `Total ${g.total}` + (showView ? ` (view ${v.total})` : ''),
+    `Learned ${g.learned}` + (showView ? ` (view ${v.learned})` : ''),
+    `Review ${g.review}` + (showView ? ` (view ${v.review})` : ''),
+    `Not ${g.not}` + (showView ? ` (view ${v.not})` : ''),
+    `New ${g.New}` + (showView ? ` (view ${v.New})` : '')
+  ];
+
+  const countsEl = document.getElementById('counts');
+  if (countsEl) countsEl.textContent = parts.join(' · ');
+
+  // Progress bar = GLOBAL learned percent
+  const fill = document.getElementById('progressFill');
+  if (fill) fill.style.width = (g.total ? Math.round((g.learned / g.total) * 100) : 0) + '%';
+
+  const pm = document.getElementById('promptMode');
+  if (pm) pm.value = state.promptMode;
+
+  if (!state.current && state.queue.length > 0) { nextCard(); return; }
+  updateEmptyState();
+}
+
   function simpleEN(m){return(/^(to\s)/i.test(m)?m.replace(/^to\s/i,"").replace(/^\w/,c=>c.toUpperCase()):`This is ${m}.`).replace(/\.$/,".")}
   function drawCard(){const c=state.current;if(!c){updateEmptyState();return}const en=c.meaning,jp=c.kanji||c.kana,kana=c.kana||"";const exJP=c.example||`これは${c.meaning}です。`,exEN=c.example_en||simpleEN(c.meaning);const choicesEl=$("#choices");if(choicesEl){choicesEl.innerHTML='';choicesEl.classList.add('hidden-el')}resetChoicesUI();if(state.mode==='drill'){state.answered=false;const pool=filterByLevel(cards());const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));state.drillChoices=shuffle(opts);if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=kana;$("#answerMain").textContent=en}else{$("#promptBig").textContent=en;$("#promptSub").textContent="";$("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`}$("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;setAnswerVisible(false);choicesEl.innerHTML=state.drillChoices.map((o,i)=>`<button class=\"choice-btn\" data-idx=\"${i}\">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');choicesEl.classList.remove('hidden-el');const rb=$("#revealBtn");if(rb){rb.textContent='Next';rb.disabled=true;rb.setAttribute('aria-disabled','true')}}else{if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=kana;$("#answerMain").textContent=en}else{$("#promptBig").textContent=en;$("#promptSub").textContent="";$("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`}$("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;setAnswerVisible(true);const rb=$("#revealBtn");if(rb){rb.disabled=false;rb.removeAttribute('aria-disabled');rb.textContent='Next'}}$("#reviewBtn").classList.add('hidden');updateEmptyState()}
   function markStatus(status){const c=state.current;if(!c)return;const all=cards();const idx=all.findIndex(x=>x.id===c.id);if(idx!==-1){const item={...all[idx]};item.seen=(item.seen||0)+1;if(status==='learned'){item.status='learned';item.correct=(item.correct||0)+1}else if(status==='review'){item.status='review'}else if(status==='not'){item.status='not'}all[idx]=item;setCards(all)}nextCard()}
