@@ -1,0 +1,202 @@
+[
+  {
+    "kanji": "必要",
+    "kana": "ひつよう",
+    "meaning": "necessary / essential",
+    "example": "日本語を上達させるには練習が必要です。",
+    "example_en": "Practice is necessary to improve your Japanese.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験",
+    "kana": "けいけん",
+    "meaning": "experience",
+    "example": "海外での経験は視野を広げます。",
+    "example_en": "Experience abroad broadens your perspective.",
+    "level": "N3"
+  },
+  {
+    "kanji": "連絡",
+    "kana": "れんらく",
+    "meaning": "contact / get in touch",
+    "example": "到着したら連絡してください。",
+    "example_en": "Please contact me when you arrive.",
+    "level": "N3"
+  },
+  {
+    "kanji": "約束",
+    "kana": "やくそく",
+    "meaning": "promise / appointment",
+    "example": "三時に会う約束をしました。",
+    "example_en": "I made a promise to meet at three o’clock.",
+    "level": "N3"
+  },
+  {
+    "kanji": "注意",
+    "kana": "ちゅうい",
+    "meaning": "attention / caution",
+    "example": "横断歩道では車に注意しましょう。",
+    "example_en": "Be careful of cars at crosswalks.",
+    "level": "N3"
+  },
+  {
+    "kanji": "安全",
+    "kana": "あんぜん",
+    "meaning": "safety",
+    "example": "この地域は夜でも安全です。",
+    "example_en": "This area is safe even at night.",
+    "level": "N3"
+  },
+  {
+    "kanji": "結果",
+    "kana": "けっか",
+    "meaning": "result",
+    "example": "試験の結果が発表された。",
+    "example_en": "The exam results were announced.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理解",
+    "kana": "りかい",
+    "meaning": "understanding",
+    "example": "先生の説明で理解が深まりました。",
+    "example_en": "The teacher’s explanation deepened my understanding.",
+    "level": "N3"
+  },
+  {
+    "kanji": "準備",
+    "kana": "じゅんび",
+    "meaning": "preparation",
+    "example": "会議の準備を始めましょう。",
+    "example_en": "Let’s start preparing for the meeting.",
+    "level": "N3"
+  },
+  {
+    "kanji": "確認",
+    "kana": "かくにん",
+    "meaning": "confirmation / check",
+    "example": "メールの内容を確認してください。",
+    "example_en": "Please check the contents of the email.",
+    "level": "N3"
+  },
+  {
+    "kanji": "予定",
+    "kana": "よてい",
+    "meaning": "plan / schedule",
+    "example": "来週の予定をカレンダーで確認した。",
+    "example_en": "I checked next week’s plans on the calendar.",
+    "level": "N3"
+  },
+  {
+    "kanji": "便利",
+    "kana": "べんり",
+    "meaning": "convenient / handy",
+    "example": "駅の近くに住むととても便利です。",
+    "example_en": "Living near the station is very convenient.",
+    "level": "N3"
+  },
+  {
+    "kanji": "不便",
+    "kana": "ふべん",
+    "meaning": "inconvenient",
+    "example": "このバスは本数が少なくて不便だ。",
+    "example_en": "This bus is inconvenient because there are few runs.",
+    "level": "N3"
+  },
+  {
+    "kanji": "情報",
+    "kana": "じょうほう",
+    "meaning": "information",
+    "example": "インターネットで最新の情報を集めた。",
+    "example_en": "I gathered the latest information on the internet.",
+    "level": "N3"
+  },
+  {
+    "kanji": "経験する",
+    "kana": "けいけんする",
+    "meaning": "to experience",
+    "example": "日本の会社で働くことを経験したい。",
+    "example_en": "I want to experience working at a Japanese company.",
+    "level": "N3"
+  },
+  {
+    "kanji": "失敗",
+    "kana": "しっぱい",
+    "meaning": "failure / mistake",
+    "example": "失敗から学ぶことは多い。",
+    "example_en": "There is much to learn from failure.",
+    "level": "N3"
+  },
+  {
+    "kanji": "成功",
+    "kana": "せいこう",
+    "meaning": "success",
+    "example": "プロジェクトは無事に成功した。",
+    "example_en": "The project was a success.",
+    "level": "N3"
+  },
+  {
+    "kanji": "理由",
+    "kana": "りゆう",
+    "meaning": "reason",
+    "example": "遅刻した理由を教えてください。",
+    "example_en": "Please tell me the reason you were late.",
+    "level": "N3"
+  },
+  {
+    "kanji": "説明",
+    "kana": "せつめい",
+    "meaning": "explanation",
+    "example": "わかりやすい説明で助かった。",
+    "example_en": "The easy-to-understand explanation helped me.",
+    "level": "N3"
+  },
+  {
+    "kanji": "選ぶ",
+    "kana": "えらぶ",
+    "meaning": "to choose / select",
+    "example": "自分に合った辞書を選ぶのが大切だ。",
+    "example_en": "It’s important to choose a dictionary that suits you.",
+    "level": "N3"
+  },
+  {
+    "kanji": "増える",
+    "kana": "ふえる",
+    "meaning": "to increase",
+    "example": "最近、日本へ来る観光客が増えている。",
+    "example_en": "Recently, the number of tourists coming to Japan has increased.",
+    "level": "N3"
+  },
+  {
+    "kanji": "減る",
+    "kana": "へる",
+    "meaning": "to decrease",
+    "example": "運動を始めてから体重が減った。",
+    "example_en": "Since I started exercising, my weight has decreased.",
+    "level": "N3"
+  },
+  {
+    "kanji": "残る",
+    "kana": "のこる",
+    "meaning": "to remain / be left",
+    "example": "まだ宿題が少し残っている。",
+    "example_en": "There is still a little homework left.",
+    "level": "N3"
+  },
+  {
+    "kanji": "練習",
+    "kana": "れんしゅう",
+    "meaning": "practice",
+    "example": "毎日少しずつ会話の練習をしている。",
+    "example_en": "I practice conversation a little every day.",
+    "level": "N3"
+  },
+  {
+    "kanji": "助ける",
+    "kana": "たすける",
+    "meaning": "to help / save",
+    "example": "困っている人を助けるべきだ。",
+    "example_en": "We should help people in trouble.",
+    "level": "N3"
+  }
+]
