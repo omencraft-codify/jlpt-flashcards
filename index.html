@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JLPT N3/N2 Flashcards</title>
+<title>JLPT N3/N2 Flashcards (Clean)</title>
 <style>
   :root{--bg:#fff;--fg:#111;--muted:#666;--line:#e6e6e6;--btn:#f6f6f6;--btn2:#111;--btnfg:#111;--btn2fg:#fff;--radius:14px;--cardw:min(720px,90vw);--cardbg:rgba(255,255,255,0.45)}
   body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}
@@ -10,7 +10,7 @@
   header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
   .group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   select{appearance:none;background:var(--btn);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-  .pill{border:1px solid var(--line);padding:10px 12px;border-radius:999px;background:var(--btn);cursor:pointer}
+  .pill{border:1px solid var(--line);background:var(--btn);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;height:var(--pill-h,40px);padding:0 14px;border-radius:var(--pill-radius,999px);font-size:14px;line-height:1}
   .pill.active{background:var(--fg);color:#fff;border-color:var(--fg)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);padding:12px 14px;border-radius:12px;cursor:pointer}
   .btn.primary{background:var(--btn2);color:var(--btn2fg);border-color:var(--btn2)}
@@ -53,13 +53,21 @@
 
   body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,linear-gradient(135deg,rgba(2,6,23,.85),rgba(30,58,138,.65)));background-size:cover;background-position:center 30%;background-repeat:no-repeat;opacity:var(--bgimgOpacity,.2);transition:opacity .2s;pointer-events:none;z-index:-1}
   details.bg-controls{position:fixed;top:12px;right:12px;z-index:1000}
-  details.bg-controls summary{list-style:none;cursor:pointer}
-  details.bg-controls summary::-webkit-details-marker{display:none}
-  .bg-button{background:rgba(17,17,17,.7);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font:13px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  .bg-panel{margin-top:8px;background:rgba(17,17,17,.85);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px;min-width:240px;box-shadow:0 12px 28px rgba(0,0,0,.45)}
-  .bg-panel .btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font-size:12px;width:100%}
-  .bg-panel .small{font-size:12px;opacity:.9}
-  .bg-panel input[type=range]{width:100%}
+details.bg-controls summary{list-style:none;cursor:pointer}
+details.bg-controls summary::-webkit-details-marker{display:none}
+.bg-button{background:rgba(17,17,17,.7);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font:13px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+.bg-panel{margin-top:8px;background:rgba(17,17,17,.85);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px;min-width:240px;box-shadow:0 12px 28px rgba(0,0,0,.45)}
+.bg-panel .btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font-size:12px;width:100%}
+.bg-panel .small{font-size:12px;opacity:.9}
+.bg-panel input[type=range]{width:100%}
+
+/* inline controls inside header */
+details.inline-controls{position:relative;display:inline-block}
+details.inline-controls summary{list-style:none}
+details.inline-controls summary::-webkit-details-marker{display:none}
+details.inline-controls > summary.btn{padding:10px 12px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);border-radius:12px}
+details.inline-controls .bg-panel{position:absolute;top:100%;right:0;margin-top:6px;min-width:260px;z-index:1000;background:var(--cardbg);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+details.inline-controls .bg-panel .btn{background:var(--btn);color:var(--btnfg);border:1px solid var(--line);width:100%}
 
   .result{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transform:scale(.9);transition:opacity .12s,transform .2s}
   .result.show{opacity:1;transform:scale(1)}
@@ -79,28 +87,7 @@
 </style>
 </head>
 <body>
-<details class="bg-controls" id="bgMenu">
-  <summary class="bg-button">BG</summary>
-  <div class="bg-panel">
-    <button class="btn" id="uploadBgBtn">Upload Image</button>
-    <div style="height:8px"></div>
-    <div class="small">BG Opacity</div>
-    <input id="bgOpacity" type="range" min="0" max="100" value="20">
-    <input id="bgFile" type="file" accept="image/*" class="hidden">
-    <div style="height:8px"></div>
-    <div class="small">Card Opacity</div>
-    <input id="cardOpacity" type="range" min="20" max="95" value="45">
-    <div style="height:8px"></div>
-    <button class="btn" id="clearBgBtn">Clear</button>
-    <div style="height:8px"></div>
-    <div class="small">Remote BG URLs (one per line)</div>
-    <textarea id="bgUrls" style="width:100%;min-height:80px"></textarea>
-    <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:6px">
-      <input type="checkbox" id="bgRandom"> Random on load
-    </label>
-    <button class="btn" id="bgRandomNow">Use Random Now</button>
-  </div>
-</details>
+
 
 <div class="wrap">
   <header>
@@ -123,9 +110,52 @@
         </select>
       </div>
       <button class="btn" id="themeBtn" aria-pressed="false">Dark</button>
-      <button class="btn" id="addBatchBtn">Add Batch</button>
-      <label class="btn" for="importFile">Import</label>
-      <input id="importFile" type="file" accept=".json" class="hidden">
+      <!-- Inline BG + Decks controls -->
+      <details class="inline-controls" id="bgMenuInline">
+        <summary class="btn">BG</summary>
+        <div class="bg-panel">
+          <button class="btn" id="uploadBgBtn">Upload Image</button>
+          <div style="height:8px"></div>
+          <div class="small">BG Opacity</div>
+          <input id="bgOpacity" type="range" min="0" max="100" value="20">
+          <input id="bgFile" type="file" accept="image/*" class="hidden">
+          <div style="height:8px"></div>
+          <div class="small">Card Opacity</div>
+          <input id="cardOpacity" type="range" min="20" max="95" value="45">
+          <div style="height:8px"></div>
+          <button class="btn" id="clearBgBtn">Clear</button>
+          <div style="height:8px"></div>
+          <div class="small">Remote BG URLs (one per line)</div>
+          <textarea id="bgUrls" style="width:100%;min-height:80px"></textarea>
+          <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:6px">
+            <input type="checkbox" id="bgRandom"> Random on load
+          </label>
+          <button class="btn" id="bgRandomNow">Use Random Now</button>
+        </div>
+      </details>
+      <details class="inline-controls" id="deckMenuInline">
+        <summary class="btn">Decks</summary>
+        <div class="bg-panel">
+          <div class="small">Remote deck URLs (.json or .csv), one per line</div>
+          <textarea id="deckUrls" style="width:100%;min-height:96px" placeholder="https://cdn.jsdelivr.net/gh/USER/REPO@main/data/n3_core.json
+https://cdn.jsdelivr.net/gh/USER/REPO@main/data/n2_core.json"></textarea>
+          <div style="height:8px"></div>
+          <div class="row" style="gap:6px;align-items:center">
+            <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckReplace"> Replace existing</label>
+            <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckDedupe" checked> De‑dupe</label>
+          </div>
+          <div style="height:8px"></div>
+          <div class="small">Optional level override</div>
+          <select id="deckLevelOverride" style="width:100%">
+            <option value="">(auto)</option>
+            <option value="N3">N3</option>
+            <option value="N2">N2</option>
+          </select>
+          <div style="height:8px"></div>
+          <button class="btn" id="loadDeckBtn">Load decks</button>
+          <div class="small" style="margin-top:6px">Tip: autoload via query: <code>?deck=&lt;url&gt;&amp;level=N3</code></div>
+        </div>
+      </details>
     </div>
   </header>
 
@@ -160,28 +190,7 @@
   </div>
 
   <div id="emptyState" class="section center">
-    <div class="muted">No cards in this view. Switch mode or add a batch.</div>
-  </div>
-
-  <div id="batchModal" class="section hidden-el">
-    <div class="row">
-      <select id="batchLevel">
-        <option value="N3">N3</option>
-        <option value="N2">N2</option>
-      </select>
-      <button class="btn" id="closeBatch">Close</button>
-    </div>
-    <div class="spacer"></div>
-    <div class="muted small">Paste JSON with: kanji, kana, meaning, example. Optional: example_en, level.</div>
-    <div class="spacer"></div>
-    <textarea id="batchInput" style="width:100%;min-height:140px"></textarea>
-    <div class="spacer"></div>
-    <div class="row">
-      <button class="btn primary" id="addBatchJson">Add JSON</button>
-      <button class="btn" id="addBatchCsv">Add CSV</button>
-    </div>
-    <div class="spacer"></div>
-    <div class="small muted">CSV header: kanji,kana,meaning,example,example_en</div>
+    <div class="muted">No cards in this view. Load a deck from the Decks panel or switch mode.</div>
   </div>
 </div>
 
@@ -205,7 +214,6 @@ document.addEventListener('DOMContentLoaded',function(){
   const Store=(function(){try{const t='__t';localStorage.setItem(t,'1');localStorage.removeItem(t);return localStorage}catch(_){let mem={};return{getItem:k=>mem[k]||null,setItem:(k,v)=>{mem[k]=String(v)},removeItem:k=>{delete mem[k]}}}})();
   const STORAGE="jlpt_flash_v14";
   const SETTINGS="jlpt_flash_settings";
-  const MANIFEST=["data/n2_core.json","data/n3_core.json"]; // 🔹 your external decks
   const $=s=>document.querySelector(s);
   const $$=s=>document.querySelectorAll(s);
   function loadSettings(){try{return JSON.parse(Store.getItem(SETTINGS)||"{}")}catch(_){return{}}}
@@ -214,9 +222,9 @@ document.addEventListener('DOMContentLoaded',function(){
   const defaultBgList=["./girl-7_t.jpg","./girl-6_t.jpg","./girl-5_t.png","./girl-4_t.png","./girl-3_t.png","./girl-2_t.png","./girl-1_t.jpg"].join("\n");
   const state={mode:"learn",level:"ALL",queue:[],current:null,promptMode:settingsBootstrap.promptMode||"JPEN",theme:settingsBootstrap.theme||null,bgDataUrl:(settingsBootstrap.bgDataUrl??null),bgOpacity:typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,cardOpacity:typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,answered:false,drillChoices:[],bgRemoteList:(settingsBootstrap.bgRemoteList&&settingsBootstrap.bgRemoteList.trim())?settingsBootstrap.bgRemoteList:defaultBgList,bgRemoteRandom:(typeof settingsBootstrap.bgRemoteRandom==='boolean'?settingsBootstrap.bgRemoteRandom:true)};
 
-  // N3/N2 seed (kept small so external decks become the bulk)
-  const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."]];
-  const N2_RAW=[["改善","かいぜん","improvement","サービスを改善します。","Improve the service."]];
+  // N3/N2 seed (small)
+  const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."],["原因","げんいん","cause","原因は何ですか。","What is the cause?"],["役に立つ","やくにたつ","be useful","この本は役に立ちます。","This book is useful."]];
+  const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."],["改善","かいぜん","improvement","サービスを改善します。","Improve the service."],["対象","たいしょう","target","学生が対象です。","Students are the target."]];
   const N3=N3_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N3"}));
   const N2=N2_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N2"}));
 
@@ -224,168 +232,134 @@ document.addEventListener('DOMContentLoaded',function(){
   function load(){const raw=Store.getItem(STORAGE);if(!raw){const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}try{const p=JSON.parse(raw);if(!Array.isArray(p)||p.length===0)throw 0;return p}catch(_){Store.removeItem(STORAGE);const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}}
   function save(all){Store.setItem(STORAGE,JSON.stringify(all))}
   function cards(){return load()}
-  function setCards(list){save(list); updateCountsOnly()} // ensure counter always reflects ALL cards
+  function setCards(list){save(list); updateCountsOnly()}  /* ← only addition: keep counter in sync */
 
   function filterByLevel(list){return state.level==="ALL"?list:list.filter(x=>x.level===state.level)}
   function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
   function setAnswerVisible(v){const ans=$("#answerBlock");if(!ans)return;ans.classList.toggle('hidden-el',!v)}
   function resetChoicesUI(){const wrap=$("#choices");if(!wrap)return;wrap.querySelectorAll('.choice-btn').forEach(b=>{b.classList.remove('correct','wrong')})}
 
-  // 🔹 COUNTER FIX: always compute using ALL CARDS, not filtered-by-level
+  /* ---------- COUNTER (global) ---------- */
   function updateCountsOnly(){
-    const all = cards();
+    const all = cards();               // all cards, not filtered
     let learned=0, review=0, notl=0;
     for(const x of all){
-      const s = x.status||"new";
-      if(s==="learned") learned++; else if(s==="review") review++; else notl++;
+      const s = x.status || "new";
+      if(s==="learned") learned++;
+      else if(s==="review") review++;
+      else notl++;
     }
     $("#counts").textContent = `Total ${all.length} · Learned ${learned} · Review ${review} · Not ${notl}`;
     $("#progressFill").style.width = (all.length ? Math.round((learned/all.length)*100) : 0) + "%";
   }
+  /* ------------------------------------- */
 
-  function buildQueue(){
-    const all=filterByLevel(cards());
-    const pools={
-      learn: all.filter(x=>x.status==="new"||x.status==="not"),
-      review: all.filter(x=>x.status==="review"),
-      drill: all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not"))
-    };
-    let mode=state.mode, pool=pools[mode];
-    if(pool.length===0){
-      const order=mode==="learn"?["review","drill","learn"]:mode==="review"?["drill","learn","review"]:["learn","review","drill"];
-      for(const m of order){ if(pools[m].length){ mode=m; pool=pools[m]; break } }
-    }
-    if(mode!==state.mode){ state.mode=mode; $$('.pill').forEach(p=>p.classList.toggle('active',p.dataset.mode===mode)) }
-    state.queue=shuffle(pool); state.current=null;
-  }
-
-  function nextCard(){
-    if(state.queue.length===0){state.current=null;updateEmptyState();return}
-    state.current=state.queue.shift();
-    if(state.mode==='drill') setAnswerVisible(false);
-    const rb=$("#revealBtn");
-    if(rb){rb.textContent='Next';rb.disabled=(state.mode==='drill');rb.setAttribute('aria-disabled',rb.disabled?'true':'false')}
-    clearResult(); drawCard();
-  }
-
+  function buildQueue(){const all=filterByLevel(cards());const pools={learn:all.filter(x=>x.status==="new"||x.status==="not"),review:all.filter(x=>x.status==="review"),drill:all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not"))};let mode=state.mode,pool=pools[mode];if(pool.length===0){const order=mode==="learn"?["review","drill","learn"]:mode==="review"?["drill","learn","review"]:["learn","review","drill"];for(const m of order){if(pools[m].length){mode=m;pool=pools[m];break}}}if(mode!==state.mode){state.mode=mode;$$('.pill').forEach(p=>p.classList.toggle('active',p.dataset.mode===mode))}state.queue=shuffle(pool);state.current=null}
+  function nextCard(){if(state.queue.length===0){state.current=null;updateEmptyState();return}state.current=state.queue.shift();if(state.mode==='drill')setAnswerVisible(false);const rb=$("#revealBtn");if(rb){rb.textContent='Next';rb.disabled=(state.mode==='drill');rb.setAttribute('aria-disabled',rb.disabled?'true':'false')}clearResult();drawCard()}
   function updateEmptyState(){const has=!!state.current;$("#cardZone").classList.toggle('hidden-el',!has);$("#emptyState").classList.toggle('hidden-el',has)}
 
-  // 🔹 draw(): keep your UI behavior, but DO NOT compute global stats here anymore
+  /* draw(): only change is using updateCountsOnly() */
   function draw(){
+    updateCountsOnly();                                   /* ← global counts */
     $("#promptMode").value=state.promptMode;
-    if(!state.current&&state.queue.length>0){ nextCard(); return }
+    if(!state.current&&state.queue.length>0){nextCard();return}
     updateEmptyState();
-    updateCountsOnly(); // ensure totals reflect ALL cards
   }
 
   function simpleEN(m){return(/^(to\s)/i.test(m)?m.replace(/^to\s/i,"").replace(/^\w/,c=>c.toUpperCase()):`This is ${m}.`).replace(/\.$/,".")}
-  function drawCard(){
-    const c=state.current; if(!c){updateEmptyState();return}
-    const en=c.meaning,jp=c.kanji||c.kana,kana=c.kana||"";
-    const exJP=c.example||`これは${c.meaning}です。`,exEN=c.example_en||simpleEN(c.meaning);
-    const choicesEl=$("#choices");
-    if(choicesEl){choicesEl.innerHTML='';choicesEl.classList.add('hidden-el')}
-    resetChoicesUI();
-    if(state.mode==='drill'){
-      state.answered=false;
-      const pool=filterByLevel(cards());
-      const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);
-      const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));
-      state.drillChoices=shuffle(opts);
-      if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=kana;$("#answerMain").textContent=en}
-      else{$("#promptBig").textContent=en;$("#promptSub").textContent="";$("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`}
-      $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
-      setAnswerVisible(false);
-      choicesEl.innerHTML=state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
-      choicesEl.classList.remove('hidden-el');
-      const rb=$("#revealBtn"); if(rb){rb.textContent='Next';rb.disabled=true;rb.setAttribute('aria-disabled','true')}
-    }else{
-      if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=kana;$("#answerMain").textContent=en}
-      else{$("#promptBig").textContent=en;$("#promptSub").textContent="";$("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`}
-      $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
-      setAnswerVisible(true);
-      const rb=$("#revealBtn"); if(rb){rb.disabled=false;rb.removeAttribute('aria-disabled');rb.textContent='Next'}
-    }
-    $("#reviewBtn").classList.add('hidden');
-    updateEmptyState();
-  }
+  function drawCard(){const c=state.current;if(!c){updateEmptyState();return}const en=c.meaning,jp=c.kanji||c.kana,kana=c.kana||"";const exJP=c.example||`これは${c.meaning}です。`,exEN=c.example_en||simpleEN(c.meaning);const choicesEl=$("#choices");if(choicesEl){choicesEl.innerHTML='';choicesEl.classList.add('hidden-el')}resetChoicesUI();if(state.mode==='drill'){state.answered=false;const pool=filterByLevel(cards());const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));state.drillChoices=shuffle(opts);if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=kana;$("#answerMain").textContent=en}else{$("#promptBig").textContent=en;$("#promptSub").textContent="";$("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`}$("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;setAnswerVisible(false);choicesEl.innerHTML=state.drillChoices.map((o,i)=>`<button class=\"choice-btn\" data-idx=\"${i}\">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');choicesEl.classList.remove('hidden-el');const rb=$("#revealBtn");if(rb){rb.textContent='Next';rb.disabled=true;rb.setAttribute('aria-disabled','true')}}else{if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=kana;$("#answerMain").textContent=en}else{$("#promptBig").textContent=en;$("#promptSub").textContent="";$("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`}$("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;setAnswerVisible(true);const rb=$("#revealBtn");if(rb){rb.disabled=false;rb.removeAttribute('aria-disabled');rb.textContent='Next'}}$("#reviewBtn").classList.add('hidden');updateEmptyState()}
+  function markStatus(status){const c=state.current;if(!c)return;const all=cards();const idx=all.findIndex(x=>x.id===c.id);if(idx!==-1){const item={...all[idx]};item.seen=(item.seen||0)+1;if(status==='learned'){item.status='learned';item.correct=(item.correct||0)+1}else if(status==='review'){item.status='review'}else if(status==='not'){item.status='not'}all[idx]=item;setCards(all)}nextCard()}
 
-  function markStatus(status){
-    const c=state.current;if(!c)return;
-    const all=cards();const idx=all.findIndex(x=>x.id===c.id);
-    if(idx!==-1){
-      const item={...all[idx]};
-      item.seen=(item.seen||0)+1;
-      if(status==='learned'){item.status='learned';item.correct=(item.correct||0)+1}
-      else if(status==='review'){item.status='review'}
-      else if(status==='not'){item.status='not'}
-      all[idx]=item; setCards(all);
-    }
-    nextCard();
-  }
+  function splitCSVLine(line){const r=[];let cur="";let q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch=='"'){if(q&&line[i+1]=='"'){cur+='"';i++}else{q=!q}}else if(ch===','&&!q){r.push(cur);cur=""}else{cur+=ch}}r.push(cur);return r.map(s=>s.trim())}
 
-  // -------- Import helpers --------
-  function importJSON(text,level){
-    let arr=JSON.parse(text); arr=Array.isArray(arr)?arr:[arr];
+  // Map raw rows to internal card objects and add to storage
+  function addCardsFromArray(arr, levelOverride){
     const now=Date.now();
-    const cleaned=arr.map((x,i)=>({
+    const cleaned=(Array.isArray(arr)?arr:[arr]).map((x,i)=>({
       id: uuidv4(),
-      kanji: String(x.kanji||"").trim(),
-      kana: String(x.kana||"").trim(),
-      meaning: String(x.meaning||"").trim(),
+      kanji: String(x.kanji||x.word||"").trim(),
+      kana: String(x.kana||x.reading||"").trim(),
+      meaning: String(x.meaning||x.gloss||x.translation||"").trim(),
       example: String(x.example||"").trim(),
-      example_en: String(x.example_en||"").trim(),
-      level: level||String(x.level||"N3").toUpperCase(),
-      status:"new", seen:0, correct:0, addedAt: now+i
-    })).filter(x=>x.meaning&&(x.kanji||x.kana));
+      example_en: String(x.example_en||x.exampleEN||x.en||"").trim(),
+      level: (levelOverride||String((x.level||"N3")).toUpperCase()),
+      status: "new", seen:0, correct:0, addedAt: now+i
+    })).filter(x=>x.meaning && (x.kanji||x.kana));
     const all=cards().concat(cleaned);
-    setCards(all); buildQueue(); draw();
-  }
-  function importCSV(text,level){
-    const lines=text.split(/\r?\n/).filter(Boolean); if(lines.length===0)return;
-    const header=lines[0].toLowerCase().split(",").map(h=>h.trim());
-    const idx=k=>header.indexOf(k);
-    const out=[];
-    for(let i=1;i<lines.length;i++){
-      const cols=splitCSVLine(lines[i]);
-      out.push({kanji:cols[idx("kanji")]||"",kana:cols[idx("kana")]||"",meaning:cols[idx("meaning")]||"",example:cols[idx("example")]||"",example_en:cols[idx("example_en")]||""});
-    }
-    importJSON(JSON.stringify(out),level);
-  }
-  function splitCSVLine(line){
-    const r=[];let cur="";let q=false;
-    for(let i=0;i<line.length;i++){
-      const ch=line[i];
-      if(ch=='"'){if(q&&line[i+1]=='"'){cur+='"';i++}else{q=!q}}
-      else if(ch===','&&!q){r.push(cur);cur=""}
-      else{cur+=ch}
-    }
-    r.push(cur); return r.map(s=>s.trim())
+    setCards(all);
   }
 
-  // 🔹 tiny deduper so reloading doesn’t double-count identical items
+  // ---- Option 1: Load decks from GitHub/jsDelivr ----
+  async function loadRemoteDeck(url, levelOverride=null){
+    const res=await fetch(url,{cache:'no-cache'});
+    if(!res.ok) throw new Error('Failed to fetch deck: '+res.status);
+    const text=await res.text();
+    const lower=url.toLowerCase();
+    if(lower.endsWith('.json')){
+      const arr=JSON.parse(text);
+      if(!Array.isArray(arr)) throw new Error('JSON must be an array');
+      addCardsFromArray(arr, levelOverride||undefined);
+    }else if(lower.endsWith('.csv')){
+      const lines=text.split(/\r?\n/).filter(Boolean);
+      if(!lines.length) return;
+      const header=lines[0].toLowerCase().split(',').map(h=>h.trim());
+      const idx=k=>header.indexOf(k);
+      const rows=[];
+      for(let i=1;i<lines.length;i++){
+        const cols=splitCSVLine(lines[i]);
+        rows.push({
+          kanji: cols[idx('kanji')]||cols[idx('word')]||"",
+          kana: cols[idx('kana')]||cols[idx('reading')]||"",
+          meaning: cols[idx('meaning')]||cols[idx('gloss')]||cols[idx('translation')]||"",
+          example: cols[idx('example')]||"",
+          example_en: cols[idx('example_en')]||cols[idx('exampleen')]||cols[idx('en')]||"",
+          level: levelOverride||""
+        });
+      }
+      addCardsFromArray(rows, levelOverride||undefined);
+    }else{
+      throw new Error('Unsupported format (use .json or .csv)');
+    }
+  }
+
   function dedupeByKey(list, keyFn){const seen=new Set();const out=[];for(const it of list){const k=keyFn(it);if(seen.has(k)) continue;seen.add(k);out.push(it)}return out}
 
-  // 🔹 AUTO-LOAD your external decks (data/n2_core.json + data/n3_core.json)
-  async function loadManifestDecks(){
-    // Load once per session unless you clear storage. De-dupe anyway.
-    let loaded=0;
-    for(const url of MANIFEST){
+  (function deckPanel(){
+    const urlsTA=document.getElementById('deckUrls');
+    const btn=document.getElementById('loadDeckBtn');
+    const replace=document.getElementById('deckReplace');
+    const dedupe=document.getElementById('deckDedupe');
+    const levelSel=document.getElementById('deckLevelOverride');
+    if(!btn) return;
+    try{const s=loadSettings();if(s.deckUrls&&urlsTA) urlsTA.value=s.deckUrls}catch(_){}
+    btn.addEventListener('click', async ()=>{
+      const urls=(urlsTA.value||'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
+      if(!urls.length){alert('Paste at least one URL');return}
+      saveSettings({deckUrls: urlsTA.value});
       try{
-        const res = await fetch(url, { cache: "no-store" });
-        if(!res.ok) continue;
-        const arr = await res.json();
-        if(Array.isArray(arr)){
-          importJSON(JSON.stringify(arr)); // uses same mapping/IDs
-          loaded++;
+        if(replace.checked){ setCards([]); }
+        for(const u of urls){ await loadRemoteDeck(u, levelSel.value||null); }
+        if(dedupe.checked){
+          const all=cards();
+          const uniq=dedupeByKey(all, x=> (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
+          setCards(uniq);
         }
-      }catch(_){/* ignore one-off fetch errors */}
-    }
-    if(loaded>0){
-      const uniq = dedupeByKey(cards(), x => (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
-      setCards(uniq); buildQueue(); draw();
-    }
-  }
+        buildQueue(); draw();
+        alert('Loaded '+urls.length+' deck file(s). Total: '+cards().length);
+      }catch(e){ alert('Deck load failed: '+(e&&e.message?e.message:e)) }
+    });
+  })();
+
+  (function autoLoadFromQuery(){
+    try{
+      const q=new URLSearchParams(location.search);
+      const deck=q.get('deck');
+      const level=q.get('level');
+      if(deck){
+        loadRemoteDeck(deck, level||null).then(()=>{buildQueue();draw();alert('Remote deck loaded')}).catch(err=>alert('Deck load failed: '+err.message));
+      }
+    }catch(_){/* ignore */}
+  })()
 
   function setTheme(mode){document.body.classList.toggle('dark',mode==='dark');const btn=$("#themeBtn");if(btn){btn.textContent=mode==='dark'?'Light':'Dark';btn.setAttribute('aria-pressed',mode==='dark'?'true':'false')}state.theme=mode;saveSettings({theme:mode});applyCardOpacity()}
   function applyBackground(){if(state.bgDataUrl){document.documentElement.style.setProperty('--bgimg',`url('${state.bgDataUrl}')`)}else{document.documentElement.style.removeProperty('--bgimg')}document.documentElement.style.setProperty('--bgimgOpacity',String((state.bgOpacity||0)/100));const s=$("#bgOpacity");if(s)s.value=String(state.bgOpacity||0)}
@@ -395,7 +369,8 @@ document.addEventListener('DOMContentLoaded',function(){
 
   const fileInput=$("#bgFile"),uploadBtn=$("#uploadBgBtn"),opacityInput=$("#bgOpacity"),cardOpacityInput=$("#cardOpacity"),clearBtn=$("#clearBgBtn");
   if(uploadBtn&&fileInput){uploadBtn.addEventListener('click',()=>fileInput.click())}
-  if(fileInput){fileInput.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.bgDataUrl=String(r.result);saveSettings({bgDataUrl:state.bgDataUrl});applyBackground()};r.readAsDataURL(f);e.target.value=''})}
+  if(fileInput){fileInput.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.bgDataUrl=String(r.result);saveSettings({bgDataUrl:state.bgDataUrl});applyBackground()};r.readAsDataURL(f);e.target.value=''})
+  }
   if(opacityInput){opacityInput.addEventListener('input',e=>{state.bgOpacity=parseInt(e.target.value,10)||0;saveSettings({bgOpacity:state.bgOpacity});applyBackground()})}
   if(cardOpacityInput){cardOpacityInput.addEventListener('input',e=>{state.cardOpacity=parseInt(e.target.value,10)||45;saveSettings({cardOpacity:state.cardOpacity});applyCardOpacity()})}
   if(clearBtn){clearBtn.addEventListener('click',()=>{state.bgDataUrl=null;saveSettings({bgDataUrl:null});applyBackground()})}
@@ -413,29 +388,17 @@ document.addEventListener('DOMContentLoaded',function(){
   function onPrimaryClick(){if(state.mode==='drill'){if(!state.answered)return;markStatus('review');return}markStatus('review')}
   $("#revealBtn").addEventListener('click',onPrimaryClick);
   $("#learnedBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('learned')});
-  $("#notBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('not')});
-  $("#reviewBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('review')});
+  $("#notBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered'})return;markStatus('not')});
+  $("#reviewBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered'})return;markStatus('review')});
   document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')$("#notBtn").click();if(e.key==='ArrowRight')$("#learnedBtn").click();if(e.key===' '||e.key==='Enter')$("#revealBtn").click();if(e.key&&e.key.toLowerCase()==='t'){const next=document.body.classList.contains('dark')?'light':'dark';setTheme(next)}});
   $("#promptMode").addEventListener('change',e=>{state.promptMode=e.target.value;saveSettings({promptMode:state.promptMode});drawCard()});
   $("#themeBtn").addEventListener('click',()=>{const next=document.body.classList.contains('dark')?'light':'dark';setTheme(next)});
-  $("#addBatchBtn").addEventListener('click',()=>{$("#batchModal").classList.remove('hidden-el')});
-  $("#closeBatch").addEventListener('click',()=>{$("#batchModal").classList.add('hidden-el')});
-  $("#addBatchJson").addEventListener('click',()=>{const t=$("#batchInput").value.trim();if(!t){alert('Paste JSON first');return}try{importJSON(t,$("#batchLevel").value);$("#batchInput").value='';$("#batchModal").classList.add('hidden-el')}catch(e){alert('Invalid JSON')}});
-  $("#addBatchCsv").addEventListener('click',()=>{const t=$("#batchInput").value.trim();if(!t){alert('Paste CSV first');return}try{importCSV(t,$("#batchLevel").value);$("#batchInput").value='';$("#batchModal").classList.add('hidden-el')}catch(e){alert('Invalid CSV')}});
-  $("#importFile").addEventListener('change',function(e){const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{importJSON(String(r.result));alert('Import complete')}catch(_){alert('Import failed')}finally{buildQueue();draw()}};r.readAsText(f);e.target.value=''});
+
   document.addEventListener('click',e=>{const btn=e.target.closest('.choice-btn');if(!btn)return;if(state.mode!=='drill'||state.answered)return;const idx=parseInt(btn.getAttribute('data-idx'),10);const opt=state.drillChoices[idx];state.drillChoices.forEach((o,i)=>{const el=document.querySelector(`.choice-btn[data-idx="${i}"]`);if(!el)return;if(o.correct)el.classList.add('correct')});if(!opt.correct)btn.classList.add('wrong');state.answered=true;setAnswerVisible(true);showResult(!!opt.correct);const rb=$("#revealBtn");if(rb){rb.disabled=false;rb.removeAttribute('aria-disabled');rb.textContent='Next'}});
   function showResult(ok){const res=$("#result"),card=$("#cardZone");if(!res||!card)return;res.className='result '+(ok?'ok show':'ng show');res.innerHTML=`<div class="icon">${ok?'✓':'✕'}</div>`;card.classList.remove('flash-ok','flash-ng','shake');if(ok){card.classList.add('flash-ok')}else{card.classList.add('flash-ng','shake')}if(navigator.vibrate){try{navigator.vibrate(ok?[30]:[10,80,10])}catch(_){}}}
   function clearResult(){const res=$("#result"),card=$("#cardZone");if(res){res.className='result';res.innerHTML=''}if(card){card.classList.remove('flash-ok','flash-ng','shake')}}
 
-  // Initial paint
-  const prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
-  setTheme(state.theme||(prefersDark?'dark':'light'));
-  if(state.bgRemoteRandom){setRandomBgFromList(false)}else{applyBackground()}
-  applyCardOpacity();
-  buildQueue(); draw();
-
-  // 🔹 Pull in your big decks now; counters will update automatically
-  loadManifestDecks();
+  const prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;setTheme(state.theme||(prefersDark?'dark':'light'));if(state.bgRemoteRandom){setRandomBgFromList(false)}else{applyBackground()}applyCardOpacity();buildQueue();draw();
 });
 </script>
 </body>
