@@ -55,21 +55,429 @@
 </style>
 </head>
 <body>
-<!-- content unchanged -->
+
+<div class="wrap">
+  <header>
+    <div class="group">
+      <button class="pill active" data-mode="learn">Learn</button>
+      <button class="pill" data-mode="review">Review</button>
+      <button class="pill" data-mode="drill">Drill</button>
+    </div>
+    <div class="group">
+      <select id="levelFilter">
+        <option value="ALL">All Levels</option>
+        <option value="N3">N3</option>
+        <option value="N2">N2</option>
+      </select>
+      <div class="group">
+        <label class="small muted">Prompt</label>
+        <select id="promptMode">
+          <option value="JPEN">JP → EN</option>
+          <option value="ENJP">EN → JP</option>
+        </select>
+      </div>
+      <button class="btn" id="themeBtn" aria-pressed="false">Dark</button>
+      <!-- Inline BG + Decks controls -->
+      <details class="inline-controls" id="bgMenuInline">
+        <summary class="btn">BG</summary>
+        <div class="bg-panel" style="color:inherit">
+          <button class="btn" id="uploadBgBtn">Upload Image</button>
+          <div style="height:8px"></div>
+          <div class="small">BG Opacity</div>
+          <input id="bgOpacity" type="range" min="0" max="100" value="20">
+          <input id="bgFile" type="file" accept="image/*" class="hidden">
+          <div style="height:8px"></div>
+          <div class="small">Card Opacity</div>
+          <input id="cardOpacity" type="range" min="20" max="95" value="45">
+          <div style="height:8px"></div>
+          <button class="btn" id="clearBgBtn">Clear</button>
+          <div style="height:8px"></div>
+          <div class="small">Remote BG URLs (one per line)</div>
+          <textarea id="bgUrls" style="width:100%;min-height:80px"></textarea>
+          <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:6px">
+            <input type="checkbox" id="bgRandom"> Random on load
+          </label>
+          <button class="btn" id="bgRandomNow">Use Random Now</button>
+        </div>
+      </details>
+      <details class="inline-controls" id="deckMenuInline">
+        <summary class="btn">Decks</summary>
+        <div class="bg-panel" style="color:inherit">
+          <div class="small">Remote deck URLs (.json or .csv), one per line</div>
+          <textarea id="deckUrls" style="width:100%;min-height:96px" placeholder="https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n3_core.json
+https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n2_core.json"></textarea>
+          <div style="height:8px"></div>
+          <div class="row" style="gap:6px;align-items:center">
+            <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckReplace"> Replace existing</label>
+            <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckDedupe" checked> De‑dupe</label>
+          </div>
+          <div style="height:8px"></div>
+          <div class="small">Optional level override</div>
+          <select id="deckLevelOverride" style="width:100%">
+            <option value="">(auto)</option>
+            <option value="N3">N3</option>
+            <option value="N2">N2</option>
+          </select>
+          <div style="height:8px"></div>
+          <button class="btn" id="loadDeckBtn">Load decks</button>
+          <div class="small" style="margin-top:6px">Tip: autoload via query: <code>?deck=&lt;url&gt;&amp;level=N3</code></div>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <div class="bar">
+    <span id="counts" class="muted"></span>
+  </div>
+  <div class="progress"><span id="progressFill"></span></div>
+
+  <div id="cardZone" class="card center hidden-el">
+    <div id="badgeLeft" class="badge left">Not</div>
+    <div id="badgeRight" class="badge right">Learned</div>
+
+    <div class="word" id="promptBig"></div>
+    <div class="kana" id="promptSub"></div>
+
+    <div class="meaning" id="answerBlock">
+      <div id="answerMain"></div>
+      <div class="ex" id="exampleBlock"></div>
+    </div>
+
+    <div id="choices" class="choices hidden-el"></div>
+
+    <div class="controls">
+      <button class="btn" id="notBtn">Not Learned</button>
+      <button class="btn primary" id="revealBtn">Next</button>
+      <button class="btn" id="learnedBtn">Learned</button>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn block hidden" id="reviewBtn">Add To Review</button>
+
+    <div id="result" class="result" aria-hidden="true"></div>
+  </div>
+
+  <div id="emptyState" class="section center">
+    <div class="muted">No cards in this view. Load a deck from the Decks panel or switch mode.</div>
+  </div>
+</div>
+
 <script>
-  // ... existing code above ...
+(function(){
+  window.addEventListener('error',function(ev){
+    var box=document.getElementById('errbox');
+    if(box) return;
+    box=document.createElement('div');
+    box.id='errbox';
+    box.style.cssText='position:fixed;left:12px;bottom:12px;max-width:90vw;background:#111;color:#fff;border:1px solid #f55;padding:10px 12px;border-radius:8px;z-index:99999;font:12px/1.4 ui-monospace,Menlo,monospace';
+    box.textContent='JS Error: '+(ev.message||'')+(ev.filename?(' @ '+ev.filename+':'+ev.lineno):'');
+    document.body.appendChild(box);
+  });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  function uuidv4(){if(crypto.randomUUID)return crypto.randomUUID();return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16)})}
+  const Store=(function(){try{const t='__t';localStorage.setItem(t,'1');localStorage.removeItem(t);return localStorage}catch(_){let mem={};return{getItem:k=>mem[k]||null,setItem:(k,v)=>{mem[k]=String(v)},removeItem:k=>{delete mem[k]}}}})();
+  const STORAGE="jlpt_flash_v14";
+  const SETTINGS="jlpt_flash_settings";
+  const $=s=>document.querySelector(s);
+  const $$=s=>document.querySelectorAll(s);
+
+  function loadSettings(){try{return JSON.parse(Store.getItem(SETTINGS)||"{}")}catch(_){return{}}}
+  function saveSettings(s){try{const cur=loadSettings();Store.setItem(SETTINGS,JSON.stringify(Object.assign({},cur,s)))}catch(e){Store.setItem(SETTINGS,JSON.stringify(s))}}
+  const settingsBootstrap=loadSettings();
+
+  const defaultBgList=["./girl-7_t.jpg","./girl-6_t.jpg","./girl-5_t.png","./girl-4_t.png","./girl-3_t.png","./girl-2_t.png","./girl-1_t.jpg"].join("\n");
+  const state={mode:"learn",level:"ALL",queue:[],current:null,promptMode:settingsBootstrap.promptMode||"JPEN",theme:settingsBootstrap.theme||null,bgDataUrl:(settingsBootstrap.bgDataUrl??null),bgOpacity:typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,cardOpacity:typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,answered:false,drillChoices:[],bgRemoteList:(settingsBootstrap.bgRemoteList&&settingsBootstrap.bgRemoteList.trim())?settingsBootstrap.bgRemoteList:defaultBgList,bgRemoteRandom:(typeof settingsBootstrap.bgRemoteRandom==='boolean'?settingsBootstrap.bgRemoteRandom:true)};
+
+  // Tiny seed (avoid baked 30 total)
+  const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."]];
+  const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."]];
+  const N3=N3_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N3"}));
+  const N2=N2_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N2"}));
+
+  function freshDeck(){const now=Date.now();return[...N3,...N2].map((x,i)=>({id:uuidv4(),...x,status:"new",seen:0,correct:0,addedAt:now+i}))}
+  function load(){const raw=Store.getItem(STORAGE);if(!raw){const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}try{const p=JSON.parse(raw);if(!Array.isArray(p)||p.length===0)throw 0;return p}catch(_){Store.removeItem(STORAGE);const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}}
+  function save(all){Store.setItem(STORAGE,JSON.stringify(all))}
+  function cards(){return load()}
+  function setCards(list){save(list); updateCountsOnly()}
+
+  function filterByLevel(list){return state.level==="ALL"?list:list.filter(x=>x.level===state.level)}
+  function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  function setAnswerVisible(v){const ans=$("#answerBlock");if(!ans)return;ans.classList.toggle('hidden-el',!v)}
+  function resetChoicesUI(){const wrap=$("#choices");if(!wrap)return;wrap.querySelectorAll('.choice-btn').forEach(b=>{b.classList.remove('correct','wrong')})}
+
+  /* Keep the pill highlight in sync with the current mode */
+  function updateModeUI(){
+    $$('.pill').forEach(btn=>{
+      const isActive = btn.dataset.mode===state.mode;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-pressed', isActive? 'true':'false');
+    });
+  }
+
+  // GLOBAL counter (ignores level filter)
+  function updateCountsOnly(){
+    const all = cards();
+    let learned=0, review=0, notl=0;
+    for(const x of all){
+      const s = x.status || "new";
+      if(s==="learned") learned++;
+      else if(s==="review") review++;
+      else notl++;
+    }
+    $("#counts").textContent = `Total ${all.length} · Learned ${learned} · Review ${review} · Not ${notl}`;
+    $("#progressFill").style.width = (all.length ? Math.round((learned/all.length)*100) : 0) + "%";
+  }
+
+  function simpleEN(m){
+    return (/^(to\s)/i.test(m)?m.replace(/^to\s/i,"").replace(/^\w/,c=>c.toUpperCase()):`This is ${m}.`).replace(/\.$/,".");
+  }
+
+  function updateEmptyState(){
+    const has=!!state.current;
+    $("#cardZone").classList.toggle('hidden-el',!has);
+    $("#emptyState").classList.toggle('hidden-el',has);
+  }
+
+  function draw(){
+    // Keep the counter global, but the queue uses filtered
+    updateCountsOnly();
+    $("#promptMode").value=state.promptMode;
+    if(!state.current && state.queue.length>0){ nextCard(); return; }
+    updateEmptyState();
+  }
+
+  function drawCard(){
+    const c=state.current; if(!c){updateEmptyState();return}
+    const en=c.meaning, jp=c.kanji||c.kana, kana=c.kana||"";
+    const exJP=c.example||`これは${c.meaning}です。`, exEN=c.example_en||simpleEN(c.meaning);
+    const choicesEl=$("#choices"); if(choicesEl){choicesEl.innerHTML='';choicesEl.classList.add('hidden-el')}
+    resetChoicesUI();
+
+    if(state.mode==='drill'){
+      state.answered=false;
+      const pool=filterByLevel(cards());
+      const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);
+      const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));
+      state.drillChoices=shuffle(opts);
+      if(state.promptMode==="JPEN"){ $("#promptBig").textContent=jp; $("#promptSub").textContent=kana; $("#answerMain").textContent=en; }
+      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?('（'+kana+'）'):""}`; }
+      $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
+      setAnswerVisible(false);
+      choicesEl.innerHTML=state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
+      choicesEl.classList.remove('hidden-el');
+      const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=true; rb.setAttribute('aria-disabled','true'); }
+    }else{
+      if(state.promptMode==="JPEN"){ $("#promptBig").textContent=jp; $("#promptSub").textContent=kana; $("#answerMain").textContent=en; }
+      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?('（'+kana+'）'):""}`; }
+      $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
+      setAnswerVisible(true);
+      const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
+    }
+    $("#reviewBtn").classList.add('hidden');
+    updateEmptyState();
+  }
+
+  function buildQueue(){
+    const all=filterByLevel(cards());
+    const pools={
+      learn: all.filter(x=>x.status==="new"||x.status==="not"),
+      review: all.filter(x=>x.status==="review"),
+      drill: all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not"))
+    };
+    let mode=state.mode, pool=pools[mode];
+    if(pool.length===0){
+      const order = mode==="learn"?["review","drill","learn"] : mode==="review"?["drill","learn","review"] : ["learn","review","drill"];
+      for(const m of order){ if(pools[m].length){ mode=m; pool=pools[m]; break; } }
+    }
+    if(mode!==state.mode){ state.mode=mode; }
+    state.queue=shuffle(pool);
+    state.current=null;
+  }
+
+  function nextCard(){
+    if(state.queue.length===0){ state.current=null; updateEmptyState(); return }
+    state.current=state.queue.shift();
+    if(state.mode==='drill') setAnswerVisible(false);
+    const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=(state.mode==='drill'); rb.setAttribute('aria-disabled', rb.disabled?'true':'false'); }
+    clearResult();
+    drawCard();
+  }
+
+  function markStatus(status){
+    const c=state.current; if(!c) return;
+    const all=cards();
+    const idx=all.findIndex(x=>x.id===c.id);
+    if(idx!==-1){
+      const item={...all[idx]};
+      item.seen=(item.seen||0)+1;
+      if(status==='learned'){ item.status='learned'; item.correct=(item.correct||0)+1 }
+      else if(status==='review'){ item.status='review' }
+      else if(status==='not'){ item.status='not' }
+      all[idx]=item; setCards(all);
+    }
+    nextCard();
+  }
+
+  function splitCSVLine(line){const r=[];let cur="";let q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch=='"'){if(q&&line[i+1]=='"'){cur+='"';i++}else{q=!q}}else if(ch===','&&!q){r.push(cur);cur=""}else{cur+=ch}}r.push(cur);return r.map(s=>s.trim())}
+
+  function addCardsFromArray(arr, levelOverride){
+    const now=Date.now();
+    const cleaned=(Array.isArray(arr)?arr:[arr]).map((x,i)=>({
+      id: uuidv4(),
+      kanji: String(x.kanji||x.word||"").trim(),
+      kana: String(x.kana||x.reading||"").trim(),
+      meaning: String(x.meaning||x.gloss||x.translation||"").trim(),
+      example: String(x.example||"").trim(),
+      example_en: String(x.example_en||x.exampleEN||x.en||"").trim(),
+      level: (levelOverride||String((x.level||"N3")).toUpperCase()),
+      status: "new", seen:0, correct:0, addedAt: now+i
+    })).filter(x=>x.meaning && (x.kanji||x.kana));
+    const all=cards().concat(cleaned);
+    setCards(all);
+  }
+
+  async function loadRemoteDeck(url, levelOverride=null){
+    const res=await fetch(url,{cache:'no-cache'});
+    if(!res.ok) throw new Error('Failed to fetch deck: '+res.status);
+    const text=await res.text();
+    const lower=url.toLowerCase();
+    if(lower.endsWith('.json')){
+      const arr=JSON.parse(text);
+      if(!Array.isArray(arr)) throw new Error('JSON must be an array');
+      addCardsFromArray(arr, levelOverride||undefined);
+    }else if(lower.endsWith('.csv')){
+      const lines=text.split(/\r?\n/).filter(Boolean);
+      if(!lines.length) return;
+      const header=lines[0].toLowerCase().split(',').map(h=>h.trim());
+      const idx=k=>header.indexOf(k);
+      const rows=[];
+      for(let i=1;i<lines.length;i++){
+        const cols=splitCSVLine(lines[i]);
+        rows.push({
+          kanji: cols[idx('kanji')]||cols[idx('word')]||"",
+          kana: cols[idx('kana')]||cols[idx('reading')]||"",
+          meaning: cols[idx('meaning')]||cols[idx('gloss')]||cols[idx('translation')]||"",
+          example: cols[idx('example')]||"",
+          example_en: cols[idx('example_en')]||cols[idx('exampleen')]||cols[idx('en')]||"",
+          level: levelOverride||""
+        });
+      }
+      addCardsFromArray(rows, levelOverride||undefined);
+    }else{
+      throw new Error('Unsupported format (use .json or .csv)');
+    }
+  }
+
+  function dedupeByKey(list, keyFn){const seen=new Set();const out=[];for(const it of list){const k=keyFn(it);if(seen.has(k)) continue;seen.add(k);out.push(it)}return out}
+
+  (function deckPanel(){
+    const urlsTA=document.getElementById('deckUrls');
+    const btn=document.getElementById('loadDeckBtn');
+    const replace=document.getElementById('deckReplace');
+    const dedupe=document.getElementById('deckDedupe');
+    const levelSel=document.getElementById('deckLevelOverride');
+    if(!btn) return;
+    try{const s=loadSettings();if(s.deckUrls&&urlsTA) urlsTA.value=s.deckUrls}catch(_){ }
+    btn.addEventListener('click', async ()=>{
+      const urls=(urlsTA.value||'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
+      if(!urls.length){alert('Paste at least one URL');return}
+      saveSettings({deckUrls: urlsTA.value});
+      try{
+        if(replace.checked){ setCards([]); }
+        for(const u of urls){ await loadRemoteDeck(u, levelSel.value||null); }
+        if(dedupe.checked){
+          const all=cards();
+          const uniq=dedupeByKey(all, x=> (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
+          setCards(uniq);
+        }
+        buildQueue(); updateModeUI(); draw();
+        alert('Loaded '+urls.length+' deck file(s). Total: '+cards().length);
+      }catch(e){ alert('Deck load failed: '+(e&&e.message?e.message:e)) }
+    });
+  })();
+
+  const REPO_DECK_URLS = [
+    'https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n3_core.json',
+    'https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n2_core.json'
+  ];
+  async function loadRepoDecksOnce(){
+    try{
+      setCards([]);
+      for(const u of REPO_DECK_URLS){ await loadRemoteDeck(u, null); }
+      const uniq=dedupeByKey(cards(), x=> (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
+      setCards(uniq);
+      saveSettings({repoLoaded:true});
+    }catch(e){ console.warn('Repo deck autoload failed:', e); }
+  }
+
+  (async function autoLoadFromQueryOrRepo(){
+    try{
+      const q=new URLSearchParams(location.search);
+      const deck=q.get('deck');
+      const level=q.get('level');
+      if(deck){
+        await loadRemoteDeck(deck, level||null);
+        buildQueue(); updateModeUI(); draw();
+        alert('Remote deck loaded');
+        return;
+      }
+    }catch(_){ }
+    const sNow = loadSettings();
+    const isFirst = !sNow.repoLoaded;
+    if(isFirst){ await loadRepoDecksOnce(); }
+    buildQueue(); updateModeUI(); draw();
+  })();
+
+  function setTheme(mode){document.body.classList.toggle('dark',mode==='dark');const btn=$("#themeBtn");if(btn){btn.textContent=mode==='dark'?'Light':'Dark';btn.setAttribute('aria-pressed',mode==='dark'?'true':'false')}state.theme=mode;saveSettings({theme:mode});applyCardOpacity()}
+  function applyBackground(){if(state.bgDataUrl){document.documentElement.style.setProperty('--bgimg',`url('${state.bgDataUrl}')`)}else{document.documentElement.style.removeProperty('--bgimg')}document.documentElement.style.setProperty('--bgimgOpacity',String((state.bgOpacity||0)/100));const s=$("#bgOpacity");if(s)s.value=String(state.bgOpacity||0)}
+  function applyCardOpacity(){const dark=document.body.classList.contains('dark');const alpha=Math.max(0,Math.min(1,(state.cardOpacity||45)/100));const val=dark?`rgba(17,22,28,${alpha})`:`rgba(255,255,255,${alpha})`;document.documentElement.style.setProperty('--cardbg',val);const s=$("#cardOpacity");if(s)s.value=String(state.cardOpacity||45)}
+  function parseBgList(text){return String(text||'').replace(/\r\n/g,'\n').split(/\n+/).map(s=>s.trim()).filter(Boolean)}
+  function setRandomBgFromList(manual){const list=parseBgList(state.bgRemoteList);if(!list.length)return;const pick=list[Math.floor(Math.random()*list.length)];const url=pick+(pick.includes('?')?'&':'?')+'t='+(manual?Date.now():Math.floor(Date.now()/3600000));state.bgDataUrl=url;saveSettings({bgDataUrl:state.bgDataUrl});applyBackground()}
+
+  const fileInput=$("#bgFile"),uploadBtn=$("#uploadBgBtn"),opacityInput=$("#bgOpacity"),cardOpacityInput=$("#cardOpacity"),clearBtn=$("#clearBgBtn");
+  if(uploadBtn&&fileInput){uploadBtn.addEventListener('click',()=>fileInput.click())}
+  if(fileInput){fileInput.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.bgDataUrl=String(r.result);saveSettings({bgDataUrl:state.bgDataUrl});applyBackground()};r.readAsDataURL(f);e.target.value=''})}
+  if(opacityInput){opacityInput.addEventListener('input',e=>{state.bgOpacity=parseInt(e.target.value,10)||0;saveSettings({bgOpacity:state.bgOpacity});applyBackground()})}
+  if(cardOpacityInput){cardOpacityInput.addEventListener('input',e=>{state.cardOpacity=parseInt(e.target.value,10)||45;saveSettings({cardOpacity:state.cardOpacity});applyCardOpacity()})}
+  if(clearBtn){clearBtn.addEventListener('click',()=>{state.bgDataUrl=null;saveSettings({bgDataUrl:null});applyBackground()})}
+  const bgUrls=$("#bgUrls"),bgRandom=$("#bgRandom"),bgRandomNow=$("#bgRandomNow");
+  if(bgUrls){bgUrls.value=state.bgRemoteList||'';bgUrls.addEventListener('change',e=>{state.bgRemoteList=e.target.value;saveSettings({bgRemoteList:state.bgRemoteList})})}
+  if(bgRandom){bgRandom.checked=!!state.bgRemoteRandom;bgRandom.addEventListener('change',e=>{state.bgRemoteRandom=!!e.target.checked;saveSettings({bgRemoteRandom:state.bgRemoteRandom})})}
+  if(bgRandomNow){bgRandomNow.addEventListener('click',()=>setRandomBgFromList(true))}
+
+  (function(){const zone=$("#cardZone"),badgeL=$("#badgeLeft"),badgeR=$("#badgeRight");let startX=0,dx=0,dragging=false;function down(e){dragging=true;startX=(e.touches?e.touches[0].clientX:e.clientX);zone.classList.add('swiping')}function move(e){if(!dragging)return;const x=(e.touches?e.touches[0].clientX:e.clientX);dx=x-startX;zone.style.transform=`translateX(${dx}px) rotate(${dx*0.03}deg)`;zone.classList.toggle('succeed',dx>60);zone.classList.toggle('fail',dx<-60);if(badgeR)badgeR.style.opacity=String(Math.min(1,Math.max(0,(dx-40)/100)));if(badgeL)badgeL.style.opacity=String(Math.min(1,Math.max(0,(-dx-40)/100)))}function reset(){zone.style.transition='transform .18s ease';zone.style.transform='translateX(0) rotate(0)';if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition=''},180)}function commit(dir){zone.style.transition='transform .18s ease';const off=dir>0?600:-600;const rot=dir>0?15:-15;zone.style.transform=`translateX(${off}px) rotate(${rot}deg)`;if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition='';zone.style.transform='';markStatus(dir>0?'learned':'not')},160)}function up(){if(!dragging)return;dragging=false;zone.classList.remove('swiping','succeed','fail');if(dx>120){commit(1)}else if(dx<-120){commit(-1)}else{reset()}dx=0}zone.addEventListener('pointerdown',down);window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);zone.addEventListener('touchstart',down,{passive:true});window.addEventListener('touchmove',move,{passive:true});window.addEventListener('touchend',up)})();
 
   function setMode(m){
     state.mode=m;
-    $$('.pill').forEach(p=>{
-      if(p.dataset.mode===m){ p.classList.add('active'); }
-      else{ p.classList.remove('active'); }
-    });
     buildQueue();
+    updateModeUI();
     draw();
   }
+  function setLevel(v){ state.level=v; buildQueue(); updateModeUI(); draw(); }
+  $("#levelFilter").addEventListener('change',e=>setLevel(e.target.value));
+  $$('.pill').forEach(p=>p.addEventListener('click',()=>setMode(p.dataset.mode)));
+  function onPrimaryClick(){if(state.mode==='drill'){if(!state.answered)return;markStatus('review');return}markStatus('review')}
+  $("#revealBtn").addEventListener('click',onPrimaryClick);
+  $("#learnedBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('learned')});
+  $("#notBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('not')});
+  $("#reviewBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('review')});
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')$("#notBtn").click();if(e.key==='ArrowRight')$("#learnedBtn").click();if(e.key===' '||e.key==='Enter')$("#revealBtn").click();if(e.key&&e.key.toLowerCase()==='t'){const next=document.body.classList.contains('dark')?'light':'dark';setTheme(next)}});
+  $("#promptMode").addEventListener('change',e=>{state.promptMode=e.target.value;saveSettings({promptMode:state.promptMode});drawCard()});
+  $("#themeBtn").addEventListener('click',()=>{const next=document.body.classList.contains('dark')?'light':'dark';setTheme(next)});
 
-  // ... rest of JS unchanged ...
+  document.addEventListener('click',e=>{const btn=e.target.closest('.choice-btn');if(!btn)return;if(state.mode!=='drill'||state.answered)return;const idx=parseInt(btn.getAttribute('data-idx'),10);const opt=state.drillChoices[idx];state.drillChoices.forEach((o,i)=>{const el=document.querySelector(`.choice-btn[data-idx="${i}"]`);if(!el)return;if(o.correct)el.classList.add('correct')});if(!opt.correct)btn.classList.add('wrong');state.answered=true;setAnswerVisible(true);showResult(!!opt.correct);const rb=$("#revealBtn");if(rb){rb.disabled=false;rb.removeAttribute('aria-disabled');rb.textContent='Next'}});
+  function showResult(ok){const res=$("#result"),card=$("#cardZone");if(!res||!card)return;res.className='result '+(ok?'ok show':'ng show');res.innerHTML=`<div class="icon">${ok?'✓':'✕'}</div>`;card.classList.remove('flash-ok','flash-ng','shake');if(ok){card.classList.add('flash-ok')}else{card.classList.add('flash-ng','shake')}if(navigator.vibrate){try{navigator.vibrate(ok?[30]:[10,80,10])}catch(_){}}}
+  function clearResult(){const res=$("#result"),card=$("#cardZone");if(res){res.className='result';res.innerHTML=''}if(card){card.classList.remove('flash-ok','flash-ng','shake')}}
+
+  const prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(state.theme||(prefersDark?'dark':'light'));
+  if(state.bgRemoteRandom){setRandomBgFromList(false)}else{applyBackground()}
+  applyCardOpacity();
+  buildQueue(); updateModeUI(); draw();
+});
 </script>
 </body>
 </html>
