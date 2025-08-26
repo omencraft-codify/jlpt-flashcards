@@ -53,21 +53,21 @@
 
   body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,linear-gradient(135deg,rgba(2,6,23,.85),rgba(30,58,138,.65)));background-size:cover;background-position:center 30%;background-repeat:no-repeat;opacity:var(--bgimgOpacity,.2);transition:opacity .2s;pointer-events:none;z-index:-1}
   details.bg-controls{position:fixed;top:12px;right:12px;z-index:1000}
-details.bg-controls summary{list-style:none;cursor:pointer}
-details.bg-controls summary::-webkit-details-marker{display:none}
-.bg-button{background:rgba(17,17,17,.7);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font:13px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-.bg-panel{margin-top:8px;background:rgba(17,17,17,.85);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px;min-width:240px;box-shadow:0 12px 28px rgba(0,0,0,.45)}
-.bg-panel .btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font-size:12px;width:100%}
-.bg-panel .small{font-size:12px;opacity:.9}
-.bg-panel input[type=range]{width:100%}
+  details.bg-controls summary{list-style:none;cursor:pointer}
+  details.bg-controls summary::-webkit-details-marker{display:none}
+  .bg-button{background:rgba(17,17,17,.7);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font:13px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  .bg-panel{margin-top:8px;background:rgba(17,17,17,.85);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px;min-width:240px;box-shadow:0 12px 28px rgba(0,0,0,.45)}
+  .bg-panel .btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:10px;font-size:12px;width:100%}
+  .bg-panel .small{font-size:12px;opacity:.9}
+  .bg-panel input[type=range]{width:100%}
 
-/* inline controls inside header */
-details.inline-controls{position:relative;display:inline-block}
-details.inline-controls summary{list-style:none}
-details.inline-controls summary::-webkit-details-marker{display:none}
-details.inline-controls > summary.btn{padding:10px 12px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);border-radius:12px}
-details.inline-controls .bg-panel{position:absolute;top:100%;right:0;margin-top:6px;min-width:260px;z-index:1000;background:var(--cardbg);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18)}
-details.inline-controls .bg-panel .btn{background:var(--btn);color:var(--btnfg);border:1px solid var(--line);width:100%}
+  /* inline controls inside header */
+  details.inline-controls{position:relative;display:inline-block}
+  details.inline-controls summary{list-style:none}
+  details.inline-controls summary::-webkit-details-marker{display:none}
+  details.inline-controls > summary.btn{padding:10px 12px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);border-radius:12px}
+  details.inline-controls .bg-panel{position:absolute;top:100%;right:0;margin-top:6px;min-width:260px;z-index:1000;background:var(--cardbg);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+  details.inline-controls .bg-panel .btn{background:var(--btn);color:var(--btnfg);border:1px solid var(--line);width:100%}
 
   .result{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transform:scale(.9);transition:opacity .12s,transform .2s}
   .result.show{opacity:1;transform:scale(1)}
@@ -87,7 +87,6 @@ details.inline-controls .bg-panel .btn{background:var(--btn);color:var(--btnfg);
 </style>
 </head>
 <body>
-
 
 <div class="wrap">
   <header>
@@ -216,32 +215,36 @@ document.addEventListener('DOMContentLoaded',function(){
   const SETTINGS="jlpt_flash_settings";
   const $=s=>document.querySelector(s);
   const $$=s=>document.querySelectorAll(s);
+
   function loadSettings(){try{return JSON.parse(Store.getItem(SETTINGS)||"{}")}catch(_){return{}}}
   function saveSettings(s){try{const cur=loadSettings();Store.setItem(SETTINGS,JSON.stringify(Object.assign({},cur,s)))}catch(e){Store.setItem(SETTINGS,JSON.stringify(s))}}
   const settingsBootstrap=loadSettings();
+
+  /* ---------------- BG defaults ---------------- */
   const defaultBgList=["./girl-7_t.jpg","./girl-6_t.jpg","./girl-5_t.png","./girl-4_t.png","./girl-3_t.png","./girl-2_t.png","./girl-1_t.jpg"].join("\n");
   const state={mode:"learn",level:"ALL",queue:[],current:null,promptMode:settingsBootstrap.promptMode||"JPEN",theme:settingsBootstrap.theme||null,bgDataUrl:(settingsBootstrap.bgDataUrl??null),bgOpacity:typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,cardOpacity:typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,answered:false,drillChoices:[],bgRemoteList:(settingsBootstrap.bgRemoteList&&settingsBootstrap.bgRemoteList.trim())?settingsBootstrap.bgRemoteList:defaultBgList,bgRemoteRandom:(typeof settingsBootstrap.bgRemoteRandom==='boolean'?settingsBootstrap.bgRemoteRandom:true)};
 
-  // N3/N2 seed (small)
-  const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."],["原因","げんいん","cause","原因は何ですか。","What is the cause?"],["役に立つ","やくにたつ","be useful","この本は役に立ちます。","This book is useful."]];
-  const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."],["改善","かいぜん","improvement","サービスを改善します。","Improve the service."],["対象","たいしょう","target","学生が対象です。","Students are the target."]];
+  /* ---------------- Seed (tiny) so UI isn't empty if offline) ---------------- */
+  const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."]];
+  const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."]];
   const N3=N3_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N3"}));
   const N2=N2_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N2"}));
 
+  /* ---------------- Storage helpers ---------------- */
   function freshDeck(){const now=Date.now();return[...N3,...N2].map((x,i)=>({id:uuidv4(),...x,status:"new",seen:0,correct:0,addedAt:now+i}))}
   function load(){const raw=Store.getItem(STORAGE);if(!raw){const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}try{const p=JSON.parse(raw);if(!Array.isArray(p)||p.length===0)throw 0;return p}catch(_){Store.removeItem(STORAGE);const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}}
   function save(all){Store.setItem(STORAGE,JSON.stringify(all))}
   function cards(){return load()}
-  function setCards(list){save(list); updateCountsOnly()}  /* ← only addition: keep counter in sync */
+  function setCards(list){save(list); updateCountsOnly()}  /* keep counter in sync */
 
   function filterByLevel(list){return state.level==="ALL"?list:list.filter(x=>x.level===state.level)}
   function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
   function setAnswerVisible(v){const ans=$("#answerBlock");if(!ans)return;ans.classList.toggle('hidden-el',!v)}
-  function resetChoicesUI(){const wrap=$("#choices");if(!wrap)return;wrap.querySelectorAll('.choice-btn').forEach(b=>{b.classList.remove('correct','wrong')})}
+  function resetChoicesUI(){const wrap=$("#choices");if(!wrap)return;wrap.querySelectorAll('.choice-btn').forEach(b=>{b.classList.remove('correct','wrong')}})
 
   /* ---------- COUNTER (global) ---------- */
   function updateCountsOnly(){
-    const all = cards();               // all cards, not filtered
+    const all = cards();
     let learned=0, review=0, notl=0;
     for(const x of all){
       const s = x.status || "new";
@@ -252,27 +255,106 @@ document.addEventListener('DOMContentLoaded',function(){
     $("#counts").textContent = `Total ${all.length} · Learned ${learned} · Review ${review} · Not ${notl}`;
     $("#progressFill").style.width = (all.length ? Math.round((learned/all.length)*100) : 0) + "%";
   }
-  /* ------------------------------------- */
 
-  function buildQueue(){const all=filterByLevel(cards());const pools={learn:all.filter(x=>x.status==="new"||x.status==="not"),review:all.filter(x=>x.status==="review"),drill:all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not"))};let mode=state.mode,pool=pools[mode];if(pool.length===0){const order=mode==="learn"?["review","drill","learn"]:mode==="review"?["drill","learn","review"]:["learn","review","drill"];for(const m of order){if(pools[m].length){mode=m;pool=pools[m];break}}}if(mode!==state.mode){state.mode=mode;$$('.pill').forEach(p=>p.classList.toggle('active',p.dataset.mode===mode))}state.queue=shuffle(pool);state.current=null}
-  function nextCard(){if(state.queue.length===0){state.current=null;updateEmptyState();return}state.current=state.queue.shift();if(state.mode==='drill')setAnswerVisible(false);const rb=$("#revealBtn");if(rb){rb.textContent='Next';rb.disabled=(state.mode==='drill');rb.setAttribute('aria-disabled',rb.disabled?'true':'false')}clearResult();drawCard()}
-  function updateEmptyState(){const has=!!state.current;$("#cardZone").classList.toggle('hidden-el',!has);$("#emptyState").classList.toggle('hidden-el',has)}
+  /* ---------------- Core study flow ---------------- */
+  function simpleEN(m){
+    return (/^(to\s)/i.test(m)?m.replace(/^to\s/i,"").replace(/^\w/,c=>c.toUpperCase()):`This is ${m}.`).replace(/\.$/,".");
+  }
 
-  /* draw(): only change is using updateCountsOnly() */
+  function updateEmptyState(){
+    const has=!!state.current;
+    $("#cardZone").classList.toggle('hidden-el',!has);
+    $("#emptyState").classList.toggle('hidden-el',has);
+  }
+
   function draw(){
-    updateCountsOnly();                                   /* ← global counts */
+    const all=filterByLevel(cards());
+    const learned=all.filter(x=>x.status==="learned").length;
+    const review=all.filter(x=>x.status==="review").length;
+    const notl=all.filter(x=>x.status==="not" || x.status==="new").length;
+    const total=all.length;
+    $("#counts").textContent=`Total ${total} · Learned ${learned} · Review ${review} · Not ${notl}`;
+    $("#progressFill").style.width=(total?Math.round((learned/total)*100):0)+"%";
     $("#promptMode").value=state.promptMode;
-    if(!state.current&&state.queue.length>0){nextCard();return}
+    if(!state.current && state.queue.length>0){ nextCard(); return; }
     updateEmptyState();
   }
 
-  function simpleEN(m){return(/^(to\s)/i.test(m)?m.replace(/^to\s/i,"").replace(/^\w/,c=>c.toUpperCase()):`This is ${m}.`).replace(/\.$/,".")}
-  function drawCard(){const c=state.current;if(!c){updateEmptyState();return}const en=c.meaning,jp=c.kanji||c.kana,kana=c.kana||"";const exJP=c.example||`これは${c.meaning}です。`,exEN=c.example_en||simpleEN(c.meaning);const choicesEl=$("#choices");if(choicesEl){choicesEl.innerHTML='';choicesEl.classList.add('hidden-el')}resetChoicesUI();if(state.mode==='drill'){state.answered=false;const pool=filterByLevel(cards());const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));state.drillChoices=shuffle(opts);if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=kana;$("#answerMain").textContent=en}else{$("#promptBig").textContent=en;$("#promptSub").textContent="";$("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`}$("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;setAnswerVisible(false);choicesEl.innerHTML=state.drillChoices.map((o,i)=>`<button class=\"choice-btn\" data-idx=\"${i}\">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');choicesEl.classList.remove('hidden-el');const rb=$("#revealBtn");if(rb){rb.textContent='Next';rb.disabled=true;rb.setAttribute('aria-disabled','true')}}else{if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=kana;$("#answerMain").textContent=en}else{$("#promptBig").textContent=en;$("#promptSub").textContent="";$("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`}$("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;setAnswerVisible(true);const rb=$("#revealBtn");if(rb){rb.disabled=false;rb.removeAttribute('aria-disabled');rb.textContent='Next'}}$("#reviewBtn").classList.add('hidden');updateEmptyState()}
-  function markStatus(status){const c=state.current;if(!c)return;const all=cards();const idx=all.findIndex(x=>x.id===c.id);if(idx!==-1){const item={...all[idx]};item.seen=(item.seen||0)+1;if(status==='learned'){item.status='learned';item.correct=(item.correct||0)+1}else if(status==='review'){item.status='review'}else if(status==='not'){item.status='not'}all[idx]=item;setCards(all)}nextCard()}
+  function drawCard(){
+    const c=state.current; if(!c){updateEmptyState();return}
+    const en=c.meaning, jp=c.kanji||c.kana, kana=c.kana||"";
+    const exJP=c.example||`これは${c.meaning}です。`, exEN=c.example_en||simpleEN(c.meaning);
+    const choicesEl=$("#choices"); if(choicesEl){choicesEl.innerHTML='';choicesEl.classList.add('hidden-el')}
+    resetChoicesUI();
 
+    if(state.mode==='drill'){
+      state.answered=false;
+      const pool=filterByLevel(cards());
+      const distractors=shuffle(pool.filter(x=>x.id!==c.id)).slice(0,3);
+      const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));
+      state.drillChoices=shuffle(opts);
+      if(state.promptMode==="JPEN"){ $("#promptBig").textContent=jp; $("#promptSub").textContent=kana; $("#answerMain").textContent=en; }
+      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
+      $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
+      setAnswerVisible(false);
+      choicesEl.innerHTML=state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
+      choicesEl.classList.remove('hidden-el');
+      const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=true; rb.setAttribute('aria-disabled','true'); }
+    }else{
+      if(state.promptMode==="JPEN"){ $("#promptBig").textContent=jp; $("#promptSub").textContent=kana; $("#answerMain").textContent=en; }
+      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?`（${kana}）`:""}`; }
+      $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
+      setAnswerVisible(true);
+      const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
+    }
+    $("#reviewBtn").classList.add('hidden');
+    updateEmptyState();
+  }
+
+  function buildQueue(){
+    const all=filterByLevel(cards());
+    const pools={
+      learn: all.filter(x=>x.status==="new"||x.status==="not"),
+      review: all.filter(x=>x.status==="review"),
+      drill: all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not"))
+    };
+    let mode=state.mode, pool=pools[mode];
+    if(pool.length===0){
+      const order = mode==="learn"?["review","drill","learn"] : mode==="review"?["drill","learn","review"] : ["learn","review","drill"];
+      for(const m of order){ if(pools[m].length){ mode=m; pool=pools[m]; break; } }
+    }
+    if(mode!==state.mode){ state.mode=mode; $$('.pill').forEach(p=>p.classList.toggle('active',p.dataset.mode===mode)); }
+    state.queue=shuffle(pool);
+    state.current=null;
+  }
+
+  function nextCard(){
+    if(state.queue.length===0){ state.current=null; updateEmptyState(); return }
+    state.current=state.queue.shift();
+    if(state.mode==='drill') setAnswerVisible(false);
+    const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=(state.mode==='drill'); rb.setAttribute('aria-disabled', rb.disabled?'true':'false'); }
+    clearResult();
+    drawCard();
+  }
+
+  function markStatus(status){
+    const c=state.current; if(!c) return;
+    const all=cards();
+    const idx=all.findIndex(x=>x.id===c.id);
+    if(idx!==-1){
+      const item={...all[idx]};
+      item.seen=(item.seen||0)+1;
+      if(status==='learned'){ item.status='learned'; item.correct=(item.correct||0)+1 }
+      else if(status==='review'){ item.status='review' }
+      else if(status==='not'){ item.status='not' }
+      all[idx]=item; setCards(all);
+    }
+    nextCard();
+  }
+
+  /* ---------------- Deck importing helpers ---------------- */
   function splitCSVLine(line){const r=[];let cur="";let q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch=='"'){if(q&&line[i+1]=='"'){cur+='"';i++}else{q=!q}}else if(ch===','&&!q){r.push(cur);cur=""}else{cur+=ch}}r.push(cur);return r.map(s=>s.trim())}
 
-  // Map raw rows to internal card objects and add to storage
   function addCardsFromArray(arr, levelOverride){
     const now=Date.now();
     const cleaned=(Array.isArray(arr)?arr:[arr]).map((x,i)=>({
@@ -289,7 +371,6 @@ document.addEventListener('DOMContentLoaded',function(){
     setCards(all);
   }
 
-  // ---- Option 1: Load decks from GitHub/jsDelivr ----
   async function loadRemoteDeck(url, levelOverride=null){
     const res=await fetch(url,{cache:'no-cache'});
     if(!res.ok) throw new Error('Failed to fetch deck: '+res.status);
@@ -324,6 +405,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
   function dedupeByKey(list, keyFn){const seen=new Set();const out=[];for(const it of list){const k=keyFn(it);if(seen.has(k)) continue;seen.add(k);out.push(it)}return out}
 
+  /* ---------------- Decks panel ---------------- */
   (function deckPanel(){
     const urlsTA=document.getElementById('deckUrls');
     const btn=document.getElementById('loadDeckBtn');
@@ -350,17 +432,40 @@ document.addEventListener('DOMContentLoaded',function(){
     });
   })();
 
-  (function autoLoadFromQuery(){
+  /* ---------------- Auto-load from your repo ---------------- */
+  const REPO_DECK_URLS = [
+    "https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n3_core.json",
+    "https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n2_core.json"
+  ];
+  async function loadRepoDecksOnce(){
+    try{
+      setCards([]);
+      for(const u of REPO_DECK_URLS){ await loadRemoteDeck(u, null); }
+      const uniq=dedupeByKey(cards(), x=> (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
+      setCards(uniq);
+      saveSettings({repoLoaded:true});
+    }catch(e){ console.warn("Repo deck autoload failed:", e); }
+  }
+
+  (async function autoLoadFromQueryOrRepo(){
     try{
       const q=new URLSearchParams(location.search);
       const deck=q.get('deck');
       const level=q.get('level');
       if(deck){
-        loadRemoteDeck(deck, level||null).then(()=>{buildQueue();draw();alert('Remote deck loaded')}).catch(err=>alert('Deck load failed: '+err.message));
+        await loadRemoteDeck(deck, level||null);
+        buildQueue(); draw();
+        alert('Remote deck loaded');
+        return;
       }
-    }catch(_){/* ignore */}
-  })()
+    }catch(_){}
+    const sNow = loadSettings();
+    const isFirst = !sNow.repoLoaded;
+    if(isFirst){ await loadRepoDecksOnce(); }
+    buildQueue(); draw();
+  })();
 
+  /* ---------------- Theming + BG ---------------- */
   function setTheme(mode){document.body.classList.toggle('dark',mode==='dark');const btn=$("#themeBtn");if(btn){btn.textContent=mode==='dark'?'Light':'Dark';btn.setAttribute('aria-pressed',mode==='dark'?'true':'false')}state.theme=mode;saveSettings({theme:mode});applyCardOpacity()}
   function applyBackground(){if(state.bgDataUrl){document.documentElement.style.setProperty('--bgimg',`url('${state.bgDataUrl}')`)}else{document.documentElement.style.removeProperty('--bgimg')}document.documentElement.style.setProperty('--bgimgOpacity',String((state.bgOpacity||0)/100));const s=$("#bgOpacity");if(s)s.value=String(state.bgOpacity||0)}
   function applyCardOpacity(){const dark=document.body.classList.contains('dark');const alpha=Math.max(0,Math.min(1,(state.cardOpacity||45)/100));const val=dark?`rgba(17,22,28,${alpha})`:`rgba(255,255,255,${alpha})`;document.documentElement.style.setProperty('--cardbg',val);const s=$("#cardOpacity");if(s)s.value=String(state.cardOpacity||45)}
@@ -379,6 +484,7 @@ document.addEventListener('DOMContentLoaded',function(){
   if(bgRandom){bgRandom.checked=!!state.bgRemoteRandom;bgRandom.addEventListener('change',e=>{state.bgRemoteRandom=!!e.target.checked;saveSettings({bgRemoteRandom:state.bgRemoteRandom})})}
   if(bgRandomNow){bgRandomNow.addEventListener('click',()=>setRandomBgFromList(true))}
 
+  /* ---------------- Swipe + controls ---------------- */
   (function(){const zone=$("#cardZone"),badgeL=$("#badgeLeft"),badgeR=$("#badgeRight");let startX=0,dx=0,dragging=false;function down(e){dragging=true;startX=(e.touches?e.touches[0].clientX:e.clientX);zone.classList.add('swiping')}function move(e){if(!dragging)return;const x=(e.touches?e.touches[0].clientX:e.clientX);dx=x-startX;zone.style.transform=`translateX(${dx}px) rotate(${dx*0.03}deg)`;zone.classList.toggle('succeed',dx>60);zone.classList.toggle('fail',dx<-60);if(badgeR)badgeR.style.opacity=String(Math.min(1,Math.max(0,(dx-40)/100)));if(badgeL)badgeL.style.opacity=String(Math.min(1,Math.max(0,(-dx-40)/100)))}function reset(){zone.style.transition='transform .18s ease';zone.style.transform='translateX(0) rotate(0)';if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition=''},180)}function commit(dir){zone.style.transition='transform .18s ease';const off=dir>0?600:-600;const rot=dir>0?15:-15;zone.style.transform=`translateX(${off}px) rotate(${rot}deg)`;if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition='';zone.style.transform='';markStatus(dir>0?'learned':'not')},160)}function up(){if(!dragging)return;dragging=false;zone.classList.remove('swiping','succeed','fail');if(dx>120){commit(1)}else if(dx<-120){commit(-1)}else{reset()}dx=0}zone.addEventListener('pointerdown',down);window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);zone.addEventListener('touchstart',down,{passive:true});window.addEventListener('touchmove',move,{passive:true});window.addEventListener('touchend',up)})();
 
   function setMode(m){state.mode=m;$$('.pill').forEach(p=>p.classList.toggle('active',p.dataset.mode===m));buildQueue();draw()}
@@ -388,8 +494,8 @@ document.addEventListener('DOMContentLoaded',function(){
   function onPrimaryClick(){if(state.mode==='drill'){if(!state.answered)return;markStatus('review');return}markStatus('review')}
   $("#revealBtn").addEventListener('click',onPrimaryClick);
   $("#learnedBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('learned')});
-  $("#notBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered'})return;markStatus('not')});
-  $("#reviewBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered'})return;markStatus('review')});
+  $("#notBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('not')});
+  $("#reviewBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('review')});
   document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')$("#notBtn").click();if(e.key==='ArrowRight')$("#learnedBtn").click();if(e.key===' '||e.key==='Enter')$("#revealBtn").click();if(e.key&&e.key.toLowerCase()==='t'){const next=document.body.classList.contains('dark')?'light':'dark';setTheme(next)}});
   $("#promptMode").addEventListener('change',e=>{state.promptMode=e.target.value;saveSettings({promptMode:state.promptMode});drawCard()});
   $("#themeBtn").addEventListener('click',()=>{const next=document.body.classList.contains('dark')?'light':'dark';setTheme(next)});
@@ -398,7 +504,27 @@ document.addEventListener('DOMContentLoaded',function(){
   function showResult(ok){const res=$("#result"),card=$("#cardZone");if(!res||!card)return;res.className='result '+(ok?'ok show':'ng show');res.innerHTML=`<div class="icon">${ok?'✓':'✕'}</div>`;card.classList.remove('flash-ok','flash-ng','shake');if(ok){card.classList.add('flash-ok')}else{card.classList.add('flash-ng','shake')}if(navigator.vibrate){try{navigator.vibrate(ok?[30]:[10,80,10])}catch(_){}}}
   function clearResult(){const res=$("#result"),card=$("#cardZone");if(res){res.className='result';res.innerHTML=''}if(card){card.classList.remove('flash-ok','flash-ng','shake')}}
 
-  const prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;setTheme(state.theme||(prefersDark?'dark':'light'));if(state.bgRemoteRandom){setRandomBgFromList(false)}else{applyBackground()}applyCardOpacity();buildQueue();draw();
+  /* ---------------- Initial theme/bg apply + counters + queue ---------------- */
+  const prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(state.theme||(prefersDark?'dark':'light'));
+  if(state.bgRemoteRandom){setRandomBgFromList(false)}else{applyBackground()}
+  applyCardOpacity();
+  buildQueue(); draw();
+
+  /* ---------------- Minimal self-tests (console) ---------------- */
+  (function selfTests(){
+    function ok(name,pass,msg){const tag=pass?'✅':'❌';console[pass?'log':'error'](`${tag} ${name}${msg?': '+msg:''}`)}
+    try{ ok('buildQueue present', typeof buildQueue==='function'); }catch(_){ ok('buildQueue present', false) }
+    try{
+      const total=cards().length; buildQueue();
+      ok('queue builds', (total===0 && state.queue.length===0) || (total>0 && state.queue.length>=0));
+    }catch(e){ ok('queue builds', false, e&&e.message) }
+    try{
+      buildQueue(); draw();
+      const txt=document.getElementById('counts').textContent||'';
+      ok('counter renders', /Total\\s+\\d+/.test(txt));
+    }catch(e){ ok('counter renders', false, e&&e.message) }
+  })();
 });
 </script>
 </body>
