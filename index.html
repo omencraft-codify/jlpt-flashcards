@@ -10,8 +10,8 @@
   header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
   .group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   select{appearance:none;background:var(--btn);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-  .pill{border:1px solid var(--line);background:var(--btn);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;height:var(--pill-h,40px);padding:0 14px;border-radius:var(--pill-radius,999px);font-size:14px;line-height:1;transition:all .15s}
-  .pill.active{background:var(--fg);color:#fff;border-color:var(--fg);box-shadow:0 0 0 2px var(--fg) inset}
+  .pill{border:1px solid var(--line);background:var(--btn);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;height:var(--pill-h,40px);padding:0 14px;border-radius:var(--pill-radius,999px);font-size:14px;line-height:1}
+  .pill.active{background:var(--fg);color:#fff;border-color:var(--fg)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);padding:12px 14px;border-radius:12px;cursor:pointer}
   .btn.primary{background:var(--btn2);color:var(--btn2fg);border-color:var(--btn2)}
   .btn.block{width:100%}
@@ -46,12 +46,35 @@
   body.dark .card, body.dark .section{background:var(--cardbg);border-color:#3b414b}
   body.dark select,body.dark textarea{background:#0d1218;color:#eef0f3;border-color:#4a5160}
   body.dark .pill{background:#121721;border-color:#6a7384;color:#e9edf5}
-  body.dark .pill.active{background:transparent;border-color:#e9edf5;color:#e9edf5;box-shadow:0 0 0 2px #e9edf5 inset}
+  body.dark .pill.active{background:transparent;border-color:#e9edf5;color:#e9edf5;box-shadow:0 0 0 1px #e9edf5 inset}
   body.dark .btn{background:#141a21;border-color:#4a5160;color:#eef0f3}
   body.dark .btn.primary{background:var(--btn2);color:var(--btn2fg);border-color:var(--btn2)}
   body.dark .choice-btn{background:#141a21;border-color:#4a5160;color:#eef0f3}
 
   body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,linear-gradient(135deg,rgba(2,6,23,.85),rgba(30,58,138,.65)));background-size:cover;background-position:center 30%;background-repeat:no-repeat;opacity:var(--bgimgOpacity,.2);transition:opacity .2s;pointer-events:none;z-index:-1}
+
+  details.inline-controls{position:relative;display:inline-block}
+  details.inline-controls summary{list-style:none}
+  details.inline-controls summary::-webkit-details-marker{display:none}
+  details.inline-controls > summary.btn{padding:10px 12px;border:1px solid var(--line);background:var(--btn);color:var(--btnfg);border-radius:12px}
+  details.inline-controls .bg-panel{position:absolute;top:100%;right:0;margin-top:6px;min-width:260px;z-index:1000;background:var(--cardbg);color:var(--fg);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+  details.inline-controls .bg-panel .btn{background:var(--btn);color:var(--btnfg);border:1px solid var(--line);width:100%}
+
+  .result{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transform:scale(.9);transition:opacity .12s,transform .2s}
+  .result.show{opacity:1;transform:scale(1)}
+  .result .icon{width:96px;height:96px;border-radius:999px;display:grid;place-items:center;border:4px solid currentColor;font-size:56px;line-height:1}
+  .result.ok{color:#22c55e}
+  .result.ng{color:#ef4444}
+  .card.flash-ok{border-color:#22c55e;box-shadow:0 0 0 2px #22c55e inset,0 10px 30px rgba(0,0,0,.18)}
+  .card.flash-ng{border-color:#ef4444;box-shadow:0 0 0 2px #ef4444 inset,0 10px 30px rgba(0,0,0,.18)}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  .shake{animation:shake .28s linear 1}
+
+  @media (max-width: 640px){
+    .wrap{padding:12px 5vw}
+    .card{width:100%}
+    header{gap:8px}
+  }
 </style>
 </head>
 <body>
@@ -59,9 +82,9 @@
 <div class="wrap">
   <header>
     <div class="group">
-      <button class="pill active" data-mode="learn">Learn</button>
-      <button class="pill" data-mode="review">Review</button>
-      <button class="pill" data-mode="drill">Drill</button>
+      <button class="pill active" data-mode="learn" aria-pressed="true">Learn</button>
+      <button class="pill" data-mode="review" aria-pressed="false">Review</button>
+      <button class="pill" data-mode="drill" aria-pressed="false">Drill</button>
     </div>
     <div class="group">
       <select id="levelFilter">
@@ -77,10 +100,9 @@
         </select>
       </div>
       <button class="btn" id="themeBtn" aria-pressed="false">Dark</button>
-      <!-- Inline BG + Decks controls -->
       <details class="inline-controls" id="bgMenuInline">
         <summary class="btn">BG</summary>
-        <div class="bg-panel" style="color:inherit">
+        <div class="bg-panel">
           <button class="btn" id="uploadBgBtn">Upload Image</button>
           <div style="height:8px"></div>
           <div class="small">BG Opacity</div>
@@ -102,14 +124,14 @@
       </details>
       <details class="inline-controls" id="deckMenuInline">
         <summary class="btn">Decks</summary>
-        <div class="bg-panel" style="color:inherit">
+        <div class="bg-panel">
           <div class="small">Remote deck URLs (.json or .csv), one per line</div>
-          <textarea id="deckUrls" style="width:100%;min-height:96px" placeholder="https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n3_core.json
-https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n2_core.json"></textarea>
+          <textarea id="deckUrls" style="width:100%;min-height:96px" placeholder="https://cdn.jsdelivr.net/gh/USER/REPO@main/data/n3_core.json
+https://cdn.jsdelivr.net/gh/USER/REPO@main/data/n2_core.json"></textarea>
           <div style="height:8px"></div>
           <div class="row" style="gap:6px;align-items:center">
             <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckReplace"> Replace existing</label>
-            <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckDedupe" checked> De‑dupe</label>
+            <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="deckDedupe" checked> De-dupe</label>
           </div>
           <div style="height:8px"></div>
           <div class="small">Optional level override</div>
@@ -191,13 +213,12 @@ document.addEventListener('DOMContentLoaded',function(){
   const defaultBgList=["./girl-7_t.jpg","./girl-6_t.jpg","./girl-5_t.png","./girl-4_t.png","./girl-3_t.png","./girl-2_t.png","./girl-1_t.jpg"].join("\n");
   const state={mode:"learn",level:"ALL",queue:[],current:null,promptMode:settingsBootstrap.promptMode||"JPEN",theme:settingsBootstrap.theme||null,bgDataUrl:(settingsBootstrap.bgDataUrl??null),bgOpacity:typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,cardOpacity:typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,answered:false,drillChoices:[],bgRemoteList:(settingsBootstrap.bgRemoteList&&settingsBootstrap.bgRemoteList.trim())?settingsBootstrap.bgRemoteList:defaultBgList,bgRemoteRandom:(typeof settingsBootstrap.bgRemoteRandom==='boolean'?settingsBootstrap.bgRemoteRandom:true)};
 
-  // Tiny seed (avoid baked 30 total)
-  const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."]];
-  const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."]];
+  const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."],["問題","もんだい","problem","問題を解決します。","Solve the problem."],["時間","じかん","time","時間がありません。","There is no time."]];
+  const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."],["影響","えいきょう","influence","大きな影響があります。","There is a big influence."],["確認","かくにん","confirmation","内容を確認します。","Confirm the contents."]];
   const N3=N3_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N3"}));
   const N2=N2_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N2"}));
 
-  function freshDeck(){const now=Date.now();return[...N3,...N2].map((x,i)=>({id:uuidv4(),...x,status:"new",seen:0,correct:0,addedAt:now+i}))}
+  function freshDeck(){const now=Date.now();return[...N3,...N2].map((x,i)=>({id:uuidv4(),...x,status:"not",seen:0,correct:0,addedAt:now+i}))}
   function load(){const raw=Store.getItem(STORAGE);if(!raw){const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}try{const p=JSON.parse(raw);if(!Array.isArray(p)||p.length===0)throw 0;return p}catch(_){Store.removeItem(STORAGE);const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}}
   function save(all){Store.setItem(STORAGE,JSON.stringify(all))}
   function cards(){return load()}
@@ -206,23 +227,13 @@ document.addEventListener('DOMContentLoaded',function(){
   function filterByLevel(list){return state.level==="ALL"?list:list.filter(x=>x.level===state.level)}
   function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
   function setAnswerVisible(v){const ans=$("#answerBlock");if(!ans)return;ans.classList.toggle('hidden-el',!v)}
-  function resetChoicesUI(){const wrap=$("#choices");if(!wrap)return;wrap.querySelectorAll('.choice-btn').forEach(b=>{b.classList.remove('correct','wrong')})}
+  function resetChoicesUI(){const wrap=$("#choices");if(!wrap)return;wrap.querySelectorAll('.choice-btn').forEach(b=>{b.classList.remove('correct','wrong')});}
 
-  /* Keep the pill highlight in sync with the current mode */
-  function updateModeUI(){
-    $$('.pill').forEach(btn=>{
-      const isActive = btn.dataset.mode===state.mode;
-      btn.classList.toggle('active', isActive);
-      btn.setAttribute('aria-pressed', isActive? 'true':'false');
-    });
-  }
-
-  // GLOBAL counter (ignores level filter)
   function updateCountsOnly(){
     const all = cards();
     let learned=0, review=0, notl=0;
     for(const x of all){
-      const s = x.status || "new";
+      const s = x.status || "not";
       if(s==="learned") learned++;
       else if(s==="review") review++;
       else notl++;
@@ -242,8 +253,13 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 
   function draw(){
-    // Keep the counter global, but the queue uses filtered
-    updateCountsOnly();
+    const all=filterByLevel(cards());
+    const learned=all.filter(x=>x.status==="learned").length;
+    const review=all.filter(x=>x.status==="review").length;
+    const notl=all.filter(x=>(x.status||"not")==="not").length;
+    const total=all.length;
+    $("#counts").textContent=`Total ${total} · Learned ${learned} · Review ${review} · Not ${notl}`;
+    $("#progressFill").style.width=(total?Math.round((learned/total)*100):0)+"%";
     $("#promptMode").value=state.promptMode;
     if(!state.current && state.queue.length>0){ nextCard(); return; }
     updateEmptyState();
@@ -263,15 +279,18 @@ document.addEventListener('DOMContentLoaded',function(){
       const opts=[{correct:true,item:c}].concat(distractors.map(d=>({correct:false,item:d})));
       state.drillChoices=shuffle(opts);
       if(state.promptMode==="JPEN"){ $("#promptBig").textContent=jp; $("#promptSub").textContent=kana; $("#answerMain").textContent=en; }
-      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?('（'+kana+'）'):""}`; }
+      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent = jp + (kana?('（'+kana+'）'):""); }
       $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
       setAnswerVisible(false);
-      choicesEl.innerHTML=state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join('');
+      choicesEl.innerHTML = state.drillChoices.map((o,i)=>{
+        const label = (state.promptMode==="JPEN" ? o.item.meaning : (o.item.kanji||o.item.kana));
+        return '<button class="choice-btn" data-idx="'+i+'">'+label+'</button>';
+      }).join('');
       choicesEl.classList.remove('hidden-el');
       const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=true; rb.setAttribute('aria-disabled','true'); }
     }else{
       if(state.promptMode==="JPEN"){ $("#promptBig").textContent=jp; $("#promptSub").textContent=kana; $("#answerMain").textContent=en; }
-      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent=`${jp}${kana?('（'+kana+'）'):""}`; }
+      else { $("#promptBig").textContent=en; $("#promptSub").textContent=""; $("#answerMain").textContent = jp + (kana?('（'+kana+'）'):""); }
       $("#exampleBlock").textContent=`例: ${exJP} / ${exEN}`;
       setAnswerVisible(true);
       const rb=$("#revealBtn"); if(rb){ rb.disabled=false; rb.removeAttribute('aria-disabled'); rb.textContent='Next'; }
@@ -283,25 +302,57 @@ document.addEventListener('DOMContentLoaded',function(){
   function buildQueue(){
     const all=filterByLevel(cards());
     const pools={
-      learn: all.filter(x=>x.status==="new"||x.status==="not"),
+      learn: all.filter(x=>(x.status||"not")==="not"),
       review: all.filter(x=>x.status==="review"),
-      drill: all.filter(x=>x.status==="review").concat(all.filter(x=>x.status==="not"))
+      drill: all.filter(x=>x.status==="review"||x.status==="learned")
     };
-    let mode=state.mode, pool=pools[mode];
-    if(pool.length===0){
-      const order = mode==="learn"?["review","drill","learn"] : mode==="review"?["drill","learn","review"] : ["learn","review","drill"];
-      for(const m of order){ if(pools[m].length){ mode=m; pool=pools[m]; break; } }
+    
+    let targetMode = state.mode;
+    let pool = pools[targetMode] || [];
+    
+    if(pool.length === 0){
+      if(targetMode === "learn"){
+        if(pools.review.length > 0) { targetMode = "review"; pool = pools.review; }
+        else if(pools.drill.length > 0) { targetMode = "drill"; pool = pools.drill; }
+      } else if(targetMode === "review"){
+        if(pools.learn.length > 0) { targetMode = "learn"; pool = pools.learn; }
+        else if(pools.drill.length > 0) { targetMode = "drill"; pool = pools.drill; }
+      } else if(targetMode === "drill"){
+        if(pools.review.length > 0) { targetMode = "review"; pool = pools.review; }
+        else if(pools.learn.length > 0) { targetMode = "learn"; pool = pools.learn; }
+      }
     }
-    if(mode!==state.mode){ state.mode=mode; }
-    state.queue=shuffle(pool);
-    state.current=null;
+    
+    state.mode = targetMode;
+    state.queue = shuffle(pool);
+    state.current = null;
+    
+    const pillElements = document.querySelectorAll('.pill');
+    pillElements.forEach(p=>{
+      const isActive = p.dataset.mode === state.mode;
+      p.classList.toggle('active', isActive);
+      p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
   }
 
   function nextCard(){
-    if(state.queue.length===0){ state.current=null; updateEmptyState(); return }
+    if(state.queue.length===0){ 
+      buildQueue(); 
+      if(state.queue.length === 0) {
+        state.current=null; 
+        updateEmptyState(); 
+        return;
+      }
+    }
     state.current=state.queue.shift();
+    state.answered = false;
     if(state.mode==='drill') setAnswerVisible(false);
-    const rb=$("#revealBtn"); if(rb){ rb.textContent='Next'; rb.disabled=(state.mode==='drill'); rb.setAttribute('aria-disabled', rb.disabled?'true':'false'); }
+    const rb=$("#revealBtn"); 
+    if(rb){ 
+      rb.textContent='Next'; 
+      rb.disabled=(state.mode==='drill'); 
+      rb.setAttribute('aria-disabled', rb.disabled?'true':'false'); 
+    }
     clearResult();
     drawCard();
   }
@@ -316,7 +367,8 @@ document.addEventListener('DOMContentLoaded',function(){
       if(status==='learned'){ item.status='learned'; item.correct=(item.correct||0)+1 }
       else if(status==='review'){ item.status='review' }
       else if(status==='not'){ item.status='not' }
-      all[idx]=item; setCards(all);
+      all[idx]=item; 
+      setCards(all);
     }
     nextCard();
   }
@@ -333,7 +385,7 @@ document.addEventListener('DOMContentLoaded',function(){
       example: String(x.example||"").trim(),
       example_en: String(x.example_en||x.exampleEN||x.en||"").trim(),
       level: (levelOverride||String((x.level||"N3")).toUpperCase()),
-      status: "new", seen:0, correct:0, addedAt: now+i
+      status:"not", seen:0, correct:0, addedAt: now+i
     })).filter(x=>x.meaning && (x.kanji||x.kana));
     const all=cards().concat(cleaned);
     setCards(all);
@@ -380,7 +432,7 @@ document.addEventListener('DOMContentLoaded',function(){
     const dedupe=document.getElementById('deckDedupe');
     const levelSel=document.getElementById('deckLevelOverride');
     if(!btn) return;
-    try{const s=loadSettings();if(s.deckUrls&&urlsTA) urlsTA.value=s.deckUrls}catch(_){ }
+    try{const s=loadSettings();if(s.deckUrls&&urlsTA) urlsTA.value=s.deckUrls}catch(_){}
     btn.addEventListener('click', async ()=>{
       const urls=(urlsTA.value||'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
       if(!urls.length){alert('Paste at least one URL');return}
@@ -393,15 +445,15 @@ document.addEventListener('DOMContentLoaded',function(){
           const uniq=dedupeByKey(all, x=> (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
           setCards(uniq);
         }
-        buildQueue(); updateModeUI(); draw();
+        buildQueue(); draw();
         alert('Loaded '+urls.length+' deck file(s). Total: '+cards().length);
       }catch(e){ alert('Deck load failed: '+(e&&e.message?e.message:e)) }
     });
   })();
 
   const REPO_DECK_URLS = [
-    'https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n3_core.json',
-    'https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n2_core.json'
+    "https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n3_core.json",
+    "https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n2_core.json"
   ];
   async function loadRepoDecksOnce(){
     try{
@@ -410,7 +462,7 @@ document.addEventListener('DOMContentLoaded',function(){
       const uniq=dedupeByKey(cards(), x=> (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
       setCards(uniq);
       saveSettings({repoLoaded:true});
-    }catch(e){ console.warn('Repo deck autoload failed:', e); }
+    }catch(e){ console.warn("Repo deck autoload failed:", e); }
   }
 
   (async function autoLoadFromQueryOrRepo(){
@@ -420,15 +472,15 @@ document.addEventListener('DOMContentLoaded',function(){
       const level=q.get('level');
       if(deck){
         await loadRemoteDeck(deck, level||null);
-        buildQueue(); updateModeUI(); draw();
+        buildQueue(); draw();
         alert('Remote deck loaded');
         return;
       }
-    }catch(_){ }
+    }catch(_){}
     const sNow = loadSettings();
     const isFirst = !sNow.repoLoaded;
     if(isFirst){ await loadRepoDecksOnce(); }
-    buildQueue(); updateModeUI(); draw();
+    buildQueue(); draw();
   })();
 
   function setTheme(mode){document.body.classList.toggle('dark',mode==='dark');const btn=$("#themeBtn");if(btn){btn.textContent=mode==='dark'?'Light':'Dark';btn.setAttribute('aria-pressed',mode==='dark'?'true':'false')}state.theme=mode;saveSettings({theme:mode});applyCardOpacity()}
@@ -439,7 +491,20 @@ document.addEventListener('DOMContentLoaded',function(){
 
   const fileInput=$("#bgFile"),uploadBtn=$("#uploadBgBtn"),opacityInput=$("#bgOpacity"),cardOpacityInput=$("#cardOpacity"),clearBtn=$("#clearBgBtn");
   if(uploadBtn&&fileInput){uploadBtn.addEventListener('click',()=>fileInput.click())}
-  if(fileInput){fileInput.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.bgDataUrl=String(r.result);saveSettings({bgDataUrl:state.bgDataUrl});applyBackground()};r.readAsDataURL(f);e.target.value=''})}
+  if(fileInput){
+    fileInput.addEventListener('change',e=>{
+      const f=e.target.files&&e.target.files[0];
+      if(!f)return;
+      const r=new FileReader();
+      r.onload=()=>{
+        state.bgDataUrl=String(r.result);
+        saveSettings({bgDataUrl:state.bgDataUrl});
+        applyBackground();
+      };
+      r.readAsDataURL(f);
+      e.target.value='';
+    });
+  }
   if(opacityInput){opacityInput.addEventListener('input',e=>{state.bgOpacity=parseInt(e.target.value,10)||0;saveSettings({bgOpacity:state.bgOpacity});applyBackground()})}
   if(cardOpacityInput){cardOpacityInput.addEventListener('input',e=>{state.cardOpacity=parseInt(e.target.value,10)||45;saveSettings({cardOpacity:state.cardOpacity});applyCardOpacity()})}
   if(clearBtn){clearBtn.addEventListener('click',()=>{state.bgDataUrl=null;saveSettings({bgDataUrl:null});applyBackground()})}
@@ -448,35 +513,117 @@ document.addEventListener('DOMContentLoaded',function(){
   if(bgRandom){bgRandom.checked=!!state.bgRemoteRandom;bgRandom.addEventListener('change',e=>{state.bgRemoteRandom=!!e.target.checked;saveSettings({bgRemoteRandom:state.bgRemoteRandom})})}
   if(bgRandomNow){bgRandomNow.addEventListener('click',()=>setRandomBgFromList(true))}
 
-  (function(){const zone=$("#cardZone"),badgeL=$("#badgeLeft"),badgeR=$("#badgeRight");let startX=0,dx=0,dragging=false;function down(e){dragging=true;startX=(e.touches?e.touches[0].clientX:e.clientX);zone.classList.add('swiping')}function move(e){if(!dragging)return;const x=(e.touches?e.touches[0].clientX:e.clientX);dx=x-startX;zone.style.transform=`translateX(${dx}px) rotate(${dx*0.03}deg)`;zone.classList.toggle('succeed',dx>60);zone.classList.toggle('fail',dx<-60);if(badgeR)badgeR.style.opacity=String(Math.min(1,Math.max(0,(dx-40)/100)));if(badgeL)badgeL.style.opacity=String(Math.min(1,Math.max(0,(-dx-40)/100)))}function reset(){zone.style.transition='transform .18s ease';zone.style.transform='translateX(0) rotate(0)';if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition=''},180)}function commit(dir){zone.style.transition='transform .18s ease';const off=dir>0?600:-600;const rot=dir>0?15:-15;zone.style.transform=`translateX(${off}px) rotate(${rot}deg)`;if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition='';zone.style.transform='';markStatus(dir>0?'learned':'not')},160)}function up(){if(!dragging)return;dragging=false;zone.classList.remove('swiping','succeed','fail');if(dx>120){commit(1)}else if(dx<-120){commit(-1)}else{reset()}dx=0}zone.addEventListener('pointerdown',down);window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);zone.addEventListener('touchstart',down,{passive:true});window.addEventListener('touchmove',move,{passive:true});window.addEventListener('touchend',up)})();
+  (function(){const zone=$("#cardZone"),badgeL=$("#badgeLeft"),badgeR=$("#badgeRight");let startX=0,dx=0,dragging=false;function down(e){dragging=true;startX=(e.touches?e.touches[0].clientX:e.clientX);zone.classList.add('swiping')}function move(e){if(!dragging)return;const x=(e.touches?e.touches[0].clientX:e.clientX);dx=x-startX;zone.style.transform='translateX('+dx+'px) rotate('+(dx*0.03)+'deg)';zone.classList.toggle('succeed',dx>60);zone.classList.toggle('fail',dx<-60);if(badgeR)badgeR.style.opacity=String(Math.min(1,Math.max(0,(dx-40)/100)));if(badgeL)badgeL.style.opacity=String(Math.min(1,Math.max(0,(-dx-40)/100)))}function reset(){zone.style.transition='transform .18s ease';zone.style.transform='translateX(0) rotate(0)';if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition=''},180)}function commit(dir){zone.style.transition='transform .18s ease';const off=dir>0?600:-600;const rot=dir>0?15:-15;zone.style.transform='translateX('+off+'px) rotate('+rot+'deg)';if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition='';zone.style.transform='';markStatus(dir>0?'learned':'not')},160)}function up(){if(!dragging)return;dragging=false;zone.classList.remove('swiping','succeed','fail');if(dx>120){commit(1)}else if(dx<-120){commit(-1)}else{reset()}dx=0}zone.addEventListener('pointerdown',down);window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);zone.addEventListener('touchstart',down,{passive:true});window.addEventListener('touchmove',move,{passive:true});window.addEventListener('touchend',up)})();
 
-  function setMode(m){
-    state.mode=m;
-    buildQueue();
-    updateModeUI();
-    draw();
-  }
-  function setLevel(v){ state.level=v; buildQueue(); updateModeUI(); draw(); }
+  function setMode(m){state.mode=m;buildQueue();draw()}
+  function setLevel(v){state.level=v;buildQueue();draw()}
   $("#levelFilter").addEventListener('change',e=>setLevel(e.target.value));
   $$('.pill').forEach(p=>p.addEventListener('click',()=>setMode(p.dataset.mode)));
-  function onPrimaryClick(){if(state.mode==='drill'){if(!state.answered)return;markStatus('review');return}markStatus('review')}
+  
+  function onPrimaryClick(){
+    if(state.mode==='drill'){
+      if(!state.answered) return;
+      markStatus('review');
+      return;
+    }
+    markStatus('review');
+  }
+  
   $("#revealBtn").addEventListener('click',onPrimaryClick);
-  $("#learnedBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('learned')});
-  $("#notBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('not')});
-  $("#reviewBtn").addEventListener('click',()=>{if(state.mode==='drill'&&!state.answered)return;markStatus('review')});
-  document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')$("#notBtn").click();if(e.key==='ArrowRight')$("#learnedBtn").click();if(e.key===' '||e.key==='Enter')$("#revealBtn").click();if(e.key&&e.key.toLowerCase()==='t'){const next=document.body.classList.contains('dark')?'light':'dark';setTheme(next)}});
+  $("#learnedBtn").addEventListener('click',()=>{
+    if(state.mode==='drill'&&!state.answered) return;
+    markStatus('learned');
+  });
+  $("#notBtn").addEventListener('click',()=>{
+    if(state.mode==='drill'&&!state.answered) return;
+    markStatus('not');
+  });
+  $("#reviewBtn").addEventListener('click',()=>{
+    if(state.mode==='drill'&&!state.answered) return;
+    markStatus('review');
+  });
+  
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft') $("#notBtn").click();
+    if(e.key==='ArrowRight') $("#learnedBtn").click();
+    if(e.key===' '||e.key==='Enter') {
+      e.preventDefault();
+      $("#revealBtn").click();
+    }
+    if(e.key&&e.key.toLowerCase()==='t'){
+      const next=document.body.classList.contains('dark')?'light':'dark';
+      setTheme(next);
+    }
+  });
+  
   $("#promptMode").addEventListener('change',e=>{state.promptMode=e.target.value;saveSettings({promptMode:state.promptMode});drawCard()});
   $("#themeBtn").addEventListener('click',()=>{const next=document.body.classList.contains('dark')?'light':'dark';setTheme(next)});
 
-  document.addEventListener('click',e=>{const btn=e.target.closest('.choice-btn');if(!btn)return;if(state.mode!=='drill'||state.answered)return;const idx=parseInt(btn.getAttribute('data-idx'),10);const opt=state.drillChoices[idx];state.drillChoices.forEach((o,i)=>{const el=document.querySelector(`.choice-btn[data-idx="${i}"]`);if(!el)return;if(o.correct)el.classList.add('correct')});if(!opt.correct)btn.classList.add('wrong');state.answered=true;setAnswerVisible(true);showResult(!!opt.correct);const rb=$("#revealBtn");if(rb){rb.disabled=false;rb.removeAttribute('aria-disabled');rb.textContent='Next'}});
-  function showResult(ok){const res=$("#result"),card=$("#cardZone");if(!res||!card)return;res.className='result '+(ok?'ok show':'ng show');res.innerHTML=`<div class="icon">${ok?'✓':'✕'}</div>`;card.classList.remove('flash-ok','flash-ng','shake');if(ok){card.classList.add('flash-ok')}else{card.classList.add('flash-ng','shake')}if(navigator.vibrate){try{navigator.vibrate(ok?[30]:[10,80,10])}catch(_){}}}
-  function clearResult(){const res=$("#result"),card=$("#cardZone");if(res){res.className='result';res.innerHTML=''}if(card){card.classList.remove('flash-ok','flash-ng','shake')}}
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.choice-btn');
+    if(!btn) return;
+    if(state.mode!=='drill'||state.answered) return;
+    
+    const idx=parseInt(btn.getAttribute('data-idx'),10);
+    const opt=state.drillChoices[idx];
+    
+    state.drillChoices.forEach((o,i)=>{
+      const el=document.querySelector('.choice-btn[data-idx="'+i+'"]');
+      if(!el) return;
+      if(o.correct) el.classList.add('correct');
+    });
+    
+    if(!opt.correct) btn.classList.add('wrong');
+    
+    state.answered=true;
+    setAnswerVisible(true);
+    showResult(!!opt.correct);
+    
+    const rb=$("#revealBtn");
+    if(rb){
+      rb.disabled=false;
+      rb.removeAttribute('aria-disabled');
+      rb.textContent='Next';
+    }
+  });
+  
+  function showResult(ok){
+    const res=$("#result"),card=$("#cardZone");
+    if(!res||!card) return;
+    res.className='result '+(ok?'ok show':'ng show');
+    res.innerHTML='<div class="icon">'+(ok?'✓':'✕')+'</div>';
+    res.setAttribute('aria-hidden', 'false');
+    card.classList.remove('flash-ok','flash-ng','shake');
+    if(ok){
+      card.classList.add('flash-ok');
+    } else {
+      card.classList.add('flash-ng','shake');
+    }
+    if(navigator.vibrate){
+      try{
+        navigator.vibrate(ok?[30]:[10,80,10]);
+      } catch(_){}
+    }
+  }
+  
+  function clearResult(){
+    const res=$("#result"),card=$("#cardZone");
+    if(res){
+      res.className='result';
+      res.innerHTML='';
+      res.setAttribute('aria-hidden', 'true');
+    }
+    if(card){
+      card.classList.remove('flash-ok','flash-ng','shake');
+    }
+  }
 
   const prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
   setTheme(state.theme||(prefersDark?'dark':'light'));
   if(state.bgRemoteRandom){setRandomBgFromList(false)}else{applyBackground()}
   applyCardOpacity();
-  buildQueue(); updateModeUI(); draw();
+  buildQueue(); 
+  draw();
 });
 </script>
 </body>
