@@ -213,7 +213,21 @@ document.addEventListener('DOMContentLoaded',function(){
   const settingsBootstrap=loadSettings();
 
   const defaultBgList=["./girl-7_t.jpg","./girl-6_t.jpg","./girl-5_t.png","./girl-4_t.png","./girl-3_t.png","./girl-2_t.png","./girl-1_t.jpg"].join("\n");
-  const state={mode:"learn",level:"ALL",queue:[],current:null,promptMode:settingsBootstrap.promptMode||"JPEN",theme:settingsBootstrap.theme||null,bgDataUrl:(settingsBootstrap.bgDataUrl??null),bgOpacity:typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,cardOpacity:typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,answered:false,drillChoices:[],bgRemoteList:(settingsBootstrap.bgRemoteList&&settingsBootstrap.bgRemoteList.trim())?settingsBootstrap.bgRemoteList:defaultBgList,bgRemoteRandom:(typeof settingsBootstrap.bgRemoteRandom==='boolean'?settingsBootstrap.bgRemoteRandom:true)};
+  const state={
+    mode:"learn",
+    level:"ALL",
+    queue:[],
+    current:null,
+    promptMode:settingsBootstrap.promptMode||"JPEN",
+    theme:settingsBootstrap.theme||null,
+    bgDataUrl:(settingsBootstrap.bgDataUrl??null),
+    bgOpacity:typeof settingsBootstrap.bgOpacity==='number'?settingsBootstrap.bgOpacity:20,
+    cardOpacity:typeof settingsBootstrap.cardOpacity==='number'?settingsBootstrap.cardOpacity:45,
+    answered:false,
+    drillChoices:[],
+    bgRemoteList:(settingsBootstrap.bgRemoteList&&settingsBootstrap.bgRemoteList.trim())?settingsBootstrap.bgRemoteList:defaultBgList,
+    bgRemoteRandom:(typeof settingsBootstrap.bgRemoteRandom==='boolean'?settingsBootstrap.bgRemoteRandom:true)
+  };
 
   const N3_RAW=[["必要","ひつよう","necessary","これは必要です。","This is necessary."],["問題","もんだい","problem","問題を解決します。","Solve the problem."],["時間","じかん","time","時間がありません。","There is no time."]];
   const N2_RAW=[["維持","いじ","maintenance","健康を維持します。","Maintain health."],["影響","えいきょう","influence","大きな影響があります。","There is a big influence."],["確認","かくにん","confirmation","内容を確認します。","Confirm the contents."]];
@@ -221,7 +235,24 @@ document.addEventListener('DOMContentLoaded',function(){
   const N2=N2_RAW.map(a=>({kanji:a[0],kana:a[1],meaning:a[2],example:a[3],example_en:a[4],level:"N2"}));
 
   function freshDeck(){const now=Date.now();return[...N3,...N2].map((x,i)=>({id:uuidv4(),...x,status:"not",seen:0,correct:0,addedAt:now+i}))}
-  function load(){const raw=Store.getItem(STORAGE);if(!raw){const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}try{const p=JSON.parse(raw);if(!Array.isArray(p)||p.length===0)throw 0;return p}catch(_){Store.removeItem(STORAGE);const init=freshDeck();Store.setItem(STORAGE,JSON.stringify(init));return init}}
+  function load(){
+    const raw=Store.getItem(STORAGE);
+    if(!raw){
+      const init=freshDeck();
+      Store.setItem(STORAGE,JSON.stringify(init));
+      return init;
+    }
+    try{
+      const p=JSON.parse(raw);
+      if(!Array.isArray(p)||p.length===0) throw 0;
+      return p;
+    }catch(_){
+      Store.removeItem(STORAGE);
+      const init=freshDeck();
+      Store.setItem(STORAGE,JSON.stringify(init));
+      return init;
+    }
+  }
   function save(all){Store.setItem(STORAGE,JSON.stringify(all))}
   function cards(){return load()}
   function setCards(list){save(list); updateCountsOnly()}
@@ -250,8 +281,24 @@ document.addEventListener('DOMContentLoaded',function(){
 
   function updateEmptyState(){
     const has=!!state.current;
-    $("#cardZone").classList.toggle('hidden-el',!has);
-    $("#emptyState").classList.toggle('hidden-el',has);
+    const zone=$("#cardZone");
+    const empty=$("#emptyState");
+    if(zone) zone.classList.toggle('hidden-el',!has);
+    if(empty){
+      empty.classList.toggle('hidden-el',has);
+      if(!has){
+        const msgEl=empty.querySelector('.muted');
+        if(msgEl){
+          if(state.mode==='review'){
+            msgEl.textContent="No review cards yet. Mark some cards as Review first.";
+          }else if(state.mode==='drill'){
+            msgEl.textContent="No drill cards yet. Mark some cards as Learned or Review first.";
+          }else{
+            msgEl.textContent="No cards in this view. Load a deck from the Decks panel or switch mode.";
+          }
+        }
+      }
+    }
   }
 
   function draw(){
@@ -303,33 +350,18 @@ document.addEventListener('DOMContentLoaded',function(){
 
   function buildQueue(){
     const all=filterByLevel(cards());
-    const pools={
-      learn: all.filter(x=>(x.status||"not")==="not"),
-      review: all.filter(x=>x.status==="review"),
-      drill: all.filter(x=>x.status==="review"||x.status==="learned")
-    };
-    
-    let targetMode = state.mode;
-    let pool = pools[targetMode] || [];
-    
-    if(pool.length === 0){
-      if(targetMode === "learn"){
-        if(pools.review.length > 0) { targetMode = "review"; pool = pools.review; }
-        else if(pools.drill.length > 0) { targetMode = "drill"; pool = pools.drill; }
-      } else if(targetMode === "review"){
-        if(pools.learn.length > 0) { targetMode = "learn"; pool = pools.learn; }
-        else if(pools.drill.length > 0) { targetMode = "drill"; pool = pools.drill; }
-      } else if(targetMode === "drill"){
-        if(pools.review.length > 0) { targetMode = "review"; pool = pools.review; }
-        else if(pools.learn.length > 0) { targetMode = "learn"; pool = pools.learn; }
-      }
+    let pool=[];
+    if(state.mode==='learn'){
+      pool = all.filter(x=>(x.status||"not")==="not");
+    }else if(state.mode==='review'){
+      pool = all.filter(x=>x.status==="review");
+    }else if(state.mode==='drill'){
+      pool = all.filter(x=>x.status==="review"||x.status==="learned");
     }
-    
-    state.mode = targetMode;
     state.queue = shuffle(pool);
     state.current = null;
-    
-    const pillElements = document.querySelectorAll('.pill');
+
+    const pillElements=document.querySelectorAll('.pill');
     pillElements.forEach(p=>{
       const isActive = p.dataset.mode === state.mode;
       p.classList.toggle('active', isActive);
@@ -338,11 +370,11 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 
   function nextCard(){
-    if(state.queue.length===0){ 
-      buildQueue(); 
-      if(state.queue.length === 0) {
-        state.current=null; 
-        updateEmptyState(); 
+    if(state.queue.length===0){
+      buildQueue();
+      if(state.queue.length===0){
+        state.current=null;
+        updateEmptyState();
         return;
       }
     }
@@ -490,11 +522,42 @@ document.addEventListener('DOMContentLoaded',function(){
     buildQueue(); draw();
   })();
 
-  function setTheme(mode){document.body.classList.toggle('dark',mode==='dark');const btn=$("#themeBtn");if(btn){btn.textContent=mode==='dark'?'Light':'Dark';btn.setAttribute('aria-pressed',mode==='dark'?'true':'false')}state.theme=mode;saveSettings({theme:mode});applyCardOpacity()}
-  function applyBackground(){if(state.bgDataUrl){document.documentElement.style.setProperty('--bgimg',`url('${state.bgDataUrl}')`)}else{document.documentElement.style.removeProperty('--bgimg')}document.documentElement.style.setProperty('--bgimgOpacity',String((state.bgOpacity||0)/100));const s=$("#bgOpacity");if(s)s.value=String(state.bgOpacity||0)}
-  function applyCardOpacity(){const dark=document.body.classList.contains('dark');const alpha=Math.max(0,Math.min(1,(state.cardOpacity||45)/100));const val=dark?`rgba(17,22,28,${alpha})`:`rgba(255,255,255,${alpha})`;document.documentElement.style.setProperty('--cardbg',val);const s=$("#cardOpacity");if(s)s.value=String(state.cardOpacity||45)}
+  function setTheme(mode){
+    document.body.classList.toggle('dark',mode==='dark');
+    const btn=$("#themeBtn");
+    if(btn){
+      btn.textContent=mode==='dark'?'Light':'Dark';
+      btn.setAttribute('aria-pressed',mode==='dark'?'true':'false');
+    }
+    state.theme=mode;
+    saveSettings({theme:mode});
+    applyCardOpacity();
+  }
+  function applyBackground(){
+    if(state.bgDataUrl){
+      document.documentElement.style.setProperty('--bgimg',`url('${state.bgDataUrl}')`);
+    }else{
+      document.documentElement.style.removeProperty('--bgimg');
+    }
+    document.documentElement.style.setProperty('--bgimgOpacity',String((state.bgOpacity||0)/100));
+    const s=$("#bgOpacity");if(s)s.value=String(state.bgOpacity||0);
+  }
+  function applyCardOpacity(){
+    const dark=document.body.classList.contains('dark');
+    const alpha=Math.max(0,Math.min(1,(state.cardOpacity||45)/100));
+    const val=dark?`rgba(17,22,28,${alpha})`:`rgba(255,255,255,${alpha})`;
+    document.documentElement.style.setProperty('--cardbg',val);
+    const s=$("#cardOpacity");if(s)s.value=String(state.cardOpacity||45);
+  }
   function parseBgList(text){return String(text||'').replace(/\r\n/g,'\n').split(/\n+/).map(s=>s.trim()).filter(Boolean)}
-  function setRandomBgFromList(manual){const list=parseBgList(state.bgRemoteList);if(!list.length)return;const pick=list[Math.floor(Math.random()*list.length)];const url=pick+(pick.includes('?')?'&':'?')+'t='+(manual?Date.now():Math.floor(Date.now()/3600000));state.bgDataUrl=url;saveSettings({bgDataUrl:state.bgDataUrl});applyBackground()}
+  function setRandomBgFromList(manual){
+    const list=parseBgList(state.bgRemoteList);if(!list.length)return;
+    const pick=list[Math.floor(Math.random()*list.length)];
+    const url=pick+(pick.includes('?')?'&':'?')+'t='+(manual?Date.now():Math.floor(Date.now()/3600000));
+    state.bgDataUrl=url;
+    saveSettings({bgDataUrl:state.bgDataUrl});
+    applyBackground();
+  }
 
   const fileInput=$("#bgFile"),uploadBtn=$("#uploadBgBtn"),opacityInput=$("#bgOpacity"),cardOpacityInput=$("#cardOpacity"),clearBtn=$("#clearBgBtn");
   if(uploadBtn&&fileInput){uploadBtn.addEventListener('click',()=>fileInput.click())}
@@ -520,7 +583,52 @@ document.addEventListener('DOMContentLoaded',function(){
   if(bgRandom){bgRandom.checked=!!state.bgRemoteRandom;bgRandom.addEventListener('change',e=>{state.bgRemoteRandom=!!e.target.checked;saveSettings({bgRemoteRandom:state.bgRemoteRandom})})}
   if(bgRandomNow){bgRandomNow.addEventListener('click',()=>setRandomBgFromList(true))}
 
-  (function(){const zone=$("#cardZone"),badgeL=$("#badgeLeft"),badgeR=$("#badgeRight");let startX=0,dx=0,dragging=false;function down(e){dragging=true;startX=(e.touches?e.touches[0].clientX:e.clientX);zone.classList.add('swiping')}function move(e){if(!dragging)return;const x=(e.touches?e.touches[0].clientX:e.clientX);dx=x-startX;zone.style.transform='translateX('+dx+'px) rotate('+(dx*0.03)+'deg)';zone.classList.toggle('succeed',dx>60);zone.classList.toggle('fail',dx<-60);if(badgeR)badgeR.style.opacity=String(Math.min(1,Math.max(0,(dx-40)/100)));if(badgeL)badgeL.style.opacity=String(Math.min(1,Math.max(0,(-dx-40)/100)))}function reset(){zone.style.transition='transform .18s ease';zone.style.transform='translateX(0) rotate(0)';if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition=''},180)}function commit(dir){zone.style.transition='transform .18s ease';const off=dir>0?600:-600;const rot=dir>0?15:-15;zone.style.transform='translateX('+off+'px) rotate('+rot+'deg)';if(badgeR)badgeR.style.opacity='0';if(badgeL)badgeL.style.opacity='0';setTimeout(()=>{zone.style.transition='';zone.style.transform='';markStatus(dir>0?'learned':'not')},160)}function up(){if(!dragging)return;dragging=false;zone.classList.remove('swiping','succeed','fail');if(dx>120){commit(1)}else if(dx<-120){commit(-1)}else{reset()}dx=0}zone.addEventListener('pointerdown',down);window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);zone.addEventListener('touchstart',down,{passive:true});window.addEventListener('touchmove',move,{passive:true});window.addEventListener('touchend',up)})();
+  (function(){
+    const zone=$("#cardZone"),badgeL=$("#badgeLeft"),badgeR=$("#badgeRight");
+    let startX=0,dx=0,dragging=false;
+    function down(e){dragging=true;startX=(e.touches?e.touches[0].clientX:e.clientX);zone.classList.add('swiping')}
+    function move(e){
+      if(!dragging)return;
+      const x=(e.touches?e.touches[0].clientX:e.clientX);
+      dx=x-startX;
+      zone.style.transform='translateX('+dx+'px) rotate('+(dx*0.03)+'deg)';
+      zone.classList.toggle('succeed',dx>60);
+      zone.classList.toggle('fail',dx<-60);
+      if(badgeR)badgeR.style.opacity=String(Math.min(1,Math.max(0,(dx-40)/100)));
+      if(badgeL)badgeL.style.opacity=String(Math.min(1,Math.max(0,(-dx-40)/100)));
+    }
+    function reset(){
+      zone.style.transition='transform .18s ease';
+      zone.style.transform='translateX(0) rotate(0)';
+      if(badgeR)badgeR.style.opacity='0';
+      if(badgeL)badgeL.style.opacity='0';
+      setTimeout(()=>{zone.style.transition=''},180)
+    }
+    function commit(dir){
+      zone.style.transition='transform .18s ease';
+      const off=dir>0?600:-600;
+      const rot=dir>0?15:-15;
+      zone.style.transform='translateX('+off+'px) rotate('+rot+'deg)';
+      if(badgeR)badgeR.style.opacity='0';
+      if(badgeL)badgeL.style.opacity='0';
+      setTimeout(()=>{zone.style.transition='';zone.style.transform='';markStatus(dir>0?'learned':'not')},160)
+    }
+    function up(){
+      if(!dragging)return;
+      dragging=false;
+      zone.classList.remove('swiping','succeed','fail');
+      if(dx>120){commit(1)}
+      else if(dx<-120){commit(-1)}
+      else{reset()}
+      dx=0;
+    }
+    zone.addEventListener('pointerdown',down);
+    window.addEventListener('pointermove',move);
+    window.addEventListener('pointerup',up);
+    zone.addEventListener('touchstart',down,{passive:true});
+    window.addEventListener('touchmove',move,{passive:true});
+    window.addEventListener('touchend',up);
+  })();
 
   function setMode(m){state.mode=m;buildQueue();draw()}
   function setLevel(v){state.level=v;buildQueue();draw()}
