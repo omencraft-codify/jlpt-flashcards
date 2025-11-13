@@ -201,8 +201,10 @@ https://cdn.jsdelivr.net/gh/USER/REPO@main/data/n2_core.json"></textarea>
 document.addEventListener('DOMContentLoaded',function(){
   function uuidv4(){if(crypto.randomUUID)return crypto.randomUUID();return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16)})}
   const Store=(function(){try{const t='__t';localStorage.setItem(t,'1');localStorage.removeItem(t);return localStorage}catch(_){let mem={};return{getItem:k=>mem[k]||null,setItem:(k,v)=>{mem[k]=String(v)},removeItem:k=>{delete mem[k]}}}})();
-  const STORAGE="jlpt_flash_v14";
-  const SETTINGS="jlpt_flash_settings";
+
+  const STORAGE="jlpt_flash_v15";
+  const SETTINGS="jlpt_flash_settings_v2";
+
   const $=s=>document.querySelector(s);
   const $$=s=>document.querySelectorAll(s);
 
@@ -452,9 +454,10 @@ document.addEventListener('DOMContentLoaded',function(){
   })();
 
   const REPO_DECK_URLS = [
-    "https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n3_core.json",
-    "https://cdn.jsdelivr.net/gh/omencraft-codify/jlpt-flashcards@main/data/n2_core.json"
+    "./data/n3_core.json",
+    "./data/n2_core.json"
   ];
+
   async function loadRepoDecksOnce(){
     try{
       setCards([]);
@@ -462,7 +465,11 @@ document.addEventListener('DOMContentLoaded',function(){
       const uniq=dedupeByKey(cards(), x=> (x.kanji||'')+'|'+(x.kana||'')+'|'+(x.meaning||''));
       setCards(uniq);
       saveSettings({repoLoaded:true});
-    }catch(e){ console.warn("Repo deck autoload failed:", e); }
+    }catch(e){
+      console.warn("Repo deck autoload failed:", e);
+      const fallback=freshDeck();
+      setCards(fallback);
+    }
   }
 
   (async function autoLoadFromQueryOrRepo(){
