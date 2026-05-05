@@ -52,7 +52,7 @@ details.inline-controls .panel .btn{width:100%}
 <label class="small muted">Prompt</label>
 <select id="promptMode"><option value="JPEN">JP → EN</option><option value="ENJP">EN → JP</option></select>
 <button class="btn" id="themeBtn">Dark</button>
-<details class="inline-controls"><summary class="btn">BG</summary><div class="panel"><button class="btn" id="uploadBgBtn">Upload Image</button><input id="bgFile" type="file" accept="image/*" class="hidden"><div class="spacer"></div><div class="small">BG Opacity</div><input id="bgOpacity" type="range" min="0" max="100" value="18"><div class="spacer"></div><button class="btn" id="clearBgBtn">Clear</button></div></details>
+<details class="inline-controls"><summary class="btn">BG</summary><div class="panel"><button class="btn" id="randomBgBtn">Random Background</button><div class="spacer"></div><button class="btn" id="uploadBgBtn">Upload Image</button><input id="bgFile" type="file" accept="image/*" class="hidden"><div class="spacer"></div><div class="small">BG Opacity</div><input id="bgOpacity" type="range" min="0" max="100" value="18"><div class="spacer"></div><button class="btn" id="clearBgBtn">Clear</button></div></details>
 <details class="inline-controls"><summary class="btn">Deck</summary><div class="panel"><button class="btn" id="resetDeckBtn">Reset to Preloaded Deck</button><div class="spacer"></div><div class="small muted">This build starts from embedded content. No remote files are required.</div></div></details>
 </div>
 </header>
@@ -76,13 +76,51 @@ const PRELOADED_DECK=[
 {level:"N3",kanji:"確認",kana:"かくにん",meaning:"confirmation / to confirm",example:"内容を確認します。",example_en:"I will confirm the contents."},
 {level:"N3",kanji:"準備",kana:"じゅんび",meaning:"preparation",example:"旅行の準備をします。",example_en:"I will prepare for the trip."},
 {level:"N3",kanji:"理由",kana:"りゆう",meaning:"reason",example:"理由を教えてください。",example_en:"Please tell me the reason."},
+{level:"N3",kanji:"予定",kana:"よてい",meaning:"plan / schedule",example:"明日の予定があります。",example_en:"I have plans tomorrow."},
+{level:"N3",kanji:"場所",kana:"ばしょ",meaning:"place",example:"場所を教えてください。",example_en:"Please tell me the place."},
+{level:"N3",kanji:"経験",kana:"けいけん",meaning:"experience",example:"いい経験になりました。",example_en:"It became a good experience."},
+{level:"N3",kanji:"最近",kana:"さいきん",meaning:"recently",example:"最近忙しいです。",example_en:"I have been busy recently."},
+{level:"N3",kanji:"生活",kana:"せいかつ",meaning:"life / daily life",example:"日本の生活に慣れました。",example_en:"I got used to life in Japan."},
+{level:"N3",kanji:"文化",kana:"ぶんか",meaning:"culture",example:"日本の文化に興味があります。",example_en:"I am interested in Japanese culture."},
+{level:"N3",kanji:"説明",kana:"せつめい",meaning:"explanation",example:"もう一度説明してください。",example_en:"Please explain one more time."},
+{level:"N3",kanji:"相談",kana:"そうだん",meaning:"consultation / to discuss",example:"友達に相談しました。",example_en:"I discussed it with a friend."},
+{level:"N3",kanji:"安全",kana:"あんぜん",meaning:"safe / safety",example:"ここは安全です。",example_en:"This place is safe."},
+{level:"N3",kanji:"危険",kana:"きけん",meaning:"dangerous / danger",example:"その道は危険です。",example_en:"That road is dangerous."},
+{level:"N3",kanji:"習慣",kana:"しゅうかん",meaning:"habit / custom",example:"早く寝る習慣があります。",example_en:"I have a habit of sleeping early."},
+{level:"N3",kanji:"関係",kana:"かんけい",meaning:"relationship / connection",example:"仕事と関係があります。",example_en:"It is related to work."},
+{level:"N3",kanji:"参加",kana:"さんか",meaning:"participation / to join",example:"会議に参加します。",example_en:"I will join the meeting."},
+{level:"N3",kanji:"失敗",kana:"しっぱい",meaning:"failure / mistake",example:"失敗しても大丈夫です。",example_en:"It is okay even if you fail."},
+{level:"N3",kanji:"成功",kana:"せいこう",meaning:"success",example:"プロジェクトは成功しました。",example_en:"The project was successful."},
+{level:"N3",kanji:"努力",kana:"どりょく",meaning:"effort",example:"毎日努力しています。",example_en:"I make an effort every day."},
+{level:"N3",kanji:"選択",kana:"せんたく",meaning:"choice / selection",example:"良い選択だと思います。",example_en:"I think it is a good choice."},
+{level:"N3",kanji:"原因",kana:"げんいん",meaning:"cause",example:"原因を調べています。",example_en:"I am checking the cause."},
 {level:"N2",kanji:"維持",kana:"いじ",meaning:"maintenance / to maintain",example:"健康を維持します。",example_en:"I maintain my health."},
 {level:"N2",kanji:"影響",kana:"えいきょう",meaning:"influence / effect",example:"大きな影響があります。",example_en:"It has a big influence."},
 {level:"N2",kanji:"改善",kana:"かいぜん",meaning:"improvement",example:"問題を改善します。",example_en:"I will improve the problem."},
 {level:"N2",kanji:"判断",kana:"はんだん",meaning:"judgment / decision",example:"正しく判断します。",example_en:"I will judge correctly."},
 {level:"N2",kanji:"対応",kana:"たいおう",meaning:"response / handling",example:"すぐに対応します。",example_en:"I will respond right away."},
-{level:"N2",kanji:"状況",kana:"じょうきょう",meaning:"situation",example:"状況を説明します。",example_en:"I will explain the situation."}
+{level:"N2",kanji:"状況",kana:"じょうきょう",meaning:"situation",example:"状況を説明します。",example_en:"I will explain the situation."},
+{level:"N2",kanji:"対象",kana:"たいしょう",meaning:"target / subject",example:"このサービスの対象は誰ですか。",example_en:"Who is the target for this service?"},
+{level:"N2",kanji:"目的",kana:"もくてき",meaning:"purpose",example:"目的を明確にします。",example_en:"I will make the purpose clear."},
+{level:"N2",kanji:"手段",kana:"しゅだん",meaning:"method / means",example:"別の手段を考えます。",example_en:"I will consider another method."},
+{level:"N2",kanji:"価値",kana:"かち",meaning:"value",example:"この経験には価値があります。",example_en:"This experience has value."},
+{level:"N2",kanji:"表現",kana:"ひょうげん",meaning:"expression",example:"自然な表現を使います。",example_en:"I use natural expressions."},
+{level:"N2",kanji:"理解",kana:"りかい",meaning:"understanding",example:"内容を理解しました。",example_en:"I understood the contents."},
+{level:"N2",kanji:"意識",kana:"いしき",meaning:"awareness / consciousness",example:"問題を意識しています。",example_en:"I am aware of the problem."},
+{level:"N2",kanji:"基準",kana:"きじゅん",meaning:"standard / criteria",example:"基準を決めます。",example_en:"I will decide the criteria."},
+{level:"N2",kanji:"比較",kana:"ひかく",meaning:"comparison",example:"二つの商品を比較します。",example_en:"I will compare the two products."},
+{level:"N2",kanji:"検討",kana:"けんとう",meaning:"consideration / review",example:"もう少し検討します。",example_en:"I will consider it a little more."},
+{level:"N2",kanji:"提案",kana:"ていあん",meaning:"proposal / suggestion",example:"新しい提案があります。",example_en:"I have a new proposal."},
+{level:"N2",kanji:"調整",kana:"ちょうせい",meaning:"adjustment",example:"予定を調整します。",example_en:"I will adjust the schedule."},
+{level:"N2",kanji:"解決",kana:"かいけつ",meaning:"solution / to solve",example:"問題を解決しました。",example_en:"I solved the problem."},
+{level:"N2",kanji:"継続",kana:"けいぞく",meaning:"continuation",example:"勉強を継続します。",example_en:"I will continue studying."},
+{level:"N2",kanji:"集中",kana:"しゅうちゅう",meaning:"concentration / to focus",example:"仕事に集中します。",example_en:"I will focus on work."},
+{level:"N2",kanji:"管理",kana:"かんり",meaning:"management",example:"時間を管理します。",example_en:"I manage my time."},
+{level:"N2",kanji:"反応",kana:"はんのう",meaning:"reaction / response",example:"お客さんの反応を見ます。",example_en:"I will watch the customer's reaction."},
+{level:"N2",kanji:"印象",kana:"いんしょう",meaning:"impression",example:"第一印象は大切です。",example_en:"First impressions are important."}
 ];
+
+const PRELOADED_BACKGROUNDS=["./girl-7_t.jpg","./girl-6_t.jpg","./girl-5_t.png","./girl-4_t.png","./girl-3_t.png","./girl-2_t.png","./girl-1_t.jpg"];
 
 const STORAGE="jlpt_flash_preloaded_v1";
 const SETTINGS="jlpt_flash_settings_preloaded_v1";
@@ -113,7 +151,9 @@ function setLevel(v){state.level=v;buildQueue();draw()}
 function clearResult(){const r=$("#result");r.className="result";r.innerHTML="";r.setAttribute("aria-hidden","true");$("#cardZone").classList.remove("flash-ok","flash-ng","shake")}
 function showResult(ok){const r=$("#result"),card=$("#cardZone");r.className="result "+(ok?"ok show":"ng show");r.innerHTML='<div class="icon">'+(ok?'✓':'✕')+'</div>';r.setAttribute("aria-hidden","false");card.classList.remove("flash-ok","flash-ng","shake");card.classList.add(ok?"flash-ok":"flash-ng");if(!ok)card.classList.add("shake")}
 function setTheme(mode){document.body.classList.toggle("dark",mode==="dark");$("#themeBtn").textContent=mode==="dark"?"Light":"Dark";saveSettings({theme:mode})}
-function applySettings(){const s=settings();state.promptMode=s.promptMode||"JPEN";$("#promptMode").value=state.promptMode;setTheme(s.theme||(matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));if(s.bgDataUrl)document.documentElement.style.setProperty("--bgimg",`url('${s.bgDataUrl}')`);document.documentElement.style.setProperty("--bgimgOpacity",String((s.bgOpacity??18)/100));$("#bgOpacity").value=s.bgOpacity??18}
+function setBackground(url){if(!url){document.documentElement.style.removeProperty("--bgimg");return}document.documentElement.style.setProperty("--bgimg",`url('${url}')`)}
+function randomBackground(){const pick=PRELOADED_BACKGROUNDS[Math.floor(Math.random()*PRELOADED_BACKGROUNDS.length)];saveSettings({bgDataUrl:pick});setBackground(pick)}
+function applySettings(){const s=settings();state.promptMode=s.promptMode||"JPEN";$("#promptMode").value=state.promptMode;setTheme(s.theme||(matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));if(s.bgDataUrl){setBackground(s.bgDataUrl)}else{randomBackground()}document.documentElement.style.setProperty("--bgimgOpacity",String((s.bgOpacity??18)/100));$("#bgOpacity").value=s.bgOpacity??18}
 
 $$(".pill").forEach(p=>p.addEventListener("click",()=>setMode(p.dataset.mode)));
 $("#levelFilter").addEventListener("change",e=>setLevel(e.target.value));
@@ -123,10 +163,11 @@ $("#learnedBtn").addEventListener("click",()=>{if(state.mode==="drill"&&!state.a
 $("#notBtn").addEventListener("click",()=>{if(state.mode==="drill"&&!state.answered)return;mark("not")});
 $("#resetDeckBtn").addEventListener("click",resetDeck);
 $("#themeBtn").addEventListener("click",()=>setTheme(document.body.classList.contains("dark")?"light":"dark"));
+$("#randomBgBtn").addEventListener("click",randomBackground);
 $("#uploadBgBtn").addEventListener("click",()=>$("#bgFile").click());
 $("#bgFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{saveSettings({bgDataUrl:String(r.result)});document.documentElement.style.setProperty("--bgimg",`url('${String(r.result)}')`)};r.readAsDataURL(f);e.target.value=""});
 $("#bgOpacity").addEventListener("input",e=>{const v=Number(e.target.value)||0;saveSettings({bgOpacity:v});document.documentElement.style.setProperty("--bgimgOpacity",String(v/100))});
-$("#clearBgBtn").addEventListener("click",()=>{saveSettings({bgDataUrl:null});document.documentElement.style.removeProperty("--bgimg")});
+$("#clearBgBtn").addEventListener("click",()=>{saveSettings({bgDataUrl:null});setBackground(null)});
 document.addEventListener("click",e=>{const b=e.target.closest(".choice-btn");if(!b||state.mode!=="drill"||state.answered)return;const opt=state.drillChoices[Number(b.dataset.idx)];$$(".choice-btn").forEach((el,i)=>{if(state.drillChoices[i].correct)el.classList.add("correct")});if(!opt.correct)b.classList.add("wrong");state.answered=true;$("#answerBlock").classList.remove("hidden-el");$("#nextBtn").disabled=false;showResult(opt.correct)});
 document.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")$("#notBtn").click();if(e.key==="ArrowRight")$("#learnedBtn").click();if(e.key===" "||e.key==="Enter"){e.preventDefault();$("#nextBtn").click()}if(e.key.toLowerCase()==="t")$("#themeBtn").click()});
 
