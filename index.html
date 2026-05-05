@@ -3,201 +3,211 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JLPT N3/N2 Flashcards</title>
-<style>
-:root{--bg:#fff;--fg:#111;--muted:#666;--line:#e6e6e6;--btn:#f6f6f6;--btn2:#111;--btnfg:#111;--btn2fg:#fff;--radius:14px;--cardw:min(720px,90vw);--cardbg:rgba(255,255,255,.62)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}
-body.dark{--bg:#0b0c0f;--fg:#eef0f3;--muted:#c8ced6;--line:#3b414b;--btn:#141a21;--btn2:#eef0f3;--btnfg:#eef0f3;--btn2fg:#0b0c0f;--cardbg:rgba(17,22,28,.68)}
-body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,linear-gradient(135deg,rgba(2,6,23,.85),rgba(30,58,138,.65)));background-size:115%;background-position:85% center;background-repeat:no-repeat;opacity:var(--bgimgOpacity,.18);pointer-events:none;z-index:-2}
-body::after{content:"";position:fixed;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.78) 0%,rgba(255,255,255,.58) 30%,rgba(255,255,255,.18) 48%,rgba(255,255,255,0) 65%);pointer-events:none;z-index:-1}
-body.dark::after{background:linear-gradient(90deg,rgba(11,12,15,.82) 0%,rgba(11,12,15,.62) 30%,rgba(11,12,15,.22) 48%,rgba(11,12,15,0) 65%)}
-.wrap{max-width:720px;margin:0 auto 0 0;padding:32px 24px 32px 48px}
-header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
-.group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-select,textarea,input{font:inherit}
-select{appearance:none;background:var(--btn);color:var(--btnfg);border:1px solid var(--line);border-radius:12px;min-height:40px;padding:0 34px 0 12px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 16px) 17px,calc(100% - 11px) 17px;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
-.pill,.btn{border:1px solid var(--line);background:var(--btn);color:var(--btnfg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;font-size:14px;line-height:1;min-height:40px;padding:0 14px;transition:transform .12s ease,background .12s ease,border-color .12s ease,box-shadow .12s ease}
+<title>JLPT Flashcards</title>
 
-/* smaller sub controls */
-header select, header .btn:not(.pill){min-height:32px;font-size:12px;padding:0 10px;border-radius:10px}
-.pill:hover,.btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.08)}
-.pill.active{background:var(--fg);color:var(--bg);border-color:var(--fg);box-shadow:0 4px 14px rgba(0,0,0,.14)}
-.btn{gap:8px}
-.btn.primary{background:var(--btn2);color:var(--btn2fg);border-color:var(--btn2)}
-.btn.block{width:100%}
-.small{font-size:12px}.muted{color:var(--muted)}.hidden,.hidden-el{display:none!important}.center{text-align:center}.row{display:flex;gap:10px;flex-wrap:wrap}.spacer{height:8px}
-.card{position:relative;width:min(590px,calc(100vw - 72px));margin:14px 0;border:1px solid var(--line);border-radius:24px;padding:34px 30px 28px;box-shadow:0 18px 48px rgba(0,0,0,.20);background:var(--cardbg);backdrop-filter:blur(10px)}
-.badge{position:absolute;top:10px;padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid var(--line);opacity:0;transition:opacity .12s}.badge.left{left:10px}.badge.right{right:10px}
-.word{font-size:42px;font-weight:750;letter-spacing:-.03em;margin:6px 0 8px}.kana{font-size:24px;color:var(--muted);margin-top:2px}.meaning{font-size:23px;margin-top:18px}.ex{margin-top:12px;color:var(--muted);font-size:15px}
-.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:22px}
-.bar{display:flex;gap:8px;align-items:center;justify-content:flex-start;margin:12px 2px 6px;color:var(--muted);font-size:12px}
-.progress{height:8px;background:rgba(0,0,0,.08);border-radius:999px;overflow:hidden;width:min(590px,calc(100vw - 72px))}.progress>span{display:block;height:100%;background:var(--fg);width:0}
-.section{border:1px solid var(--line);border-radius:24px;padding:22px;background:var(--cardbg);backdrop-filter:blur(10px);width:min(590px,calc(100vw - 72px));margin:14px 0;box-shadow:0 12px 34px rgba(0,0,0,.14)}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.choice-btn{border:1px solid var(--line);background:var(--btn);color:var(--btnfg);padding:14px 16px;border-radius:14px;cursor:pointer;font-size:15px;transition:transform .12s ease,box-shadow .12s ease}.choice-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.08)}.choice-btn.correct{border-color:#22c55e}.choice-btn.wrong{border-color:#ef4444}
-details.inline-controls{position:relative;display:inline-block}details.inline-controls summary{list-style:none}details.inline-controls summary::-webkit-details-marker{display:none}
-details.inline-controls .panel{position:absolute;top:100%;right:0;margin-top:6px;min-width:260px;z-index:10;background:var(--cardbg);color:var(--fg);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
-details.inline-controls .panel .btn{width:100%}
-.result{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transform:scale(.9);transition:opacity .12s,transform .2s}.result.show{opacity:1;transform:scale(1)}.result .icon{width:96px;height:96px;border-radius:999px;display:grid;place-items:center;border:4px solid currentColor;font-size:56px}.result.ok{color:#22c55e}.result.ng{color:#ef4444}
-.card.flash-ok{border-color:#22c55e;box-shadow:0 0 0 2px #22c55e inset,0 10px 30px rgba(0,0,0,.18)}.card.flash-ng{border-color:#ef4444;box-shadow:0 0 0 2px #ef4444 inset,0 10px 30px rgba(0,0,0,.18)}
-@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}.shake{animation:shake .28s linear 1}
-@media(min-width:900px){
-  :root{--cardw:590px}
-  .wrap{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+<style>
+:root{
+  --bg:#fff;
+  --fg:#111;
+  --muted:#666;
+  --line:#e6e6e6;
+  --btn:#f6f6f6;
+  --btn2:#111;
+  --btnfg:#111;
+  --btn2fg:#fff;
+  --cardbg:rgba(255,255,255,.65);
 }
-@media(max-width:899px){
-  .wrap{max-width:920px;margin:0 auto;padding:18px}
-  body::before{background-position:center center}
-  body::after{background:linear-gradient(180deg,rgba(255,255,255,.84) 0%,rgba(255,255,255,.62) 52%,rgba(255,255,255,.22) 100%)}
-  body.dark::after{background:linear-gradient(180deg,rgba(11,12,15,.88) 0%,rgba(11,12,15,.66) 52%,rgba(11,12,15,.28) 100%)}
-  .card,.section{width:var(--cardw);margin:14px auto}
-  .progress{width:var(--cardw);margin-left:auto;margin-right:auto}
-  .bar{justify-content:center}
+
+body{
+  margin:0;
+  font:16px/1.4 -apple-system,Helvetica,Arial;
+  color:var(--fg);
+  background:var(--bg);
 }
-@media(max-width:640px){.wrap{padding:12px 5vw}.card,.section{width:100%}.controls,.choices{grid-template-columns:1fr}.word{font-size:30px}}
+
+/* background image */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:var(--bgimg);
+  background-size:115%;
+  background-position:85% center;
+  background-repeat:no-repeat;
+  opacity:.2;
+  z-index:-2;
+}
+
+/* fade */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:linear-gradient(
+    90deg,
+    rgba(255,255,255,.78) 0%,
+    rgba(255,255,255,.58) 30%,
+    rgba(255,255,255,.18) 48%,
+    rgba(255,255,255,0) 65%
+  );
+  z-index:-1;
+}
+
+/* layout */
+.wrap{
+  max-width:680px;
+  padding:40px;
+}
+
+/* controls */
+.pill,.btn,select{
+  border:1px solid var(--line);
+  background:var(--btn);
+  border-radius:12px;
+  height:40px;
+  padding:0 14px;
+  font-size:14px;
+  display:inline-flex;
+  align-items:center;
+  cursor:pointer;
+}
+
+.pill.active{
+  background:#111;
+  color:#fff;
+}
+
+/* small controls */
+header select,
+header .btn:not(.pill){
+  height:32px;
+  font-size:12px;
+  padding:0 10px;
+}
+
+/* card */
+.card{
+  margin-top:20px;
+  padding:30px;
+  border-radius:24px;
+  background:var(--cardbg);
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+
+.word{
+  font-size:42px;
+  font-weight:700;
+}
+
+.kana{
+  color:var(--muted);
+  font-size:22px;
+}
+
+.meaning{
+  margin-top:16px;
+  font-size:22px;
+}
+
+.controls{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+}
+
+/* choices */
+.choices{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+
+.choice-btn{
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--btn);
+  cursor:pointer;
+}
+
+.choice-btn.correct{border-color:#22c55e;}
+.choice-btn.wrong{border-color:#ef4444;}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
+
 <header>
-<div class="group">
+<div>
 <button class="pill active" data-mode="learn">Learn</button>
 <button class="pill" data-mode="review">Review</button>
 <button class="pill" data-mode="drill">Drill</button>
 </div>
-<div class="group">
-<select id="levelFilter"><option value="ALL">All Levels</option><option value="N3">N3</option><option value="N2">N2</option></select>
-<select id="studyMode"><option value="vocab">Vocabulary</option><option value="context">Context</option></select>
-<select id="promptMode"><option value="JPEN">JP → EN</option><option value="ENJP">EN → JP</option></select>
-<button class="btn" id="autoBtn">Auto Off</button>
-<button class="btn" id="themeBtn">Dark</button>
-<details class="inline-controls"><summary class="btn">BG</summary><div class="panel"><button class="btn" id="randomBgBtn">Random Background</button><div class="spacer"></div><button class="btn" id="rotateBgBtn">Rotate On</button><div class="spacer"></div><button class="btn" id="uploadBgBtn">Upload Image</button><input id="bgFile" type="file" accept="image/*" class="hidden"><div class="spacer"></div><div class="small">BG Opacity</div><input id="bgOpacity" type="range" min="0" max="100" value="18"><div class="spacer"></div><button class="btn" id="clearBgBtn">Clear</button></div></details>
-<details class="inline-controls"><summary class="btn">Deck</summary><div class="panel"><button class="btn" id="resetDeckBtn">Reset to Preloaded Deck</button><div class="spacer"></div><div class="small muted">This build starts from embedded content. No remote files are required.</div></div></details>
+
+<div>
+<select id="level">
+<option>ALL</option>
+<option>N3</option>
+<option>N2</option>
+</select>
+
+<select id="study">
+<option value="vocab">Vocab</option>
+<option value="context">Context</option>
+</select>
+
+<select id="prompt">
+<option value="JPEN">JP→EN</option>
+<option value="ENJP">EN→JP</option>
+</select>
+
+<button class="btn" id="auto">Auto Off</button>
+<button class="btn" id="bg">BG</button>
 </div>
 </header>
-<div class="bar"><span id="counts" class="muted"></span></div>
-<div class="progress"><span id="progressFill"></span></div>
-<div id="cardZone" class="card center hidden-el">
-<div id="badgeLeft" class="badge left">Not</div><div id="badgeRight" class="badge right">Learned</div>
-<div class="word" id="promptBig"></div><div class="kana" id="promptSub"></div>
-<div class="meaning" id="answerBlock"><div id="answerMain"></div><div class="ex" id="exampleBlock"></div></div>
-<div id="choices" class="choices hidden-el"></div>
-<div class="controls"><button class="btn" id="notBtn">Not Learned</button><button class="btn primary" id="nextBtn">Next</button><button class="btn" id="learnedBtn">Learned</button></div>
-<div id="result" class="result" aria-hidden="true"></div>
+
+<div class="card">
+<div class="word" id="word"></div>
+<div class="kana" id="kana"></div>
+
+<div class="meaning" id="meaning"></div>
+
+<div class="choices" id="choices"></div>
+
+<div class="controls">
+<button id="not">Not</button>
+<button id="next">Next</button>
+<button id="yes">Learned</button>
 </div>
-<div id="emptyState" class="section center"><div class="muted">No cards in this view.</div></div>
 </div>
+
+</div>
+
 <script>
-const PRELOADED_DECK=[
-{level:"N3",kanji:"必要",kana:"ひつよう",meaning:"necessary",example:"これは必要です。",example_en:"This is necessary."},
-{level:"N3",kanji:"問題",kana:"もんだい",meaning:"problem",example:"問題を解決します。",example_en:"I will solve the problem."},
-{level:"N3",kanji:"時間",kana:"じかん",meaning:"time",example:"時間がありません。",example_en:"There is no time."},
-{level:"N3",kanji:"確認",kana:"かくにん",meaning:"confirmation / to confirm",example:"内容を確認します。",example_en:"I will confirm the contents."},
-{level:"N3",kanji:"準備",kana:"じゅんび",meaning:"preparation",example:"旅行の準備をします。",example_en:"I will prepare for the trip."},
-{level:"N3",kanji:"理由",kana:"りゆう",meaning:"reason",example:"理由を教えてください。",example_en:"Please tell me the reason."},
-{level:"N3",kanji:"予定",kana:"よてい",meaning:"plan / schedule",example:"明日の予定があります。",example_en:"I have plans tomorrow."},
-{level:"N3",kanji:"場所",kana:"ばしょ",meaning:"place",example:"場所を教えてください。",example_en:"Please tell me the place."},
-{level:"N3",kanji:"経験",kana:"けいけん",meaning:"experience",example:"いい経験になりました。",example_en:"It became a good experience."},
-{level:"N3",kanji:"最近",kana:"さいきん",meaning:"recently",example:"最近忙しいです。",example_en:"I have been busy recently."},
-{level:"N3",kanji:"生活",kana:"せいかつ",meaning:"life / daily life",example:"日本の生活に慣れました。",example_en:"I got used to life in Japan."},
-{level:"N3",kanji:"文化",kana:"ぶんか",meaning:"culture",example:"日本の文化に興味があります。",example_en:"I am interested in Japanese culture."},
-{level:"N3",kanji:"説明",kana:"せつめい",meaning:"explanation",example:"もう一度説明してください。",example_en:"Please explain one more time."},
-{level:"N3",kanji:"相談",kana:"そうだん",meaning:"consultation / to discuss",example:"友達に相談しました。",example_en:"I discussed it with a friend."},
-{level:"N3",kanji:"安全",kana:"あんぜん",meaning:"safe / safety",example:"ここは安全です。",example_en:"This place is safe."},
-{level:"N3",kanji:"危険",kana:"きけん",meaning:"dangerous / danger",example:"その道は危険です。",example_en:"That road is dangerous."},
-{level:"N3",kanji:"習慣",kana:"しゅうかん",meaning:"habit / custom",example:"早く寝る習慣があります。",example_en:"I have a habit of sleeping early."},
-{level:"N3",kanji:"関係",kana:"かんけい",meaning:"relationship / connection",example:"仕事と関係があります。",example_en:"It is related to work."},
-{level:"N3",kanji:"参加",kana:"さんか",meaning:"participation / to join",example:"会議に参加します。",example_en:"I will join the meeting."},
-{level:"N3",kanji:"失敗",kana:"しっぱい",meaning:"failure / mistake",example:"失敗しても大丈夫です。",example_en:"It is okay even if you fail."},
-{level:"N3",kanji:"成功",kana:"せいこう",meaning:"success",example:"プロジェクトは成功しました。",example_en:"The project was successful."},
-{level:"N3",kanji:"努力",kana:"どりょく",meaning:"effort",example:"毎日努力しています。",example_en:"I make an effort every day."},
-{level:"N3",kanji:"選択",kana:"せんたく",meaning:"choice / selection",example:"良い選択だと思います。",example_en:"I think it is a good choice."},
-{level:"N3",kanji:"原因",kana:"げんいん",meaning:"cause",example:"原因を調べています。",example_en:"I am checking the cause."},
-{level:"N2",kanji:"維持",kana:"いじ",meaning:"maintenance / to maintain",example:"健康を維持します。",example_en:"I maintain my health."},
-{level:"N2",kanji:"影響",kana:"えいきょう",meaning:"influence / effect",example:"大きな影響があります。",example_en:"It has a big influence."},
-{level:"N2",kanji:"改善",kana:"かいぜん",meaning:"improvement",example:"問題を改善します。",example_en:"I will improve the problem."},
-{level:"N2",kanji:"判断",kana:"はんだん",meaning:"judgment / decision",example:"正しく判断します。",example_en:"I will judge correctly."},
-{level:"N2",kanji:"対応",kana:"たいおう",meaning:"response / handling",example:"すぐに対応します。",example_en:"I will respond right away."},
-{level:"N2",kanji:"状況",kana:"じょうきょう",meaning:"situation",example:"状況を説明します。",example_en:"I will explain the situation."},
-{level:"N2",kanji:"対象",kana:"たいしょう",meaning:"target / subject",example:"このサービスの対象は誰ですか。",example_en:"Who is the target for this service?"},
-{level:"N2",kanji:"目的",kana:"もくてき",meaning:"purpose",example:"目的を明確にします。",example_en:"I will make the purpose clear."},
-{level:"N2",kanji:"手段",kana:"しゅだん",meaning:"method / means",example:"別の手段を考えます。",example_en:"I will consider another method."},
-{level:"N2",kanji:"価値",kana:"かち",meaning:"value",example:"この経験には価値があります。",example_en:"This experience has value."},
-{level:"N2",kanji:"表現",kana:"ひょうげん",meaning:"expression",example:"自然な表現を使います。",example_en:"I use natural expressions."},
-{level:"N2",kanji:"理解",kana:"りかい",meaning:"understanding",example:"内容を理解しました。",example_en:"I understood the contents."},
-{level:"N2",kanji:"意識",kana:"いしき",meaning:"awareness / consciousness",example:"問題を意識しています。",example_en:"I am aware of the problem."},
-{level:"N2",kanji:"基準",kana:"きじゅん",meaning:"standard / criteria",example:"基準を決めます。",example_en:"I will decide the criteria."},
-{level:"N2",kanji:"比較",kana:"ひかく",meaning:"comparison",example:"二つの商品を比較します。",example_en:"I will compare the two products."},
-{level:"N2",kanji:"検討",kana:"けんとう",meaning:"consideration / review",example:"もう少し検討します。",example_en:"I will consider it a little more."},
-{level:"N2",kanji:"提案",kana:"ていあん",meaning:"proposal / suggestion",example:"新しい提案があります。",example_en:"I have a new proposal."},
-{level:"N2",kanji:"調整",kana:"ちょうせい",meaning:"adjustment",example:"予定を調整します。",example_en:"I will adjust the schedule."},
-{level:"N2",kanji:"解決",kana:"かいけつ",meaning:"solution / to solve",example:"問題を解決しました。",example_en:"I solved the problem."},
-{level:"N2",kanji:"継続",kana:"けいぞく",meaning:"continuation",example:"勉強を継続します。",example_en:"I will continue studying."},
-{level:"N2",kanji:"集中",kana:"しゅうちゅう",meaning:"concentration / to focus",example:"仕事に集中します。",example_en:"I will focus on work."},
-{level:"N2",kanji:"管理",kana:"かんり",meaning:"management",example:"時間を管理します。",example_en:"I manage my time."},
-{level:"N2",kanji:"反応",kana:"はんのう",meaning:"reaction / response",example:"お客さんの反応を見ます。",example_en:"I will watch the customer's reaction."},
-{level:"N2",kanji:"印象",kana:"いんしょう",meaning:"impression",example:"第一印象は大切です。",example_en:"First impressions are important."}
+const BG=[
+"./girl-1.jpg",
+"./girl-2.jpg",
+"./girl-3.jpg"
 ];
 
-const PRELOADED_BACKGROUNDS=["./girl-7_t.jpg","./girl-6_t.jpg","./girl-5_t.png","./girl-4_t.png","./girl-3_t.png","./girl-2_t.png","./girl-1_t.jpg"];
+function randomBG(){
+  const pick=BG[Math.floor(Math.random()*BG.length)];
+  document.documentElement.style.setProperty("--bgimg",`url('${pick}')`);
+}
 
-const STORAGE="jlpt_flash_preloaded_v1";
-const SETTINGS="jlpt_flash_settings_preloaded_v1";
-const $=s=>document.querySelector(s);
-const $$=s=>Array.from(document.querySelectorAll(s));
-const Store=(()=>{try{localStorage.setItem("__t","1");localStorage.removeItem("__t");return localStorage}catch(e){let m={};return{getItem:k=>m[k]||null,setItem:(k,v)=>m[k]=String(v),removeItem:k=>delete m[k]}}})();
-let state={mode:"learn",level:"ALL",promptMode:"JPEN",studyMode:"vocab",autoAdvance:false,rotateBg:true,queue:[],current:null,answered:false,drillChoices:[]};
+function nextCard(){
+  randomBG();
+}
 
-function id(){return crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random())}
-function makeDeck(){return PRELOADED_DECK.map((x,i)=>({id:id(),status:"not",seen:0,correct:0,wrong:0,lastSeen:0,addedAt:Date.now()+i,...x}))}
-function loadDeck(){try{const data=JSON.parse(Store.getItem(STORAGE)||"null");if(Array.isArray(data)&&data.length)return data}catch(e){}const d=makeDeck();saveDeck(d);return d}
-function saveDeck(d){Store.setItem(STORAGE,JSON.stringify(d))}
-function resetDeck(){saveDeck(makeDeck());buildQueue();draw()}
-function settings(){try{return JSON.parse(Store.getItem(SETTINGS)||"{}")}catch(e){return{}}}
-function saveSettings(next){Store.setItem(SETTINGS,JSON.stringify({...settings(),...next}))}
-function deck(){return loadDeck()}
-function filtered(){const d=deck();return state.level==="ALL"?d:d.filter(x=>x.level===state.level)}
-function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function scoreCard(x){const seen=x.seen||0;const wrong=x.wrong||0;const correct=x.correct||0;const age=x.lastSeen?Math.min(6,(Date.now()-x.lastSeen)/86400000):6;return wrong*5+(seen?0:8)+age+(x.status==="review"?4:0)-correct}
-function weightedShuffle(list){return shuffle(list).sort((a,b)=>scoreCard(b)-scoreCard(a))}
-function pools(){const all=filtered();if(state.mode==="learn")return weightedShuffle(all.filter(x=>(x.status||"not")!=="learned"));if(state.mode==="review")return weightedShuffle(all.filter(x=>x.status==="review"||x.wrong>0));return weightedShuffle(all.filter(x=>x.status==="review"||x.status==="learned"||x.wrong>0))}
-function updateStats(){const all=filtered();const learned=all.filter(x=>x.status==="learned").length;const review=all.filter(x=>x.status==="review").length;const not=all.filter(x=>(x.status||"not")==="not").length;$("#counts").textContent=`Total ${all.length} · Learned ${learned} · Review ${review} · Not ${not}`;$("#progressFill").style.width=(all.length?Math.round(learned/all.length*100):0)+"%"}
-function buildQueue(){state.queue=pools();state.current=null;$$(".pill").forEach(p=>{const on=p.dataset.mode===state.mode;p.classList.toggle("active",on);p.setAttribute("aria-pressed",String(on))})}
-function nextCard(){clearResult();if(!state.queue.length)buildQueue();state.current=state.queue.shift()||null;state.answered=false;if(state.rotateBg&&state.current)randomBackground(false);drawCard()}
-function draw(){updateStats();if(!state.current)nextCard();else drawCard()}
-function drawCard(){const c=state.current;$("#cardZone").classList.toggle("hidden-el",!c);$("#emptyState").classList.toggle("hidden-el",!!c);if(!c){const msg=state.mode==="review"?"No review cards yet. Missed cards are added here automatically.":state.mode==="drill"?"No drill cards yet. Mark cards Learned or Review first.":"No cards in this view.";$("#emptyState .muted").textContent=msg;updateStats();return}const jp=c.kanji||c.kana;const answerJP=jp+(c.kana?`（${c.kana}）`:"");const choices=$("#choices");choices.innerHTML="";choices.classList.add("hidden-el");if(state.studyMode==="context"){$("#promptBig").textContent=c.example||jp;$("#promptSub").textContent="Guess the highlighted word from context";$("#answerMain").textContent=`${answerJP} · ${c.meaning}`;$("#exampleBlock").textContent=c.example_en||""}else if(state.promptMode==="JPEN"){$("#promptBig").textContent=jp;$("#promptSub").textContent=c.kana||"";$("#answerMain").textContent=c.meaning;$("#exampleBlock").textContent=`例: ${c.example||""} / ${c.example_en||""}`}else{$("#promptBig").textContent=c.meaning;$("#promptSub").textContent="";$("#answerMain").textContent=answerJP;$("#exampleBlock").textContent=`例: ${c.example||""} / ${c.example_en||""}`}$("#answerBlock").classList.toggle("hidden-el",state.mode==="drill");$("#nextBtn").disabled=state.mode==="drill";if(state.mode==="drill"){const pool=filtered().filter(x=>x.id!==c.id);state.drillChoices=shuffle([{correct:true,item:c},...shuffle(pool).slice(0,3).map(item=>({correct:false,item}))]);choices.innerHTML=state.drillChoices.map((o,i)=>`<button class="choice-btn" data-idx="${i}">${state.studyMode==="context"||state.promptMode==="JPEN"?o.item.meaning:(o.item.kanji||o.item.kana)}</button>`).join("");choices.classList.remove("hidden-el")}updateStats()}
-function mark(status){const c=state.current;if(!c)return;const all=deck();const i=all.findIndex(x=>x.id===c.id);if(i>-1){const wasWrong=status==="not";all[i]={...all[i],status:wasWrong?"review":status,seen:(all[i].seen||0)+1,correct:(all[i].correct||0)+(status==="learned"?1:0),wrong:(all[i].wrong||0)+(wasWrong?1:0),lastSeen:Date.now()};saveDeck(all)}nextCard()}
-function setMode(m){state.mode=m;buildQueue();draw()}
-function setLevel(v){state.level=v;buildQueue();draw()}
-function clearResult(){const r=$("#result");r.className="result";r.innerHTML="";r.setAttribute("aria-hidden","true");$("#cardZone").classList.remove("flash-ok","flash-ng","shake")}
-function showResult(ok){const r=$("#result"),card=$("#cardZone");r.className="result "+(ok?"ok show":"ng show");r.innerHTML='<div class="icon">'+(ok?'✓':'✕')+'</div>';r.setAttribute("aria-hidden","false");card.classList.remove("flash-ok","flash-ng","shake");card.classList.add(ok?"flash-ok":"flash-ng");if(!ok)card.classList.add("shake")}
-function setTheme(mode){document.body.classList.toggle("dark",mode==="dark");$("#themeBtn").textContent=mode==="dark"?"Light":"Dark";saveSettings({theme:mode})}
-function setBackground(url){if(!url){document.documentElement.style.removeProperty("--bgimg");return}document.documentElement.style.setProperty("--bgimg",`url('${url}')`)}
-function randomBackground(save=true){const current=settings().bgDataUrl;let pick=PRELOADED_BACKGROUNDS[Math.floor(Math.random()*PRELOADED_BACKGROUNDS.length)];if(PRELOADED_BACKGROUNDS.length>1){let guard=0;while(pick===current&&guard<10){pick=PRELOADED_BACKGROUNDS[Math.floor(Math.random()*PRELOADED_BACKGROUNDS.length)];guard++}}if(save)saveSettings({bgDataUrl:pick});setBackground(pick)}
-function applySettings(){const s=settings();state.promptMode=s.promptMode||"JPEN";state.studyMode=s.studyMode||"vocab";state.autoAdvance=!!s.autoAdvance;state.rotateBg=s.rotateBg!==false;$("#promptMode").value=state.promptMode;$("#studyMode").value=state.studyMode;$("#autoBtn").textContent=state.autoAdvance?"Auto On":"Auto Off";$("#rotateBgBtn").textContent=state.rotateBg?"Rotate On":"Rotate Off";setTheme(s.theme||(matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));if(s.bgDataUrl){setBackground(s.bgDataUrl)}else{randomBackground()}document.documentElement.style.setProperty("--bgimgOpacity",String((s.bgOpacity??18)/100));$("#bgOpacity").value=s.bgOpacity??18}
+document.getElementById("next").onclick=nextCard;
 
-$$(".pill").forEach(p=>p.addEventListener("click",()=>setMode(p.dataset.mode)));
-$("#levelFilter").addEventListener("change",e=>setLevel(e.target.value));
-$("#studyMode").addEventListener("change",e=>{state.studyMode=e.target.value;saveSettings({studyMode:state.studyMode});drawCard()});
-$("#promptMode").addEventListener("change",e=>{state.promptMode=e.target.value;saveSettings({promptMode:state.promptMode});drawCard()});
-$("#autoBtn").addEventListener("click",()=>{state.autoAdvance=!state.autoAdvance;saveSettings({autoAdvance:state.autoAdvance});$("#autoBtn").textContent=state.autoAdvance?"Auto On":"Auto Off"});
-$("#nextBtn").addEventListener("click",()=>{if(state.mode==="drill"&&!state.answered)return;mark("review")});
-$("#learnedBtn").addEventListener("click",()=>{if(state.mode==="drill"&&!state.answered)return;mark("learned")});
-$("#notBtn").addEventListener("click",()=>{if(state.mode==="drill"&&!state.answered)return;mark("not")});
-$("#resetDeckBtn").addEventListener("click",resetDeck);
-$("#themeBtn").addEventListener("click",()=>setTheme(document.body.classList.contains("dark")?"light":"dark"));
-$("#randomBgBtn").addEventListener("click",()=>randomBackground(true));
-$("#rotateBgBtn").addEventListener("click",()=>{state.rotateBg=!state.rotateBg;saveSettings({rotateBg:state.rotateBg});$("#rotateBgBtn").textContent=state.rotateBg?"Rotate On":"Rotate Off"});
-$("#uploadBgBtn").addEventListener("click",()=>$("#bgFile").click());
-$("#bgFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{saveSettings({bgDataUrl:String(r.result)});document.documentElement.style.setProperty("--bgimg",`url('${String(r.result)}')`)};r.readAsDataURL(f);e.target.value=""});
-$("#bgOpacity").addEventListener("input",e=>{const v=Number(e.target.value)||0;saveSettings({bgOpacity:v});document.documentElement.style.setProperty("--bgimgOpacity",String(v/100))});
-$("#clearBgBtn").addEventListener("click",()=>{saveSettings({bgDataUrl:null});setBackground(null)});
-document.addEventListener("click",e=>{const b=e.target.closest(".choice-btn");if(!b||state.mode!=="drill"||state.answered)return;const opt=state.drillChoices[Number(b.dataset.idx)];$$('.choice-btn').forEach((el,i)=>{if(state.drillChoices[i].correct)el.classList.add('correct')});if(!opt.correct)b.classList.add('wrong');state.answered=true;$("#answerBlock").classList.remove("hidden-el");$("#nextBtn").disabled=false;showResult(opt.correct);if(opt.correct&&state.autoAdvance)setTimeout(()=>mark("learned"),650);if(!opt.correct){const c=state.current,all=deck(),i=all.findIndex(x=>x.id===c.id);if(i>-1){all[i]={...all[i],status:"review",wrong:(all[i].wrong||0)+1,lastSeen:Date.now()};saveDeck(all);updateStats()}}});
-document.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")$("#notBtn").click();if(e.key==="ArrowRight")$("#learnedBtn").click();if(e.key===" "||e.key==="Enter"){e.preventDefault();$("#nextBtn").click()}if(e.key.toLowerCase()==="t")$("#themeBtn").click()});
-
-applySettings();
-buildQueue();
-draw();
+randomBG();
 </script>
+
 </body>
 </html>
