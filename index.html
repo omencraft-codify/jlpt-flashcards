@@ -46,15 +46,15 @@ details.inline-controls .panel .btn{width:100%}
   .wrap{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
 }
 @media(max-width:899px){
-  .wrap{max-width:920px;margin:0 auto;padding:18px}
-  body::before{background-position:center center}
-  body::after{background:linear-gradient(180deg,rgba(255,255,255,.88) 0%,rgba(255,255,255,.66) 52%,rgba(255,255,255,.28) 100%)}
-  body.dark::after{background:linear-gradient(180deg,rgba(11,12,15,.9) 0%,rgba(11,12,15,.68) 52%,rgba(11,12,15,.32) 100%)}
-  .card,.section{width:var(--cardw);margin:14px auto}
-  .progress{width:var(--cardw);margin-left:auto;margin-right:auto}
-  .bar{justify-content:center}
+.wrap{max-width:920px;margin:0 auto;padding:42vh 18px 18px}
+body::before{background-size:100% auto;background-position:center top;background-repeat:no-repeat}
+body::after{background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.18) 22%,rgba(255,255,255,.72) 48%,rgba(255,255,255,.94) 72%,rgba(255,255,255,.98) 100%)}
+body.dark::after{background:linear-gradient(180deg,rgba(11,12,15,0) 0%,rgba(11,12,15,.22) 22%,rgba(11,12,15,.74) 48%,rgba(11,12,15,.94) 72%,rgba(11,12,15,.98) 100%)}
+.card,.section{width:var(--cardw);margin:14px auto}
+.progress{width:var(--cardw);margin-left:auto;margin-right:auto}
+.bar{justify-content:center}
 }
-@media(max-width:640px){.wrap{padding:12px 5vw}.card,.section{width:100%}.controls,.choices{grid-template-columns:1fr}.word{font-size:30px}}
+@media(max-width:640px){.wrap{padding:44vh 5vw 12px}.card,.section{width:100%}.controls,.choices{grid-template-columns:1fr}.word{font-size:30px}}
 </style>
 </head>
 <body>
@@ -204,4 +204,3 @@ draw();
 </script>
 </body>
 </html>
-
