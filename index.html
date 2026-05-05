@@ -9,7 +9,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}
 body.dark{--bg:#0b0c0f;--fg:#eef0f3;--muted:#c8ced6;--line:#3b414b;--btn:#141a21;--btn2:#eef0f3;--btnfg:#eef0f3;--btn2fg:#0b0c0f;--cardbg:rgba(17,22,28,.68)}
-body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,linear-gradient(135deg,rgba(2,6,23,.85),rgba(30,58,138,.65)));background-size:var(--bgSize,auto 92vh);background-position:var(--bgPos,right center);background-repeat:no-repeat;opacity:var(--bgimgOpacity,.18);pointer-events:none;z-index:-2}
+body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,linear-gradient(135deg,rgba(2,6,23,.85),rgba(30,58,138,.65)));background-size:contain;background-position:right center;background-repeat:no-repeat;opacity:var(--bgimgOpacity,.18);pointer-events:none;z-index:-2}
 body::after{content:"";position:fixed;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.78) 0%,rgba(255,255,255,.58) 30%,rgba(255,255,255,.18) 48%,rgba(255,255,255,0) 65%);pointer-events:none;z-index:-1}
 body.dark::after{background:linear-gradient(90deg,rgba(11,12,15,.82) 0%,rgba(11,12,15,.62) 30%,rgba(11,12,15,.22) 48%,rgba(11,12,15,0) 65%)}
 .wrap{max-width:720px;margin:0 auto 0 0;padding:32px 24px 32px 48px}
@@ -173,23 +173,8 @@ function clearResult(){const r=$("#result");r.className="result";r.innerHTML="";
 function showResult(ok){const r=$("#result"),card=$("#cardZone");r.className="result "+(ok?"ok show":"ng show");r.innerHTML='<div class="icon">'+(ok?'✓':'✕')+'</div>';r.setAttribute("aria-hidden","false");card.classList.remove("flash-ok","flash-ng","shake");card.classList.add(ok?"flash-ok":"flash-ng");if(!ok)card.classList.add("shake")}
 function setTheme(mode){document.body.classList.toggle("dark",mode==="dark");$("#themeBtn").textContent=mode==="dark"?"Light":"Dark";saveSettings({theme:mode})}
 function setBackground(url){
-if(!url){document.documentElement.style.removeProperty("--bgimg");document.documentElement.style.removeProperty("--bgSize");document.documentElement.style.removeProperty("--bgPos");return}
+if(!url){document.documentElement.style.removeProperty("--bgimg");return}
 document.documentElement.style.setProperty("--bgimg",`url('${url}')`);
-autoPositionBackground(url);
-}
-function autoPositionBackground(url){
-const img=new Image();
-img.onload=()=>{
-const ratio=img.naturalWidth/img.naturalHeight;
-let size="auto 92vh";
-let pos="right center";
-if(ratio<0.85){size="auto 90vh";pos="88% center"}
-else if(ratio<1.15){size="auto 94vh";pos="92% center"}
-else{size="105vw auto";pos="right center"}
-document.documentElement.style.setProperty("--bgSize",size);
-document.documentElement.style.setProperty("--bgPos",pos);
-};
-img.src=url;
 }
 function randomBackground(save=true){const current=settings().bgDataUrl;let pick=PRELOADED_BACKGROUNDS[Math.floor(Math.random()*PRELOADED_BACKGROUNDS.length)];if(PRELOADED_BACKGROUNDS.length>1){let guard=0;while(pick===current&&guard<10){pick=PRELOADED_BACKGROUNDS[Math.floor(Math.random()*PRELOADED_BACKGROUNDS.length)];guard++}}if(save)saveSettings({bgDataUrl:pick});setBackground(pick)}
 function applySettings(){const s=settings();state.promptMode=s.promptMode||"JPEN";state.studyMode=s.studyMode||"vocab";state.autoAdvance=!!s.autoAdvance;state.rotateBg=s.rotateBg!==false;$("#promptMode").value=state.promptMode;$("#studyMode").value=state.studyMode;$("#autoBtn").textContent=state.autoAdvance?"Auto On":"Auto Off";$("#rotateBgBtn").textContent=state.rotateBg?"Rotate On":"Rotate Off";setTheme(s.theme||(matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));if(s.bgDataUrl){setBackground(s.bgDataUrl)}else{randomBackground()}document.documentElement.style.setProperty("--bgimgOpacity",String((s.bgOpacity??18)/100));$("#bgOpacity").value=s.bgOpacity??18}
