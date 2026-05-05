@@ -13,11 +13,14 @@ body::before{content:"";position:fixed;inset:0;background-image:var(--bgimg,line
 body::after{content:"";position:fixed;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.84) 0%,rgba(255,255,255,.70) 34%,rgba(255,255,255,.28) 52%,rgba(255,255,255,0) 72%);pointer-events:none;z-index:-1}
 body.dark::after{background:linear-gradient(90deg,rgba(11,12,15,.88) 0%,rgba(11,12,15,.74) 34%,rgba(11,12,15,.34) 52%,rgba(11,12,15,0) 72%)}
 .wrap{max-width:720px;margin:0 auto 0 0;padding:32px 24px 32px 48px}
-header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px;padding:14px;border:1px solid var(--line);border-radius:18px;background:var(--cardbg);backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,.10)}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
 .group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 select,textarea,input{font:inherit}
 select{appearance:none;background:var(--btn);color:var(--btnfg);border:1px solid var(--line);border-radius:12px;min-height:40px;padding:0 34px 0 12px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 16px) 17px,calc(100% - 11px) 17px;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
 .pill,.btn{border:1px solid var(--line);background:var(--btn);color:var(--btnfg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;font-size:14px;line-height:1;min-height:40px;padding:0 14px;transition:transform .12s ease,background .12s ease,border-color .12s ease,box-shadow .12s ease}
+
+/* smaller sub controls */
+header select, header .btn:not(.pill){min-height:32px;font-size:12px;padding:0 10px;border-radius:10px}
 .pill:hover,.btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.08)}
 .pill.active{background:var(--fg);color:var(--bg);border-color:var(--fg);box-shadow:0 4px 14px rgba(0,0,0,.14)}
 .btn{gap:8px}
