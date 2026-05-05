@@ -71,7 +71,7 @@ body.dark::after{inset:0;background:linear-gradient(180deg,rgba(11,12,15,0) 0%,r
 <select id="promptMode"><option value="JPEN">JP → EN</option><option value="ENJP">EN → JP</option></select>
 <button class="btn" id="autoBtn">Auto Off</button>
 <button class="btn" id="themeBtn">Dark</button>
-<details class="inline-controls"><summary class="btn">BG</summary><div class="panel"><button class="btn" id="randomBgBtn">Random Background</button><div class="spacer"></div><button class="btn" id="rotateBgBtn">Rotate On</button><div class="spacer"></div><button class="btn" id="uploadBgBtn">Upload Image</button><input id="bgFile" type="file" accept="image/*" class="hidden"><div class="spacer"></div><div class="small">BG Opacity</div><input id="bgOpacity" type="range" min="0" max="100" value="18"><div class="spacer"></div><button class="btn" id="clearBgBtn">Clear</button></div></details>
+<details class="inline-controls"><summary class="btn">BG</summary><div class="panel"><button class="btn" id="randomBgBtn">Random Background</button><div class="spacer"></div><button class="btn" id="rotateBgBtn">Rotate On</button><div class="spacer"></div><div class="small">BG Opacity</div><input id="bgOpacity" type="range" min="0" max="100" value="18"><div class="spacer"></div><button class="btn" id="clearBgBtn">Clear</button></div></details>
 <details class="inline-controls"><summary class="btn">Deck</summary><div class="panel"><button class="btn" id="resetDeckBtn">Reset to Preloaded Deck</button><div class="spacer"></div><div class="small muted">This build starts from embedded content. No remote files are required.</div></div></details>
 </div>
 </header>
@@ -191,8 +191,6 @@ $("#resetDeckBtn").addEventListener("click",resetDeck);
 $("#themeBtn").addEventListener("click",()=>setTheme(document.body.classList.contains("dark")?"light":"dark"));
 $("#randomBgBtn").addEventListener("click",()=>randomBackground(true));
 $("#rotateBgBtn").addEventListener("click",()=>{state.rotateBg=!state.rotateBg;saveSettings({rotateBg:state.rotateBg});$("#rotateBgBtn").textContent=state.rotateBg?"Rotate On":"Rotate Off"});
-$("#uploadBgBtn").addEventListener("click",()=>$("#bgFile").click());
-$("#bgFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{saveSettings({bgDataUrl:String(r.result)});document.documentElement.style.setProperty("--bgimg",`url('${String(r.result)}')`)};r.readAsDataURL(f);e.target.value=""});
 $("#bgOpacity").addEventListener("input",e=>{const v=Number(e.target.value)||0;saveSettings({bgOpacity:v});document.documentElement.style.setProperty("--bgimgOpacity",String(v/100))});
 $("#clearBgBtn").addEventListener("click",()=>{saveSettings({bgDataUrl:null});setBackground(null)});
 document.addEventListener("click",e=>{const b=e.target.closest(".choice-btn");if(!b||state.mode!=="drill"||state.answered)return;const opt=state.drillChoices[Number(b.dataset.idx)];$$('.choice-btn').forEach((el,i)=>{if(state.drillChoices[i].correct)el.classList.add('correct')});if(!opt.correct)b.classList.add('wrong');state.answered=true;$("#answerBlock").classList.remove("hidden-el");$("#nextBtn").disabled=false;showResult(opt.correct);if(opt.correct&&state.autoAdvance)setTimeout(()=>mark("learned"),650);if(!opt.correct){const c=state.current,all=deck(),i=all.findIndex(x=>x.id===c.id);if(i>-1){all[i]={...all[i],status:"review",wrong:(all[i].wrong||0)+1,lastSeen:Date.now()};saveDeck(all);updateStats()}}});
